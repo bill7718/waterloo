@@ -96,6 +96,9 @@ abstract class Scored extends Object {
     }
   }
 
+  /// This method is added so that we can verify the [clearScoreCache] method
+  bool get isCacheEmpty =>_cache.isEmpty;
+
   /// Clears the cache of scores recorded by the [getScore] method
   void clearScoreCache()=>_cache.clear();
 }
