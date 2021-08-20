@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:waterloo/change_notifier_list.dart';
+import 'waterloo_vm.dart';
 
 ///
 /// Displays a list of items.
@@ -71,7 +72,3 @@ class DropTargetListView<T extends Clone<T>> extends StatelessWidget {
   }
 }
 
-abstract class Clone<T> {
-  /// Returns a clone of this Object
-  T clone();
-}

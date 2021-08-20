@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:waterloo/waterloo_text_field.dart';
+import 'waterloo_text_field.dart';
+import 'waterloo_vm.dart';
 
 ///
 /// Accepts a list of items and filters them based on a text value entered by a user
@@ -66,40 +67,4 @@ class FilteredList<T extends Scored> extends StatelessWidget {
 }
 
 
-///
-/// Classes that implement this interface provide a simple integer score when provided with a String
-///
-/// This can be used to filter lists of data by comparing the data content against a String entered by a user.
-///
-abstract class Scored extends Object {
-
-  final Map<String, int> _cache = <String, int>{};
-
-  ///
-  /// Return a score that, in some way, reflects the match between the String provided and
-  /// the data content of this object. By convention a higher score indicates a greater match.
-  ///
-  /// The score method many be called many times for the same object and filter value.
-  ///
-  int score(String filter);
-
-  ///
-  /// Calls the [score] method caching the result so that it does not need to be recomputed next time
-  ///
-  int getScore(String filter) {
-    if (_cache[filter] == null) {
-      var value = score(filter);
-      _cache[filter] = value;
-      return value;
-    } else {
-      return _cache[filter]!;
-    }
-  }
-
-  /// This method is added so that we can verify the [clearScoreCache] method
-  bool get isCacheEmpty =>_cache.isEmpty;
-
-  /// Clears the cache of scores recorded by the [getScore] method
-  void clearScoreCache()=>_cache.clear();
-}
 
