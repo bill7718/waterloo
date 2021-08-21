@@ -4,19 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:youtube_plyr_iframe/youtube_plyr_iframe.dart';
 
-class WaterlooYouTubeThumbnail extends StatelessWidget {
-  final YouTubeVideoIdProvider videoIdProvider;
+class NotifiableYouTubeThumbnail extends StatelessWidget {
+  final ValueNotifier<String> videoId;
 
-  const WaterlooYouTubeThumbnail({Key? key, required this.videoIdProvider}) : super(key: key);
+  const NotifiableYouTubeThumbnail({Key? key, required this.videoId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<YouTubeVideoIdProvider>.value(
-        value: videoIdProvider,
-        child: Consumer<YouTubeVideoIdProvider>(builder: (consumerContext, provider, _) {
-          if (provider.videoId.isNotEmpty) {
+    return ChangeNotifierProvider<ValueNotifier<String>>.value(
+        value: videoId,
+        child: Consumer<ValueNotifier<String>>(builder: (consumerContext, provider, _) {
+          if (provider.value.isNotEmpty) {
             try {
-              return Image.network(YoutubePlayerController.getThumbnail(videoId: provider.videoId));
+              return YouTubeThumbnail(videoId: provider.value);
             } catch (ex) {
               return Container();
             }
@@ -44,6 +44,16 @@ class WaterlooYouTubePlayer extends StatelessWidget {
   }
 }
 
-abstract class YouTubeVideoIdProvider with ChangeNotifier {
-  String get videoId;
+class YouTubeThumbnail extends StatelessWidget {
+
+  final String videoId;
+
+  const YouTubeThumbnail({Key? key, required this.videoId}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Image.network(YoutubePlayerController.getThumbnail(videoId: videoId));
+  }
 }
+
+
