@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:waterloo/waterloo_form_message.dart';
+import 'package:waterloo/waterloo.dart';
 
 
 import 'util.dart';

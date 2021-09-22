@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:waterloo/waterloo_text_button.dart';
+import 'package:waterloo/src/waterloo_text_button.dart';
 import 'package:file_picker/file_picker.dart';
 
 ///
