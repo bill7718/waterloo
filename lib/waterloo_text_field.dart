@@ -6,7 +6,6 @@ import 'package:flutter/widgets.dart';
 ///
 ///
 class WaterlooTextField extends StatelessWidget {
-
   static const FormFieldValidator<String> emptyValidator = empty;
 
   ///
@@ -26,13 +25,16 @@ class WaterlooTextField extends StatelessWidget {
   /// Optional help to be shown with the field
   final String help;
 
+  final bool readOnly;
+
   const WaterlooTextField(
       {Key? key,
-      this.valueBinder = emptyBinder ,
+      this.valueBinder = emptyBinder,
       required this.label,
       this.validator = emptyValidator,
       this.obscure = false,
-        this.initialValue = '',
+      this.readOnly = false,
+      this.initialValue = '',
       this.help = ''})
       : super(
           key: key,
@@ -51,14 +53,13 @@ class WaterlooTextField extends StatelessWidget {
         focusNode: focus,
         decoration: InputDecoration(labelText: label, helperText: help),
         validator: validator,
-        onChanged: (v) =>valueBinder(v),
-
+        onChanged: (v) => valueBinder(v),
+        readOnly: readOnly,
       ),
     );
   }
 
-  static String? empty(String? v)=>null;
+  static String? empty(String? v) => null;
 
   static void emptyBinder(String? v) {}
 }
-
