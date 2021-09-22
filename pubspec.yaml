@@ -1,7 +1,6 @@
 name: waterloo
 description: A new Flutter project.
 version: 0.0.1
-homepage:
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
@@ -10,6 +9,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
+  serializable_data:
+    path: ../serializable_data
 
   provider: ^5.0.0
 

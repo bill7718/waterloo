@@ -8,9 +8,11 @@ class WaterlooDropDownList extends StatefulWidget {
 
   final String? initialValue;
 
+  final String label;
+
   final Function valueBinder;
 
-  const WaterlooDropDownList({Key? key, required this.items, required this.valueBinder, this.initialValue}) : super(key: key);
+  const WaterlooDropDownList({Key? key, required this.label,  required this.items, required this.valueBinder, this.initialValue}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => WaterlooDropDownListState();
@@ -40,7 +42,7 @@ class WaterlooDropDownListState extends State<WaterlooDropDownList> {
       SizedBox(
           width: 350,
           child: WaterlooTextField(
-            label: 'Hello Drop Down',
+            label: widget.label,
             initialValue: textValue,
             readOnly: true,
           )),
