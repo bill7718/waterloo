@@ -31,6 +31,11 @@ class ChangeNotifierList<T extends Object>  with ChangeNotifier {
       notifyListeners();
     }
   }
+  void replaceAll(Iterable<T> i) {
+    _list.clear();
+    _list.addAll(i);
+    notifyListeners();
+  }
 
   Type get type=>T;
 }

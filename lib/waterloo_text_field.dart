@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 ///
 /// A wrapper around a [TextFormField]
@@ -6,6 +7,7 @@ import 'package:flutter/material.dart';
 ///
 class WaterlooTextField extends StatelessWidget {
 
+  static const FormFieldValidator<String> emptyValidator = empty;
 
   ///
   final String initialValue;
@@ -26,9 +28,9 @@ class WaterlooTextField extends StatelessWidget {
 
   const WaterlooTextField(
       {Key? key,
-      required this.valueBinder,
+      this.valueBinder = emptyBinder ,
       required this.label,
-      required this.validator,
+      this.validator = emptyValidator,
       this.obscure = false,
         this.initialValue = '',
       this.help = ''})
@@ -54,4 +56,9 @@ class WaterlooTextField extends StatelessWidget {
       ),
     );
   }
+
+  static String? empty(String? v)=>null;
+
+  static void emptyBinder(String? v) {}
 }
+
