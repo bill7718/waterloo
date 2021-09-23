@@ -25,6 +25,9 @@ class WaterlooTextField extends StatelessWidget {
   /// Optional help to be shown with the field
   final String help;
 
+  /// Optional hint to be shown with the field
+  final String? hint;
+
   final bool readOnly;
 
   const WaterlooTextField(
@@ -35,6 +38,7 @@ class WaterlooTextField extends StatelessWidget {
       this.obscure = false,
       this.readOnly = false,
       this.initialValue = '',
+        this.hint,
       this.help = ''})
       : super(
           key: key,
@@ -42,16 +46,21 @@ class WaterlooTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final formFieldKey = GlobalKey();
+
     var focus = FocusNode();
+
     return Container(
       width: 400,
       margin: const EdgeInsets.fromLTRB(0, 10, 0, 10),
       child: TextFormField(
+        key: formFieldKey,
         initialValue: initialValue,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         obscureText: obscure,
         focusNode: focus,
-        decoration: InputDecoration(labelText: label, helperText: help),
+        decoration: InputDecoration(labelText: label, helperText: help, hintText: hint),
         validator: validator,
         onChanged: (v) => valueBinder(v),
         readOnly: readOnly,

@@ -76,7 +76,11 @@ class WaterlooDropDownListState extends State<WaterlooDropDownList> {
         ));
       }
      return Column(mainAxisAlignment: MainAxisAlignment.start, children: widgets);
-
+      return Stack ( children: [Positioned (
+        top: 25,
+        left: 25,
+        child: Column(mainAxisAlignment: MainAxisAlignment.start, children: widgets)
+      )]);
     } else {
       return header;
     }
