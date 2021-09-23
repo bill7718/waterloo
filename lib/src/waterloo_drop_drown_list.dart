@@ -75,7 +75,8 @@ class WaterlooDropDownListState extends State<WaterlooDropDownList> {
           alignment: Alignment.topLeft,
         ));
       }
-      return Column(mainAxisAlignment: MainAxisAlignment.start, children: widgets);
+     return Column(mainAxisAlignment: MainAxisAlignment.start, children: widgets);
+
     } else {
       return header;
     }
