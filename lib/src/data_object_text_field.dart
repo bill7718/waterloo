@@ -39,7 +39,7 @@ class DataObjectTextField extends StatelessWidget {
         data.set(fieldName, v);
       },
       obscure: obscure,
-      initialValue: data.get(fieldName),
+      initialValue: data.get(fieldName) ?? '',
       help: help,
     );
   }
