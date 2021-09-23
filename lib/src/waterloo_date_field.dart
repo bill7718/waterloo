@@ -71,11 +71,9 @@ class WaterlooDateFieldState extends State<WaterlooDateField> {
       dateValue = '${value?.day.toString().padLeft(2, '0')}/${value?.month.toString().padLeft(2, '0')}/${value?.year}';
     }
 
-    print(dateValue);
-
     return Row(children: [
       SizedBox(
-          width: 250,
+          width: 350,
           child: WaterlooTextField(
               label: widget.label,
               initialValue: dateValue,
@@ -96,10 +94,12 @@ class WaterlooDateFieldState extends State<WaterlooDateField> {
         onPressed: () {
           var f = showDatePicker(context: context, initialDate: initial, firstDate: first, lastDate: last);
           f.then((r) {
-            setState(() {
-              widget.valueBinder(r);
-              value = r;
-            });
+            if (r != null) {
+              setState(() {
+                widget.valueBinder(r);
+                value = r;
+              });
+            }
           });
         },
       )

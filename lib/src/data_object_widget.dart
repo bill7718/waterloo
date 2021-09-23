@@ -33,6 +33,16 @@ class DataObjectWidget extends StatelessWidget {
           label: dataSpecification.label ?? '', data: data, fieldName: fieldName, items: items);
     }
 
+    if (dataSpecification.type == 'date') {
+      return DataObjectDateField(
+        label: dataSpecification.label ?? '',
+        data: data,
+        fieldName: fieldName,
+        maxDurationAfter: dataSpecification.maxDurationAfter,
+        maxDurationBefore: dataSpecification.maxDurationBefore,
+      );
+    }
+
     return DataObjectTextField(
       label: dataSpecification.label ?? '',
       data: data,
