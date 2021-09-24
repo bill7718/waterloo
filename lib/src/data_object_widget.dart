@@ -55,3 +55,51 @@ class DataObjectWidget extends StatelessWidget {
 
   String? v(String? v) => dataSpecification.validator(v);
 }
+
+
+
+class DataObjectCard extends StatelessWidget {
+
+
+  final String? title;
+  final DataObject data;
+  final List<String> fieldNames;
+  final Map<String, DataSpecification> dataSpecifications;
+
+  const DataObjectCard({Key? key, this.title, required this.data, required this.fieldNames, required this.dataSpecifications})
+      : super(key: key);
+
+
+  @override
+  Widget build(BuildContext context) {
+
+    var widgets = <Widget>[];
+    for (var field in fieldNames) {
+
+      if (dataSpecifications[field] != null) {
+        widgets.add(DataObjectWidget(data: data, dataSpecification: dataSpecifications[field]!, fieldName: field,));
+      }
+    }
+
+    if (title == null) {
+      return Card(
+        child: Column(children: widgets, mainAxisAlignment: MainAxisAlignment.start,)
+      );
+    } else {
+      return Card(
+        child: Column (
+          children: [
+            Text(title!),
+              Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: widgets,)
+          ],
+        )
+      );
+    }
+
+
+  }
+
+}
