@@ -1,6 +1,7 @@
-
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import 'waterloo_text_button.dart';
 import 'waterloo_text_field.dart';
 
 class WaterlooDropDownList extends StatefulWidget {
@@ -12,7 +13,9 @@ class WaterlooDropDownList extends StatefulWidget {
 
   final Function valueBinder;
 
-  const WaterlooDropDownList({Key? key, required this.label,  required this.items, required this.valueBinder, this.initialValue}) : super(key: key);
+  const WaterlooDropDownList(
+      {Key? key, required this.label, required this.items, required this.valueBinder, this.initialValue})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() => WaterlooDropDownListState();
@@ -31,14 +34,13 @@ class WaterlooDropDownListState extends State<WaterlooDropDownList> {
 
   @override
   Widget build(BuildContext context) {
-
     for (var item in widget.items) {
       if (item.id == value) {
         textValue = item.description;
       }
     }
 
-    var header = Row(children: [
+    return Row(children: [
       SizedBox(
           width: 350,
           child: WaterlooTextField(
@@ -46,44 +48,32 @@ class WaterlooDropDownListState extends State<WaterlooDropDownList> {
             initialValue: textValue,
             readOnly: true,
           )),
-      IconButton(
+      PopupMenuButton<ListItem>(
         icon: const Icon(Icons.keyboard_arrow_down),
-        onPressed: () {
+        onSelected: (item) {
           setState(() {
-            _expanded = !_expanded;
+            value = item.id;
           });
-
+        },
+        itemBuilder: (context) {
+          //_expanded = !_expanded;
+          var widgets = <PopupMenuItem<ListItem>>[];
+          for (var item in widget.items) {
+            widgets.add(PopupMenuItem<ListItem>(
+                child: Align(
+              child: ListTile(
+                title: Text(item.description),
+                onTap: () {
+                  Navigator.pop(context, item);
+                },
+              ),
+              alignment: Alignment.topLeft,
+            )));
+          }
+          return widgets;
         },
       )
     ]);
-
-    if (_expanded) {
-      var widgets = <Widget>[];
-      widgets.add(header);
-      for (var item in widget.items) {
-        widgets.add(Align(
-          child: ListTile(
-            title: Text(item.description),
-            onTap: () {
-              setState(() {
-                _expanded = false;
-                value = item.id;
-                widget.valueBinder(item.id);
-              });
-            },
-          ),
-          alignment: Alignment.topLeft,
-        ));
-      }
-     return Column(mainAxisAlignment: MainAxisAlignment.start, children: widgets);
-      return Stack ( children: [Positioned (
-        top: 25,
-        left: 25,
-        child: Column(mainAxisAlignment: MainAxisAlignment.start, children: widgets)
-      )]);
-    } else {
-      return header;
-    }
   }
 }
 
