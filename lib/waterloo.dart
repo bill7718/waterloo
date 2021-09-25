@@ -11,3 +11,9 @@ export 'src/waterloo_form_container.dart';
 export 'src/waterloo_form_message.dart';
 export 'src/waterloo_text_button.dart';
 export 'src/waterloo_date_field.dart';
+
+export 'src/data_object_form.dart';
+export 'src/waterloo_grid.dart';
+
+export 'src/waterloo_theme.dart';
+export 'src/waterloo_event_handler.dart';

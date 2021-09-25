@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
+
+import 'waterloo_theme.dart';
 
 ///
 /// A wrapper around a [TextFormField]
@@ -52,8 +55,8 @@ class WaterlooTextField extends StatelessWidget {
     var focus = FocusNode();
 
     return Container(
-      width: 400,
-      margin: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+      width: Provider.of<WaterlooTheme>(context).textFieldTheme.fieldWidth,
+      margin: Provider.of<WaterlooTheme>(context).textFieldTheme.margin,
       child: TextFormField(
         key: formFieldKey,
         initialValue: initialValue,
@@ -71,4 +74,12 @@ class WaterlooTextField extends StatelessWidget {
   static String? empty(String? v) => null;
 
   static void emptyBinder(String? v) {}
+}
+
+
+class WaterlooTextFieldTheme {
+  final double fieldWidth;
+  final EdgeInsets margin;
+
+  const WaterlooTextFieldTheme({this.fieldWidth = 400, this.margin = const EdgeInsets.fromLTRB(0, 10, 0, 10)});
 }

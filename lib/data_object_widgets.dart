@@ -6,3 +6,4 @@ export 'src/data_object_switch_tile.dart';
 export 'src/data_object_widget.dart';
 export 'src/data_object_widget_list.dart';
 export 'src/data_object_date_field.dart';
+export 'src/data_object_table.dart';
