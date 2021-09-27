@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import 'waterloo_text_button.dart';
 import 'waterloo_text_field.dart';
+import 'waterloo_theme.dart';
 
 class WaterlooDropDownList extends StatefulWidget {
   final List<ListItem> items;
@@ -22,7 +21,6 @@ class WaterlooDropDownList extends StatefulWidget {
 }
 
 class WaterlooDropDownListState extends State<WaterlooDropDownList> {
-  bool _expanded = false;
   String textValue = '';
   String? value;
 
@@ -41,22 +39,21 @@ class WaterlooDropDownListState extends State<WaterlooDropDownList> {
     }
 
     return Row(children: [
-      SizedBox(
-          width: 350,
-          child: WaterlooTextField(
+          WaterlooTextField(
+            width: Provider.of<WaterlooTheme>(context).waterlooDropDownListTheme.inputFieldWidth,
             label: widget.label,
             initialValue: textValue,
             readOnly: true,
-          )),
+          ),
       PopupMenuButton<ListItem>(
         icon: const Icon(Icons.keyboard_arrow_down),
         onSelected: (item) {
           setState(() {
             value = item.id;
+            widget.valueBinder(value);
           });
         },
         itemBuilder: (context) {
-          //_expanded = !_expanded;
           var widgets = <PopupMenuItem<ListItem>>[];
           for (var item in widget.items) {
             widgets.add(PopupMenuItem<ListItem>(
@@ -82,4 +79,10 @@ class ListItem {
   final String description;
 
   ListItem(this.id, this.description);
+}
+
+class WaterlooDropDownListTheme {
+  final double inputFieldWidth;
+
+  const WaterlooDropDownListTheme({this.inputFieldWidth = 250 });
 }

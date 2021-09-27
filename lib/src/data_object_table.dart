@@ -5,8 +5,8 @@ import 'data_object_cell_content.dart';
 
 import 'change_notifier_list.dart';
 
-class DataObjectTable extends StatelessWidget {
-  final List<DataObject> data;
+class DataObjectTable<T extends DataObject> extends StatelessWidget {
+  final ChangeNotifierList<T> data;
   final Map<String, DataSpecification> specifications;
   final List<String> fieldNames;
 
@@ -15,18 +15,17 @@ class DataObjectTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var list = ChangeNotifierList<DataObject>();
-    list.replaceAll(data);
-    return ChangeNotifierProvider<ChangeNotifierList<DataObject>>.value(
-        value: list,
-        child: Consumer<ChangeNotifierList<DataObject>>(builder: (context, l, _) {
+
+    return ChangeNotifierProvider<ChangeNotifierList<T>>.value(
+        value: data,
+        child: Consumer<ChangeNotifierList<T>>(builder: (context, l, _) {
           var columns = <DataColumn>[];
           for (var field in fieldNames) {
             columns.add(DataColumn(label: Text(specifications[field]?.label ?? '')));
           }
 
           var rows = <DataRow>[];
-          for (var item in list.list) {
+          for (var item in data.list) {
             var cells = <DataCell>[];
             for (var field in fieldNames) {
               cells.add(DataCell(DataObjectCellContent(
@@ -38,7 +37,12 @@ class DataObjectTable extends StatelessWidget {
             rows.add(DataRow(cells: cells));
           }
 
-          return DataTable(columns: columns, rows: rows);
+          if (rows.isNotEmpty) {
+            return DataTable(columns: columns, rows: rows);
+          } else {
+            return Container();
+          }
+
         }));
   }
 }

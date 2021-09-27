@@ -1,6 +1,9 @@
+import 'dart:html';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:waterloo/src/base_change_notifier.dart';
 
 class WaterlooGrid extends StatelessWidget {
   final List<Widget> children;
@@ -30,7 +33,6 @@ class WaterlooGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return LayoutBuilder(builder: (context, constraints) {
       var layoutConstraints = WaterlooGridLayoutConstraints.calculateConstraints(
           gridWidth: constraints.maxWidth,
@@ -64,7 +66,7 @@ class WaterlooGrid extends StatelessWidget {
       }
 
       // add a dummy layouts row that indicates a new row after the last widget
-      layouts.add(WaterlooGridElementLayout(0, true));
+      layouts.add(WaterlooGridElementLayout(0, true, 0));
 
       // now add widgets to the rows based on the widgets
       var i = 0;
@@ -78,15 +80,16 @@ class WaterlooGrid extends StatelessWidget {
           ));
           cumulativeFlex = cumulativeFlex + layoutConstraints.columnSeparatorFlex;
         }
-        Widget w = children[i];
-        if (w is WaterlooGridChild) {
-          w = w.child;
-        }
+
+        var flex = layouts[i].columnCount * layoutConstraints.columnFlex +
+            layoutConstraints.columnSeparatorFlex * (layouts[i].columnCount - 1);
+
         rowContents.add(Expanded(
-          child: w,
-          flex: layouts[i].columnCount * layoutConstraints.columnFlex,
+          child: children[i],
+          flex: flex,
         ));
-        cumulativeFlex = cumulativeFlex + layouts[i].columnCount * layoutConstraints.columnFlex;
+
+        cumulativeFlex = cumulativeFlex + flex;
 
         if (layouts[i + 1].newRow) {
           if (cumulativeFlex < layoutConstraints.totalFlex) {
@@ -112,7 +115,6 @@ class WaterlooGrid extends StatelessWidget {
         i++;
       }
 
-
       return Column(children: rows);
     });
   }
@@ -136,13 +138,13 @@ class WaterlooGridLayoutConstraints {
       bool pad = true,
       required double gridWidth}) {
     double availableWidth = gridWidth + columnSeparation;
-    if (pad) {
+    if (!pad) {
       availableWidth = gridWidth - columnSeparation;
     }
 
     int maxColumnCount = 32;
     if (minimumColumnWidth > 0) {
-      maxColumnCount = min(32, availableWidth ~/ (minimumColumnWidth + columnSeparation));
+      maxColumnCount = max(1, min(32, availableWidth ~/ (minimumColumnWidth + columnSeparation)));
     }
 
     int minColumnCount = 1;
@@ -199,7 +201,9 @@ class WaterlooGridChild extends StatelessWidget implements HasWaterlooGridChildL
 
   @override
   Widget build(BuildContext context) {
-    return child;
+    return LayoutBuilder(builder: (context, constraints) {
+      return child;
+    });
   }
 
   static WaterlooGridElementLayout getChildLayout(double columnWidth, int remainingColumns, int totalColumnCount,
@@ -210,24 +214,24 @@ class WaterlooGridChild extends StatelessWidget implements HasWaterlooGridChildL
       case WaterlooGridChildLayoutRule.normal:
         var c = min(totalColumnCount, getColumnCount(columnWidth, preferredColumnCount, preferredColumnWidth));
         if (c > remainingColumns) {
-          return WaterlooGridElementLayout(c, true);
+          return WaterlooGridElementLayout(c, true, preferredColumnWidth);
         } else {
-          return WaterlooGridElementLayout(c, false);
+          return WaterlooGridElementLayout(c, false, preferredColumnWidth);
         }
 
       case WaterlooGridChildLayoutRule.start:
         var c = min(totalColumnCount, getColumnCount(columnWidth, preferredColumnCount, preferredColumnWidth));
-        return WaterlooGridElementLayout(c, true);
+        return WaterlooGridElementLayout(c, true, preferredColumnWidth);
 
       case WaterlooGridChildLayoutRule.full:
-        return WaterlooGridElementLayout(totalColumnCount, true);
+        return WaterlooGridElementLayout(totalColumnCount, true, preferredColumnWidth);
 
       case WaterlooGridChildLayoutRule.fill:
         var c = min(totalColumnCount, getColumnCount(columnWidth, preferredColumnCount, preferredColumnWidth));
         if (c > remainingColumns) {
-          return WaterlooGridElementLayout(totalColumnCount, true);
+          return WaterlooGridElementLayout(totalColumnCount, true, preferredColumnWidth);
         } else {
-          return WaterlooGridElementLayout(remainingColumns, false);
+          return WaterlooGridElementLayout(remainingColumns, false, preferredColumnWidth);
         }
 
       default:
@@ -251,7 +255,8 @@ class WaterlooGridChild extends StatelessWidget implements HasWaterlooGridChildL
 class WaterlooGridElementLayout {
   final int columnCount;
   final bool newRow;
-  WaterlooGridElementLayout(this.columnCount, this.newRow);
+  final double? preferredWidth;
+  WaterlooGridElementLayout(this.columnCount, this.newRow, this.preferredWidth);
 }
 
 enum WaterlooGridChildLayoutRule { start, full, fill, normal }
@@ -283,6 +288,7 @@ class WaterlooGridRow extends StatelessWidget implements HasWaterlooGridChildLay
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: children,);
+      children: children,
+    );
   }
 }

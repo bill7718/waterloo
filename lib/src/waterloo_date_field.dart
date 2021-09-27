@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'waterloo_text_field.dart';
+import 'waterloo_theme.dart';
 
 class WaterlooDateField extends StatefulWidget {
   final String label;
@@ -72,24 +74,29 @@ class WaterlooDateFieldState extends State<WaterlooDateField> {
     }
 
     return Row(children: [
+      WaterlooTextField(
+          label: widget.label,
+          initialValue: dateValue,
+          readOnly: false,
+          hint: 'dd/mm/yyyy',
+          width: Provider.of<WaterlooTheme>(context).dateFieldTheme.inputFieldWidth,
+          valueBinder: (v) {
+            if (validateDate(v) == null) {
+              var split = v.split('/');
+              var year = int.parse(split.last);
+              if (year < 100) {
+                year = year + 2000;
+              }
+              value = DateTime(int.parse(split.last), int.parse(split[1]), int.parse(split.first));
+              widget.valueBinder(value);
+            }
+          },
+          validator: (v) {
+            return validateDate(v);
+          }),
       SizedBox(
-          width: 350,
-          child: WaterlooTextField(
-              label: widget.label,
-              initialValue: dateValue,
-              readOnly: false,
-              hint: 'dd/mm/yyyy',
-              valueBinder: (v) {
-                if (validateDate(v) == null) {
-                  var split = v.split('/');
-                  value = DateTime(int.parse(split.last), int.parse(split[1]), int.parse(split.first));
-                  widget.valueBinder(value);
-                }
-              },
-              validator: (v) {
-                return validateDate(v);
-              })),
-      IconButton(
+        width: 50,
+      child: IconButton(
         icon: const Icon(Icons.calendar_today_outlined),
         onPressed: () {
           var f = showDatePicker(context: context, initialDate: initial, firstDate: first, lastDate: last);
@@ -102,7 +109,7 @@ class WaterlooDateFieldState extends State<WaterlooDateField> {
             }
           });
         },
-      )
+      ))
     ]);
   }
 
@@ -145,4 +152,10 @@ class WaterlooDateFieldState extends State<WaterlooDateField> {
     }
     return null;
   }
+}
+
+class WaterlooDateFieldTheme {
+  final double inputFieldWidth;
+
+  const WaterlooDateFieldTheme({this.inputFieldWidth = 250 });
 }

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
@@ -33,6 +35,8 @@ class WaterlooTextField extends StatelessWidget {
 
   final bool readOnly;
 
+  final double? width;
+
   const WaterlooTextField(
       {Key? key,
       this.valueBinder = emptyBinder,
@@ -41,7 +45,8 @@ class WaterlooTextField extends StatelessWidget {
       this.obscure = false,
       this.readOnly = false,
       this.initialValue = '',
-        this.hint,
+      this.hint,
+        this.width,
       this.help = ''})
       : super(
           key: key,
@@ -49,33 +54,41 @@ class WaterlooTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final formFieldKey = GlobalKey();
 
     var focus = FocusNode();
+    return LayoutBuilder(builder: (context, constraints) {
+      var w = width ?? Provider.of<WaterlooTheme>(context).textFieldTheme.fieldWidth;
+      w = min(constraints.maxWidth, w);
+      return Container(
+          margin: Provider.of<WaterlooTheme>(context).textFieldTheme.margin,
+          child: Row(
+            children: [
+              SizedBox(
+                  width: w,
+                  child: TextFormField(
+                    key: formFieldKey,
+                    initialValue: initialValue,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    obscureText: obscure,
+                    focusNode: focus,
+                    decoration: InputDecoration(labelText: label, helperText: help, hintText: hint),
+                    validator: validator,
+                    onChanged: (v) => valueBinder(v),
+                    readOnly: readOnly,
+                  ))
+            ],
+          ));
+    },
 
-    return Container(
-      width: Provider.of<WaterlooTheme>(context).textFieldTheme.fieldWidth,
-      margin: Provider.of<WaterlooTheme>(context).textFieldTheme.margin,
-      child: TextFormField(
-        key: formFieldKey,
-        initialValue: initialValue,
-        autovalidateMode: AutovalidateMode.onUserInteraction,
-        obscureText: obscure,
-        focusNode: focus,
-        decoration: InputDecoration(labelText: label, helperText: help, hintText: hint),
-        validator: validator,
-        onChanged: (v) => valueBinder(v),
-        readOnly: readOnly,
-      ),
     );
+
   }
 
   static String? empty(String? v) => null;
 
   static void emptyBinder(String? v) {}
 }
-
 
 class WaterlooTextFieldTheme {
   final double fieldWidth;
