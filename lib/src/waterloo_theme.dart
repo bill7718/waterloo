@@ -1,3 +1,4 @@
+import 'package:waterloo/src/waterloo_currency_field.dart';
 import 'package:waterloo/src/waterloo_date_field.dart';
 
 import 'data_object_form.dart';
@@ -11,6 +12,7 @@ class WaterlooTheme {
   final WaterlooDropDownListTheme waterlooDropDownListTheme;
   final WaterlooSwitchTileTheme switchTileTheme;
   final WaterlooDateFieldTheme dateFieldTheme;
+  final WaterlooCurrencyFieldTheme currencyFieldTheme;
 
   WaterlooTheme(
       {this.textFieldTheme = const WaterlooTextFieldTheme(),
@@ -18,5 +20,6 @@ class WaterlooTheme {
         this.waterlooDropDownListTheme = const WaterlooDropDownListTheme(),
       this.switchTileTheme = const WaterlooSwitchTileTheme(),
         this.dateFieldTheme = const WaterlooDateFieldTheme(),
+        this.currencyFieldTheme = const WaterlooCurrencyFieldTheme(),
       });
 }

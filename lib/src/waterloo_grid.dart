@@ -1,9 +1,5 @@
-import 'dart:html';
 import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:waterloo/src/base_change_notifier.dart';
 
 class WaterlooGrid extends StatelessWidget {
   final List<Widget> children;
