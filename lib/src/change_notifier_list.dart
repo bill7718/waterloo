@@ -1,17 +1,13 @@
-
-
 import 'package:flutter/material.dart';
 
-class ChangeNotifierList<T extends Object>  with ChangeNotifier {
-
+class ChangeNotifierList<T extends Object> with ChangeNotifier {
   final List<T> _list = <T>[];
-
 
   ChangeNotifierList();
 
-  List<T> get list =>_list;
+  List<T> get list => _list;
 
-  void add(T value, { T? beforeItem }) {
+  void add(T value, {T? beforeItem}) {
     if (_list.contains(value)) {
       _list.remove(value);
     }
@@ -31,11 +27,12 @@ class ChangeNotifierList<T extends Object>  with ChangeNotifier {
       notifyListeners();
     }
   }
+
   void replaceAll(Iterable<T> i) {
     _list.clear();
     _list.addAll(i);
     notifyListeners();
   }
 
-  Type get type=>T;
+  Type get type => T;
 }

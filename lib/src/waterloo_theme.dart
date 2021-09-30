@@ -3,6 +3,7 @@ import 'package:waterloo/src/waterloo_date_field.dart';
 
 import 'data_object_form.dart';
 import 'waterloo_drop_drown_list.dart';
+import 'waterloo_percent_field.dart';
 import 'waterloo_switch_tile.dart';
 import 'waterloo_text_field.dart';
 
@@ -13,6 +14,7 @@ class WaterlooTheme {
   final WaterlooSwitchTileTheme switchTileTheme;
   final WaterlooDateFieldTheme dateFieldTheme;
   final WaterlooCurrencyFieldTheme currencyFieldTheme;
+  final WaterlooPercentFieldTheme percentFieldTheme;
 
   WaterlooTheme(
       {this.textFieldTheme = const WaterlooTextFieldTheme(),
@@ -21,5 +23,6 @@ class WaterlooTheme {
       this.switchTileTheme = const WaterlooSwitchTileTheme(),
         this.dateFieldTheme = const WaterlooDateFieldTheme(),
         this.currencyFieldTheme = const WaterlooCurrencyFieldTheme(),
+        this.percentFieldTheme = const WaterlooPercentFieldTheme()
       });
 }

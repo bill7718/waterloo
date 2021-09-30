@@ -49,3 +49,19 @@ class DataObjectDialogEventHandler implements WaterlooEventHandler {
   }
 
 }
+
+showDataObjectDialog(BuildContext context, DataObject data, List<String> fieldNames, Map<String, DataSpecification> specifications,
+    Function callback) {
+  var f = showDialog(
+      context: context,
+      builder: (context) {
+        return DataObjectDialog(
+            data: data,
+            fieldNames: fieldNames,
+            specifications: specifications);
+      });
+
+  f.then((r) {
+      callback(r);
+  });
+}
