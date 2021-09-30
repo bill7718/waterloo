@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:serializable_data/serializable_data.dart';
 import 'package:waterloo/src/waterloo_event_handler.dart';
+import 'package:waterloo/src/waterloo_text_button.dart';
 
 import 'data_object_form.dart';
 
@@ -65,6 +66,40 @@ void showDataObjectDialog(
       builder: (context) {
         return DataObjectDialog(
             data: data, fieldNames: fieldNames, specifications: specifications);
+      });
+
+  f.then((r) {
+    callback(r);
+  });
+}
+
+void showDataObjectDeleteDialog(BuildContext context, DataObject data, Function callback) {
+  var f = showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+          child: Card(
+              child: Column(
+            children: [
+              const Text('Confirm Delete'),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  WaterlooTextButton(
+                      text: 'Confirm',
+                      exceptionHandler: () {},
+                      onPressed: () {
+                        Navigator.pop(context, true);
+                      }),
+                  WaterlooTextButton(
+                      text: 'Cancel', exceptionHandler: () {}, onPressed: () {
+                    Navigator.pop(context, false);
+                  })
+                ],
+              )
+            ],
+          )),
+        );
       });
 
   f.then((r) {
