@@ -3,6 +3,7 @@ import 'package:serializable_data/serializable_data.dart';
 import 'data_object_currency_field.dart';
 import 'data_object_date_field.dart';
 import 'data_object_drop_down_list.dart';
+import 'data_object_percent_field.dart';
 import 'data_object_text_field.dart';
 import 'waterloo_drop_drown_list.dart';
 import 'data_object_switch_tile.dart';
@@ -48,6 +49,15 @@ class DataObjectWidget extends StatelessWidget {
 
     if (dataSpecification.type == 'currency') {
       return DataObjectCurrencyField(
+        label: dataSpecification.label ?? '',
+        data: data,
+        fieldName: fieldName,
+        help: dataSpecification.help ?? '',
+      );
+    }
+
+    if (dataSpecification.type == 'percent') {
+      return DataObjectPercentField(
         label: dataSpecification.label ?? '',
         data: data,
         fieldName: fieldName,

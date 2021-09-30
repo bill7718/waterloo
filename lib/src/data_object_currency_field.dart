@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:serializable_data/serializable_data.dart';
 
 import 'waterloo_currency_field.dart';
-import 'waterloo_date_field.dart';
+
 
 class DataObjectCurrencyField extends StatelessWidget {
   /// The label for the field

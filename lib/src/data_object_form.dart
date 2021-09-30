@@ -7,29 +7,34 @@ import 'waterloo_grid.dart';
 import 'waterloo_text_button.dart';
 import 'waterloo_theme.dart';
 
-class DataObjectForm extends StatelessWidget {
+class DataObjectForm extends StatefulWidget {
   final DataObject data;
   final List<String> fieldNames;
   final Map<String, DataSpecification> specifications;
   final GlobalKey formKey = GlobalKey();
   final WaterlooEventHandler eventHandler;
 
-  DataObjectForm(
-      {Key? key,
-      required this.eventHandler,
-      required this.data,
-      required this.fieldNames,
-      required this.specifications})
+  DataObjectForm({Key? key,
+    required this.eventHandler,
+    required this.data,
+    required this.fieldNames,
+    required this.specifications})
       : super(key: key);
+
+  @override
+  State<StatefulWidget> createState()=>DataObjectFormState();
+
+}
+  class DataObjectFormState extends State<DataObjectForm> {
 
   @override
   Widget build(BuildContext context) {
     var widgets = <Widget>[];
-    for (var field in fieldNames) {
-      if (specifications[field] != null) {
+    for (var field in widget.fieldNames) {
+      if (widget.specifications[field] != null) {
         widgets.add(DataObjectWidget(
-          data: data,
-          dataSpecification: specifications[field]!,
+          data: widget.data,
+          dataSpecification: widget.specifications[field]!,
           fieldName: field,
         ));
       }
@@ -38,23 +43,23 @@ class DataObjectForm extends StatelessWidget {
     widgets.add(WaterlooGridRow(children: [
       WaterlooTextButton(
           text: 'Cancel',
-          exceptionHandler: eventHandler.handleException,
+          exceptionHandler: widget.eventHandler.handleException,
           onPressed: () {
-            eventHandler.handleEvent(context, event: 'Cancel');
+            widget.eventHandler.handleEvent(context, event: 'Cancel');
           }),
       WaterlooTextButton(
           text: 'Ok',
-          exceptionHandler: eventHandler.handleException,
+          exceptionHandler: widget.eventHandler.handleException,
           onPressed: () {
-            var formState = formKey.currentState as FormState;
+            var formState = widget.formKey.currentState as FormState;
             if (formState.validate()) {
-              eventHandler.handleEvent(context, event: 'Ok', output: data);
+              widget.eventHandler.handleEvent(context, event: 'Ok', output: widget.data);
             }
           })
     ]));
 
     return Form(
-        key: formKey,
+        key: widget.formKey,
         child: Card(
             margin: Provider.of<WaterlooTheme>(context).dataObjectFormTheme.margin,
             child: Container(
