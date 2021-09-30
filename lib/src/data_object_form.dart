@@ -1,76 +1,107 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:serializable_data/serializable_data.dart';
+import 'package:waterloo/waterloo.dart';
 import 'data_object_widget.dart';
 import 'waterloo_event_handler.dart';
+import 'waterloo_form_message.dart';
 import 'waterloo_grid.dart';
 import 'waterloo_text_button.dart';
 import 'waterloo_theme.dart';
 
-class DataObjectForm extends StatefulWidget {
-  final DataObject data;
-  final List<String> fieldNames;
+class DataObjectForm extends StatelessWidget {
+  final List<DataObject> data;
+  final List<List<String>> fieldNames;
   final Map<String, DataSpecification> specifications;
   final GlobalKey formKey = GlobalKey();
   final WaterlooEventHandler eventHandler;
+  final List<EventSpecification> events;
 
-  DataObjectForm({Key? key,
-    required this.eventHandler,
-    required this.data,
-    required this.fieldNames,
-    required this.specifications})
+  DataObjectForm(
+      {Key? key,
+      required this.eventHandler,
+      required this.data,
+      required this.fieldNames,
+      required this.specifications,
+      required this.events})
       : super(key: key);
-
-  @override
-  State<StatefulWidget> createState()=>DataObjectFormState();
-
-}
-  class DataObjectFormState extends State<DataObjectForm> {
 
   @override
   Widget build(BuildContext context) {
     var widgets = <Widget>[];
-    for (var field in widget.fieldNames) {
-      if (widget.specifications[field] != null) {
+    var error = FormError();
+    widgets.add(WaterlooFormMessage(
+      error: error,
+    ));
+    var i = 0;
+    while (i < data.length) {
+      widgets.add(DataObjectGrid(
+        data: data[i],
+        fieldNames: fieldNames[i],
+        specifications: specifications,
+      ));
+      i++;
+    }
+
+    var buttons = <Widget>[];
+    for (var event in events) {
+      buttons.add(WaterlooTextButton(
+        text: event.description,
+        exceptionHandler: eventHandler.handleException,
+        onPressed: () {
+          if (event.mustValidate) {
+            var formState = formKey.currentState as FormState;
+            if (formState.validate()) {
+              eventHandler.handleEvent(context,
+                  event: event.event, output: data);
+            }
+          } else {
+            eventHandler.handleEvent(context, event: event.event, output: data);
+          }
+        },
+      ));
+    }
+
+    widgets.add(WaterlooGridRow(children: buttons));
+
+    return WaterlooFormContainer(
+      children: widgets,
+      formKey: formKey,
+    );
+  }
+}
+
+class DataObjectGrid extends StatelessWidget {
+  final DataObject data;
+  final List<String> fieldNames;
+  final Map<String, DataSpecification> specifications;
+
+  const DataObjectGrid(
+      {Key? key,
+      required this.data,
+      required this.fieldNames,
+      required this.specifications})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    var widgets = <Widget>[];
+    for (var field in fieldNames) {
+      if (specifications[field] != null) {
         widgets.add(DataObjectWidget(
-          data: widget.data,
-          dataSpecification: widget.specifications[field]!,
+          data: data,
+          dataSpecification: specifications[field]!,
           fieldName: field,
         ));
       }
     }
 
-    widgets.add(WaterlooGridRow(children: [
-      WaterlooTextButton(
-          text: 'Cancel',
-          exceptionHandler: widget.eventHandler.handleException,
-          onPressed: () {
-            widget.eventHandler.handleEvent(context, event: 'Cancel');
-          }),
-      WaterlooTextButton(
-          text: 'Ok',
-          exceptionHandler: widget.eventHandler.handleException,
-          onPressed: () {
-            var formState = widget.formKey.currentState as FormState;
-            if (formState.validate()) {
-              widget.eventHandler.handleEvent(context, event: 'Ok', output: widget.data);
-            }
-          })
-    ]));
-
-    return Form(
-        key: widget.formKey,
-        child: Card(
-            margin: Provider.of<WaterlooTheme>(context).dataObjectFormTheme.margin,
-            child: Container(
-                margin: Provider.of<WaterlooTheme>(context).dataObjectFormTheme.margin,
-                child: WaterlooGrid(
-                  children: widgets,
-                  minimumColumnWidth: Provider.of<WaterlooTheme>(context).dataObjectFormTheme.minimumColumnWidth,
-                  pad: false,
-                )
-                //child: GridView.count(crossAxisCount: 1, children: children,))
-                )));
+    return WaterlooGrid(
+        children: widgets,
+        minimumColumnWidth: Provider.of<WaterlooTheme>(context)
+            .dataObjectFormTheme
+            .minimumColumnWidth,
+        pad: false);
   }
 }
 
@@ -78,5 +109,7 @@ class DataObjectFormTheme {
   final double minimumColumnWidth;
   final EdgeInsets margin;
 
-  const DataObjectFormTheme({this.minimumColumnWidth = 401, this.margin = const EdgeInsets.fromLTRB(20, 20, 20, 20)});
+  const DataObjectFormTheme(
+      {this.minimumColumnWidth = 401,
+      this.margin = const EdgeInsets.fromLTRB(20, 20, 20, 20)});
 }

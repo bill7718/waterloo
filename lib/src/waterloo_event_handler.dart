@@ -9,3 +9,14 @@ abstract class WaterlooEventHandler {
   ///
   void handleException(dynamic context, Exception ex, StackTrace? st );
 }
+
+
+class EventSpecification {
+
+  final String event;
+  final bool mustValidate;
+  final String description;
+
+  EventSpecification({ required this.event, required this.description, this.mustValidate = true });
+
+}
