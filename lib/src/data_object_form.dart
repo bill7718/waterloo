@@ -16,6 +16,7 @@ class DataObjectForm extends StatelessWidget {
   final GlobalKey formKey = GlobalKey();
   final WaterlooEventHandler eventHandler;
   final List<EventSpecification> events;
+  final String formHeaderText;
 
   DataObjectForm(
       {Key? key,
@@ -23,7 +24,8 @@ class DataObjectForm extends StatelessWidget {
       required this.data,
       required this.fieldNames,
       required this.specifications,
-      required this.events})
+      required this.events,
+      this.formHeaderText = ''})
       : super(key: key);
 
   @override
@@ -32,6 +34,7 @@ class DataObjectForm extends StatelessWidget {
     var error = FormError();
     widgets.add(WaterlooFormMessage(
       error: error,
+      text: formHeaderText,
     ));
     var i = 0;
     while (i < data.length) {
@@ -90,7 +93,7 @@ class DataObjectGrid extends StatelessWidget {
       if (specifications[field] != null) {
         widgets.add(DataObjectWidget(
           data: data,
-          dataSpecification: specifications[field]!,
+          specifications: specifications,
           fieldName: field,
         ));
       }

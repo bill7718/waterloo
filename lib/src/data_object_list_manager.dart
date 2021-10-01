@@ -46,8 +46,6 @@ class DataObjectListManagerState extends State<DataObjectListManager> {
                       switchValue = v;
                     }
                 ) ,
-
-
               )),
           if (switchValue && list.list.isNotEmpty) WaterlooGridChild(child: DataObjectTable(data: list, fieldNames: list.list.first.fields, specifications: widget.specifications),layoutRule: WaterlooGridChildLayoutRule.full),
           if (switchValue && list.list.isNotEmpty) WaterlooGridChild(child:

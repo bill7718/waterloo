@@ -10,7 +10,7 @@ List<Widget> getDataObjectWidgets(DataObject data, List<String> fields,
   var widgets = <Widget>[];
   for (var field in fields) {
     widgets.add(DataObjectWidget(data: data, fieldName: field,
-        dataSpecification: specifications[field]!));
+        specifications: specifications));
   }
 
   return widgets;
