@@ -19,3 +19,5 @@ export 'src/waterloo_grid.dart';
 
 export 'src/waterloo_theme.dart';
 export 'src/waterloo_event_handler.dart';
+
+export 'src/waterloo_text_provider.dart';

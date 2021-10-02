@@ -24,6 +24,10 @@ class DataObjectCellContent extends StatelessWidget {
       return const Text('No');
     }
 
+    if (value == null) {
+      return Container();
+    }
+
     if ((dataSpecification?.list ?? []).isNotEmpty) {
       return Text(ListEntry.getDescription(value, dataSpecification!.list) ?? '');
     }

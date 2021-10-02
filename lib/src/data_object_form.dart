@@ -87,7 +87,7 @@ class DataObjectForm extends StatelessWidget {
 
     return Scaffold(
         appBar: WaterlooAppBar.get(title: formTitle, context: context, subtitle: formSubtitle,
-        handleAction: act ? () { eventHandler.handleEvent(context, event: 'home'); } : null),
+        handleAction: act ? () { eventHandler.handleEvent(context, event: Provider.of<WaterlooTheme>(context).dataObjectFormTheme.homeEvent); } : null),
         body: WaterlooFormContainer(
           children: widgets,
           formKey: formKey,
@@ -132,8 +132,9 @@ class DataObjectGrid extends StatelessWidget {
 class DataObjectFormTheme {
   final double minimumColumnWidth;
   final EdgeInsets margin;
+  final String homeEvent;
 
   const DataObjectFormTheme(
       {this.minimumColumnWidth = 401,
-      this.margin = const EdgeInsets.fromLTRB(20, 20, 20, 20)});
+      this.margin = const EdgeInsets.fromLTRB(20, 20, 20, 20), this.homeEvent = 'home'});
 }
