@@ -38,7 +38,7 @@ void main() {
 
  });
 
-
+/*
  testWidgets('Add an AppBar from  WaterlooAppBar to a page', (WidgetTester tester) async {
 
    Widget page = MockPage(
@@ -49,6 +49,8 @@ void main() {
    expect(find.text('Hello'), findsOneWidget);
 
  });
+
+ */
 
  testWidgets('Add a  WaterlooButtonRow to a page', (WidgetTester tester) async {
 

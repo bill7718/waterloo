@@ -16,7 +16,8 @@ class EventSpecification {
   final String event;
   final bool mustValidate;
   final String description;
+  final Function? additionalValidation;
 
-  const EventSpecification({ required this.event, required this.description, this.mustValidate = true });
+  const EventSpecification({ required this.event, required this.description, this.mustValidate = true, this.additionalValidation });
 
 }

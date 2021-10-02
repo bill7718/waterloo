@@ -46,7 +46,7 @@ class WaterlooDropDownListState extends State<WaterlooDropDownList> {
             readOnly: true,
           ),
       PopupMenuButton<ListItem>(
-        icon: const Icon(Icons.keyboard_arrow_down),
+        icon: Icon(Provider.of<WaterlooTheme>(context).waterlooDropDownListTheme.dropIcon,),
         onSelected: (item) {
           setState(() {
             value = item.id;
@@ -83,6 +83,7 @@ class ListItem {
 
 class WaterlooDropDownListTheme {
   final double inputFieldWidth;
+  final IconData dropIcon;
 
-  const WaterlooDropDownListTheme({this.inputFieldWidth = 250 });
+  const WaterlooDropDownListTheme({this.inputFieldWidth = 250, this.dropIcon =  Icons.keyboard_arrow_down });
 }

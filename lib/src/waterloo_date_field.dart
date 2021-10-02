@@ -98,7 +98,7 @@ class WaterlooDateFieldState extends State<WaterlooDateField> {
       SizedBox(
         width: 50,
       child: IconButton(
-        icon: const Icon(Icons.calendar_today_outlined),
+        icon: Icon(Provider.of<WaterlooTheme>(context).dateFieldTheme.dateIcon,),
         onPressed: () {
           var f = showDatePicker(context: context, initialDate: initial, firstDate: first, lastDate: last);
           f.then((r) {
@@ -157,6 +157,7 @@ class WaterlooDateFieldState extends State<WaterlooDateField> {
 
 class WaterlooDateFieldTheme {
   final double inputFieldWidth;
+  final IconData dateIcon;
 
-  const WaterlooDateFieldTheme({this.inputFieldWidth = 250 });
+  const WaterlooDateFieldTheme({this.inputFieldWidth = 250, this.dateIcon = Icons.calendar_today_outlined });
 }

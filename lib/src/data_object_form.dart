@@ -16,7 +16,11 @@ class DataObjectForm extends StatelessWidget {
   final GlobalKey formKey = GlobalKey();
   final WaterlooEventHandler eventHandler;
   final List<EventSpecification> events;
-  final String formHeaderText;
+  final String formMessage;
+  final String formTitle;
+  final String? formSubtitle;
+  final bool act;
+
 
   DataObjectForm(
       {Key? key,
@@ -25,7 +29,10 @@ class DataObjectForm extends StatelessWidget {
       required this.fieldNames,
       required this.specifications,
       required this.events,
-      this.formHeaderText = ''})
+        required this.formTitle,
+        this.formSubtitle,
+        this.act = false,
+      this.formMessage = ''})
       : super(key: key);
 
   @override
@@ -34,7 +41,7 @@ class DataObjectForm extends StatelessWidget {
     var error = FormError();
     widgets.add(WaterlooFormMessage(
       error: error,
-      text: formHeaderText,
+      text: formMessage,
     ));
     var i = 0;
     while (i < data.length) {
@@ -52,11 +59,22 @@ class DataObjectForm extends StatelessWidget {
         text: event.description,
         exceptionHandler: eventHandler.handleException,
         onPressed: () {
+          error.error = '';
           if (event.mustValidate) {
             var formState = formKey.currentState as FormState;
             if (formState.validate()) {
-              eventHandler.handleEvent(context,
-                  event: event.event, output: data);
+              if (event.additionalValidation == null) {
+                eventHandler.handleEvent(context,
+                    event: event.event, output: data);
+              } else {
+                var s = event.additionalValidation!();
+                if (s == null) {
+                  eventHandler.handleEvent(context,
+                      event: event.event, output: data);
+                } else {
+                  error.error = s;
+                }
+              }
             }
           } else {
             eventHandler.handleEvent(context, event: event.event, output: data);
@@ -67,10 +85,13 @@ class DataObjectForm extends StatelessWidget {
 
     widgets.add(WaterlooGridRow(children: buttons));
 
-    return WaterlooFormContainer(
-      children: widgets,
-      formKey: formKey,
-    );
+    return Scaffold(
+        appBar: WaterlooAppBar.get(title: formTitle, context: context, subtitle: formSubtitle,
+        handleAction: act ? () { eventHandler.handleEvent(context, event: 'home'); } : null),
+        body: WaterlooFormContainer(
+          children: widgets,
+          formKey: formKey,
+        ));
   }
 }
 

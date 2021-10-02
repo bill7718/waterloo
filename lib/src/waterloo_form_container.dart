@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'waterloo_theme.dart';
 
 class WaterlooFormContainer extends StatelessWidget {
   final GlobalKey formKey;
@@ -21,11 +24,23 @@ class WaterlooFormContainer extends StatelessWidget {
 }
 
 class WaterlooAppBar {
-  static AppBar get({required String title}) => AppBar(
-        title: Text(title),
+  static AppBar get({required String title, String? subtitle, required BuildContext context, Function? handleAction }) => AppBar(
+        title: Column ( children: [
+          Row(mainAxisAlignment: MainAxisAlignment.center , children: [Text(title), ]),
+          if (subtitle != null) Row(mainAxisAlignment: MainAxisAlignment.center , children: [Text(subtitle, style: Provider.of<WaterlooTheme>(context).appBarTheme.subTitleStyle,)])]),
+        actions: [ if (handleAction != null) IconButton( icon: Icon(Provider.of<WaterlooTheme>(context).appBarTheme.actionIcon), onPressed: () { handleAction(); },)],
         automaticallyImplyLeading: false,
       );
 }
+
+class WaterlooAppBarTheme {
+
+  final IconData actionIcon;
+  final TextStyle subTitleStyle;
+
+  const WaterlooAppBarTheme({this.actionIcon =  Icons.home, this.subTitleStyle = const TextStyle(fontSize: 16) });
+}
+
 
 class WaterlooButtonRow extends StatelessWidget {
   final List<Widget> children;

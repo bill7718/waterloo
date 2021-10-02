@@ -23,6 +23,7 @@ class DataObjectDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dialog(
         child: DataObjectForm(
+          formTitle: 'Dialog',
       data: data,
       fieldNames: fieldNames,
       specifications: specifications,
