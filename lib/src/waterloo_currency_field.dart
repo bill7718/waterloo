@@ -2,8 +2,9 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:serializable_data/serializable_data.dart';
 import 'waterloo_text_field.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'waterloo_text_provider.dart';
 import 'waterloo_theme.dart';
 
 class WaterlooCurrencyField extends StatefulWidget {
@@ -46,13 +47,6 @@ class WaterlooCurrencyFieldState extends State<WaterlooCurrencyField> {
         Provider.of<WaterlooTheme>(context).currencyFieldTheme.decimalPoint;
 
     return Row(children: [
-      SizedBox(
-          width: Provider.of<WaterlooTheme>(context)
-              .currencyFieldTheme
-              .iconFieldWidth,
-          child: FaIcon(Provider.of<WaterlooTheme>(context)
-              .currencyFieldTheme
-              .currencyIcon)),
       WaterlooTextField(
         label: widget.label,
         initialValue:
@@ -61,29 +55,24 @@ class WaterlooCurrencyFieldState extends State<WaterlooCurrencyField> {
             .currencyFieldTheme
             .inputFieldWidth,
         valueBinder: (v) {
-          if (validateCurrencyAmount(v, decimalPlaces, decimalPoint) == null) {
-            List<String> l = v.split(decimalPoint);
-            while (l.length < 2) {
-              l.add('0');
-            }
-            int amount = int.parse(l.first) * pow(10, decimalPlaces) as int;
-            amount = amount + int.parse(l.last.padRight(decimalPlaces, '0'));
-            widget.valueBinder(v);
+          if (validateCurrencyAmount(v, decimalPlaces, decimalPoint)) {
+            int? amount = toAmount(v, decimalPlaces, decimalPoint);
+            widget.valueBinder(amount);
           }
         },
         validator: (v) {
-          var s = validateCurrencyAmount(v, decimalPlaces, decimalPoint);
-          if (s != null) {
-            return widget.validator(v);
-          }
+          var valid = validateCurrencyAmount(v, decimalPlaces, decimalPoint);
+          var s = valid ?  widget.validator(v) : error;
+          return s == null ? null : Provider.of<WaterlooTextProvider>(context).get(s);
         },
       )
     ]);
   }
 
-  String toDecimal(int? v, int decimalPlaces, String decimalPoint) {
+  
+  static String? toDecimal(int? v, int decimalPlaces, String decimalPoint) {
     if (v == null) {
-      return '';
+      return null;
     }
     var s = v.toString().padLeft(decimalPlaces, '0');
 
@@ -96,46 +85,20 @@ class WaterlooCurrencyFieldState extends State<WaterlooCurrencyField> {
         s.substring(s.length - decimalPlaces);
   }
 
-  String? validateCurrencyAmount(
-      String? v, int decimalPlaces, String decimalPoint) {
-    if (v == null) {
-      return null;
-    }
 
-    List<String> l = v.split(decimalPoint);
-
-    if (l.length > 2) {
-      return error;
-    }
-
-    if (l.isEmpty) {
-      return null;
-    }
-
-    if (l.length == 1) {
-      l.add('0');
-    }
-
-    for (var i in l) {
-      if (int.tryParse(i) == null) {
-        return error;
-      }
-    }
-    return null;
-  }
 }
 
 class WaterlooCurrencyFieldTheme {
   final double inputFieldWidth;
-  final double iconFieldWidth;
-  final IconData currencyIcon;
+  //final double iconFieldWidth;
+  //final IconData currencyIcon;
   final int decimalPlaces;
   final String decimalPoint;
 
   const WaterlooCurrencyFieldTheme(
       {this.inputFieldWidth = 250,
-      this.iconFieldWidth = 50,
-      this.currencyIcon = FontAwesomeIcons.poundSign,
+      //this.iconFieldWidth = 50,
+      //this.currencyIcon = FontAwesomeIcons.poundSign,
       this.decimalPlaces = 2,
       this.decimalPoint = '.'});
 }

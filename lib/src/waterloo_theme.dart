@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:waterloo/src/waterloo_currency_field.dart';
 import 'package:waterloo/src/waterloo_date_field.dart';
 import 'package:waterloo/src/waterloo_form_container.dart';
@@ -9,7 +10,12 @@ import 'waterloo_percent_field.dart';
 import 'waterloo_switch_tile.dart';
 import 'waterloo_text_field.dart';
 
+///
+/// Contains theme data that is specific to Waterloo Widgets
+/// Use [ThemeData] in preference to these theme parameters.
+///
 class WaterlooTheme {
+
   final WaterlooTextFieldTheme textFieldTheme;
   final DataObjectFormTheme dataObjectFormTheme;
   final WaterlooDropDownListTheme waterlooDropDownListTheme;

@@ -1,5 +1,9 @@
 library waterloo;
 
+export 'src/waterloo_theme.dart';
+
+
+
 export 'src/filtered_list.dart';
 export 'src/drop_target_list_view.dart';
 export 'src/waterloo_vm.dart';
@@ -17,7 +21,7 @@ export 'src/waterloo_animate_scale_opacity.dart';
 
 export 'src/waterloo_grid.dart';
 
-export 'src/waterloo_theme.dart';
+
 export 'src/waterloo_event_handler.dart';
 
 export 'src/waterloo_text_provider.dart';

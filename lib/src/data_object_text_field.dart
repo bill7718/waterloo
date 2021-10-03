@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:serializable_data/serializable_data.dart';
 
 import 'waterloo_text_field.dart';
+import 'waterloo_text_provider.dart';
 
 class DataObjectTextField extends StatelessWidget {
   /// The label for the field
@@ -41,6 +43,11 @@ class DataObjectTextField extends StatelessWidget {
       obscure: obscure,
       initialValue: data.get(fieldName) ?? '',
       help: help,
+      validator: (v) {
+        var s = validator(v);
+        s ??= data.validate(fields: [fieldName]);
+        return Provider.of<WaterlooTextProvider>(context).get(s);
+      },
     );
   }
 }

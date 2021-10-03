@@ -21,7 +21,6 @@ class DataObjectForm extends StatelessWidget {
   final String? formSubtitle;
   final bool act;
 
-
   DataObjectForm(
       {Key? key,
       required this.eventHandler,
@@ -29,9 +28,9 @@ class DataObjectForm extends StatelessWidget {
       required this.fieldNames,
       required this.specifications,
       required this.events,
-        required this.formTitle,
-        this.formSubtitle,
-        this.act = false,
+      required this.formTitle,
+      this.formSubtitle,
+      this.act = false,
       this.formMessage = ''})
       : super(key: key);
 
@@ -63,18 +62,15 @@ class DataObjectForm extends StatelessWidget {
           if (event.mustValidate) {
             var formState = formKey.currentState as FormState;
             if (formState.validate()) {
-              if (event.additionalValidation == null) {
-                eventHandler.handleEvent(context,
-                    event: event.event, output: data);
-              } else {
-                var s = event.additionalValidation!();
-                if (s == null) {
-                  eventHandler.handleEvent(context,
-                      event: event.event, output: data);
-                } else {
-                  error.error = s;
-                }
+              var s = event.additionalValidation == null
+                  ? null
+                  : event.additionalValidation!();
+              for (var d in data) {
+                s ??= d.validate();
               }
+              s == null
+                  ? eventHandler.handleEvent(context, event: event.event, output: data)
+                  : error.error = Provider.of<WaterlooTextProvider>(context).get(s);
             }
           } else {
             eventHandler.handleEvent(context, event: event.event, output: data);
@@ -86,8 +82,18 @@ class DataObjectForm extends StatelessWidget {
     widgets.add(WaterlooGridRow(children: buttons));
 
     return Scaffold(
-        appBar: WaterlooAppBar.get(title: formTitle, context: context, subtitle: formSubtitle,
-        handleAction: act ? () { eventHandler.handleEvent(context, event: Provider.of<WaterlooTheme>(context).dataObjectFormTheme.homeEvent); } : null),
+        appBar: WaterlooAppBar.get(
+            title: formTitle,
+            context: context,
+            subtitle: formSubtitle,
+            handleAction: act
+                ? () {
+                    eventHandler.handleEvent(context,
+                        event: Provider.of<WaterlooTheme>(context)
+                            .dataObjectFormTheme
+                            .homeEvent);
+                  }
+                : null),
         body: WaterlooFormContainer(
           children: widgets,
           formKey: formKey,
@@ -136,5 +142,6 @@ class DataObjectFormTheme {
 
   const DataObjectFormTheme(
       {this.minimumColumnWidth = 401,
-      this.margin = const EdgeInsets.fromLTRB(20, 20, 20, 20), this.homeEvent = 'home'});
+      this.margin = const EdgeInsets.fromLTRB(20, 20, 20, 20),
+      this.homeEvent = 'home'});
 }
