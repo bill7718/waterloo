@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:serializable_data/serializable_data.dart';
 
 import '../src/waterloo_text_field.dart';
-import 'waterloo_text_provider.dart';
+import '../src/waterloo_text_provider.dart';
 
 class DataObjectTextField extends StatelessWidget {
   /// The label for the field

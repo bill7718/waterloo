@@ -25,4 +25,4 @@ export 'beta/waterloo_grid.dart';
 
 export 'beta/waterloo_event_handler.dart';
 
-export 'beta/waterloo_text_provider.dart';
+export 'src/waterloo_text_provider.dart';

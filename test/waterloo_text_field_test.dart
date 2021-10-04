@@ -21,6 +21,10 @@ void main() {
 
   group('Test WaterlooTextField', ()
   {
+    setUp( () {
+      currentValue = '';
+    });
+
     testWidgets('Add a WaterlooTextField to a page checking that parameters are passed in correctly', (WidgetTester tester) async {
       var label = 'Greeting';
       var initialValue = 'Hello';
@@ -76,6 +80,20 @@ void main() {
       await enterText(tester, 'Greeting', 'bad');
       expect(find.text('error'), findsOneWidget);
       expect(currentValue, 'bad');
+    });
+
+    testWidgets('When I do not provide a binder then no binding takes place ', (WidgetTester tester) async {
+      Widget page = MockPage(WaterlooTextField(
+        initialValue: 'Hello',
+        label: 'Greeting',
+        validator: validator,
+        help: 'assistanceHere',
+      ));
+
+      await tester.pumpWidget(page);
+      await enterText(tester, 'Greeting', 'bad');
+      expect(find.text('error'), findsOneWidget);
+      expect(currentValue.isEmpty , true, reason: currentValue);
     });
   });
 }

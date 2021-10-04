@@ -9,7 +9,7 @@ import 'waterloo_form_message.dart';
 import 'waterloo_grid.dart';
 import 'waterloo_text_button.dart';
 import '../src/waterloo_theme.dart';
-import 'waterloo_text_provider.dart';
+import '../src/waterloo_text_provider.dart';
 
 class DataObjectForm extends StatelessWidget {
   final List<DataObject> data;

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:waterloo/waterloo.dart';
 
-import 'util.dart';
+import '../util.dart';
 
 void main() {
   final items = StringScorer.make(['Hello', 'Goodbye', 'Colin', 'Mabel']);

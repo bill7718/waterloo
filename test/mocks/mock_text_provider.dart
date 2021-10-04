@@ -1,6 +1,6 @@
 
 
-import 'package:waterloo/beta/waterloo_text_provider.dart';
+import 'package:waterloo/src/waterloo_text_provider.dart';
 
 class MockTextProvider extends WaterlooTextProvider {
   @override
