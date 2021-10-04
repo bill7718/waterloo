@@ -1,19 +1,15 @@
 {
-  "name": "Jericho",
+  "name": "Waterloo",
   "description": "General Npm",
   "scripts": {
     "upgrade_dartdoc": "pub global activate dartdoc",
-    "test": "flutter test --coverage",
+    "test": "flutter test test/all_test.dart --coverage",
     "doc": "flutter pub global run dartdoc:dartdoc -q",
     "fullDoc" : "dartdoc --auto-include-dependencies",
     "show_doc": "dhttpd --path doc/api",
     "all": "npm run test && npm run show_coverage  && npm run doc && npm run show_doc",
     "part": "npm run test && npm run show_coverage",
-    "show_coverage": "dart run vm/vm_poc.dart",
-    "gherkin": "dart test_driver/app_test.dart",
-    "bdd_report": "node test_driver/reporter/index.js",
-    "bdd": "npm run gherkin && npm run bdd_report",
-    "tests": "flutter test test_manual/all_test.dart"
+    "show_coverage": "dart run test/show_coverage.dart"
   },
   "engines": {
     "node": "12"

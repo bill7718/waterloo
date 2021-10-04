@@ -5,17 +5,42 @@ import '../src/waterloo_text_field.dart';
 import '../src/waterloo_text_provider.dart';
 import '../src/waterloo_theme.dart';
 
+///
+/// A [WaterlooTextField] that allows input of a date.
+///
+/// It includes an icon that opens a date selection dialog so that the user
+/// can select the date or enter it directly.
+///
 class WaterlooDateField extends StatefulWidget {
+
+  /// The text field label - passed directly to the [WaterlooTextField]
   final String label;
+
+  /// Used by the calendar widget to control the largest allowable date that can be selected.
+  /// Specified as a duration relative to the current date/time.
   final Duration? maxFutureDuration;
+
+  /// Used by the calendar widget to control the smallest allowable date that can be selected.
+  /// Specified as a duration relative to the current date/time.
   final Duration? maxPastDuration;
+
+  /// The initial value to show in the field - this class converts to a DDD/MM/YYYY date
+  /// and passes it to the initialValue in the [WaterlooTextField]
   final DateTime? initialValue;
+
+  /// Optional help - passed directly to the [WaterlooTextField]
   final String help;
+
+  /// Passed directly to the [WaterlooTextField] - defaults to [false]
+  /// If true then the icon which opens the Calendar widget is not shown
   final bool readOnly;
 
+  /// Binds this value to an external object. The date is exchanged as a [DateTime] object
   final Function valueBinder;
 
   /// Validates the entered value. Returns an error message
+  /// This widget validates that the date is a valid date and then applies the
+  /// validation specified in this parameter.
   final FormFieldValidator<String> validator;
 
   const WaterlooDateField(
@@ -23,7 +48,7 @@ class WaterlooDateField extends StatefulWidget {
       required this.label,
       this.initialValue,
       this.help = '',
-      this.readOnly = true,
+      this.readOnly = false,
       this.valueBinder = emptyBinder,
         this.validator = WaterlooTextField.empty,
       this.maxFutureDuration,
@@ -96,12 +121,27 @@ class WaterlooDateFieldState extends State<WaterlooDateField> {
   }
 }
 
+///
+/// Default parameters used by the [WaterlooDateField]
+///
 class WaterlooDateFieldTheme {
+
+  /// The width to apply to the date input field
   final double inputFieldWidth;
+
+  /// The icon which the user selects to open the calendar widget
   final IconData dateIcon;
+
+  /// The width allocated to the icon
   final double iconWidth;
+
+  /// The input field hint - defaults to dd/mm/yyyy
   final String dateHint;
+
+  /// Default value for the [maxPastDuration] parameter
   final Duration past;
+
+  /// Default value for the [maxFutureDuration] parameter
   final Duration future;
 
   const WaterlooDateFieldTheme(

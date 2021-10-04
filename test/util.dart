@@ -17,11 +17,12 @@ class MockPage extends StatelessWidget {
     var theme = WaterlooTheme();
     var text = MockTextProvider();
 
-
-    return MultiProvider(providers: [
-      Provider<WaterlooTheme>.value(value: theme),
-      Provider<WaterlooTextProvider>.value(value: text)
-    ], child: MaterialApp(home: Card(child: child,)));
+    return MultiProvider(
+        providers: [Provider<WaterlooTheme>.value(value: theme), Provider<WaterlooTextProvider>.value(value: text)],
+        child: MaterialApp(
+            home: Card(
+          child: child,
+        )));
   }
 }
 
@@ -30,31 +31,48 @@ Finder findTextInputFieldByLabel(String label) {
   return f;
 }
 
-bool checkTextInputField(String label, { String? initialValue, bool obscure = false,
-  bool readOnly = false,  String? hint, String? help, double? width }) {
+bool checkTextInputField(String label,
+    {String? initialValue, bool obscure = false, bool readOnly = false, String? hint, String? help, double? width}) {
   try {
     Finder fWaterloo = find.byWidgetPredicate((widget) => widget is WaterlooTextField && widget.label == label);
     expect(fWaterloo, findsOneWidget);
     if (initialValue != null) {
-      Finder fInitial = find.descendant(of: fWaterloo, matching: find.byWidgetPredicate((widget) => widget is TextFormField && widget.initialValue == initialValue));
+      Finder fInitial = find.descendant(
+          of: fWaterloo, matching: find.byWidgetPredicate((widget) => widget is TextFormField && widget.initialValue == initialValue));
       expect(fInitial, findsOneWidget);
     }
-    Finder fObscure = find.descendant(of: fWaterloo, matching: find.byWidgetPredicate((widget) => widget is TextField && widget.obscureText == obscure));
+    Finder fObscure =
+        find.descendant(of: fWaterloo, matching: find.byWidgetPredicate((widget) => widget is TextField && widget.obscureText == obscure));
     expect(fObscure, findsOneWidget);
-    Finder fReadOnly = find.descendant(of: fWaterloo, matching: find.byWidgetPredicate((widget) => widget is TextField && widget.readOnly == readOnly));
+    Finder fReadOnly =
+        find.descendant(of: fWaterloo, matching: find.byWidgetPredicate((widget) => widget is TextField && widget.readOnly == readOnly));
     expect(fReadOnly, findsOneWidget);
     if (hint != null) {
-      Finder fHint = find.descendant(of: fWaterloo, matching: find.byWidgetPredicate((widget) => widget is TextField && widget.decoration?.hintText == hint));
+      Finder fHint =
+          find.descendant(of: fWaterloo, matching: find.byWidgetPredicate((widget) => widget is TextField && widget.decoration?.hintText == hint));
       expect(fHint, findsOneWidget);
     }
     if (help != null) {
-      Finder fHelp = find.descendant(of: fWaterloo, matching: find.byWidgetPredicate((widget) => widget is TextField && widget.decoration?.helperText == help));
+      Finder fHelp =
+          find.descendant(of: fWaterloo, matching: find.byWidgetPredicate((widget) => widget is TextField && widget.decoration?.helperText == help));
       expect(fHelp, findsOneWidget);
     }
     if (width != null) {
       Finder fWidth = find.descendant(of: fWaterloo, matching: find.byWidgetPredicate((widget) => widget is SizedBox && widget.width == width));
       expect(fWidth, findsOneWidget);
     }
+    return true;
+  } catch (ex) {
+    return false;
+  }
+}
+
+bool checkIconButton(IconData iconData) {
+  try {
+    Finder fIconButton = find.byWidgetPredicate((widget) => widget is IconButton);
+    expect(fIconButton, findsOneWidget);
+    Finder fIcon = find.descendant(of: fIconButton, matching: find.byWidgetPredicate((widget) => widget is Icon && widget.icon == iconData));
+    expect(fIcon, findsOneWidget);
     return true;
   } catch (ex) {
     return false;

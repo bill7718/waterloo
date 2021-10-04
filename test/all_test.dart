@@ -1,7 +1,7 @@
 
 
-import 'waterloo_theme_test.dart' as theme;
-import 'waterloo_text_field_test.dart' as text;
+import 'src/waterloo_theme_test.dart' as theme;
+import 'src/waterloo_text_field_test.dart' as text;
 
 main () {
 
