@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:waterloo/src/change_notifier_list.dart';
+import 'package:waterloo/beta/change_notifier_list.dart';
 import 'waterloo_vm.dart';
 
 ///

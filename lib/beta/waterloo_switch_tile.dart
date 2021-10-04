@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
-import 'waterloo_theme.dart';
+import '../src/waterloo_theme.dart';
 
 class WaterlooSwitchTile extends StatefulWidget {
   final bool initialValue;

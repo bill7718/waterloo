@@ -9,7 +9,7 @@ import 'package:native_pdf_view/native_pdf_view.dart';
 ///
 /// To use add this to the <head> in the index.html file
 ///
-/// `<script src="//cdnjs.cloudflare.com/ajax/libs/pdf.js/2.4.456/pdf.min.js"></script>
+/// `<script beta="//cdnjs.cloudflare.com/ajax/libs/pdf.js/2.4.456/pdf.min.js"></script>
 /// <script type="text/javascript">
 ///  pdfjsLib.GlobalWorkerOptions.workerSrc = "//cdnjs.cloudflare.com/ajax/libs/pdf.js/2.4.456/pdf.worker.min.js";
 /// </script>`

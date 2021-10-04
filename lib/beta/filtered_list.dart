@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'waterloo_text_field.dart';
+import '../src/waterloo_text_field.dart';
 import 'waterloo_vm.dart';
 
 ///

@@ -4,10 +4,12 @@ import 'package:serializable_data/serializable_data.dart';
 import 'package:waterloo/waterloo.dart';
 import 'data_object_widget.dart';
 import 'waterloo_event_handler.dart';
+import 'waterloo_form_container.dart';
 import 'waterloo_form_message.dart';
 import 'waterloo_grid.dart';
 import 'waterloo_text_button.dart';
-import 'waterloo_theme.dart';
+import '../src/waterloo_theme.dart';
+import 'waterloo_text_provider.dart';
 
 class DataObjectForm extends StatelessWidget {
   final List<DataObject> data;
@@ -70,7 +72,7 @@ class DataObjectForm extends StatelessWidget {
               }
               s == null
                   ? eventHandler.handleEvent(context, event: event.event, output: data)
-                  : error.error = Provider.of<WaterlooTextProvider>(context).get(s);
+                  : error.error = Provider.of<WaterlooTextProvider>(context).get(s) ?? '';
             }
           } else {
             eventHandler.handleEvent(context, event: event.event, output: data);

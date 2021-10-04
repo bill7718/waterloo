@@ -2,9 +2,9 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'waterloo_text_field.dart';
+import '../src/waterloo_text_field.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'waterloo_theme.dart';
+import '../src/waterloo_theme.dart';
 
 class WaterlooPercentField extends StatefulWidget {
   final String label;

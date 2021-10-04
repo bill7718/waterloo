@@ -34,6 +34,9 @@ class DataObjectDateField extends StatelessWidget {
       valueBinder: (v) {
         data.set(fieldName, fromDateTime(v));
       },
+      validator: (v) {
+        return data.validate(fields: [fieldName]);
+      },
       initialValue: toDateTime(data.get(fieldName)),
       maxFutureDuration: maxDurationAfter ?? const Duration(),
       maxPastDuration: maxDurationBefore ?? const Duration(),

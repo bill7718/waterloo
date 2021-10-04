@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'waterloo_theme.dart';
+import '../src/waterloo_theme.dart';
 
 class WaterlooFormContainer extends StatelessWidget {
   final GlobalKey formKey;

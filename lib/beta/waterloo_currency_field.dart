@@ -3,9 +3,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:serializable_data/serializable_data.dart';
-import 'waterloo_text_field.dart';
+import '../src/waterloo_text_field.dart';
 import 'waterloo_text_provider.dart';
-import 'waterloo_theme.dart';
+import '../src/waterloo_theme.dart';
 
 class WaterlooCurrencyField extends StatefulWidget {
   final String label;

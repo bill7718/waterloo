@@ -5,6 +5,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 import 'package:waterloo/waterloo.dart';
 
+import 'mocks/mock_text_provider.dart';
+
 class MockPage extends StatelessWidget {
   final Widget child;
 
@@ -13,9 +15,12 @@ class MockPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var theme = WaterlooTheme();
+    var text = MockTextProvider();
+
 
     return MultiProvider(providers: [
       Provider<WaterlooTheme>.value(value: theme),
+      Provider<WaterlooTextProvider>.value(value: text)
     ], child: MaterialApp(home: Card(child: child,)));
   }
 }

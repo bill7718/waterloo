@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:waterloo/src/waterloo_form_container.dart';
+import 'package:waterloo/beta/waterloo_form_container.dart';
 
 import 'util.dart';
 
