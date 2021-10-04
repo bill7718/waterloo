@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:waterloo/beta/waterloo_currency_field.dart';
-import 'package:waterloo/beta/waterloo_date_field.dart';
+import 'package:waterloo/src/waterloo_date_field.dart';
 import 'package:waterloo/beta/waterloo_form_container.dart';
 
 import '../beta/data_object_form.dart';

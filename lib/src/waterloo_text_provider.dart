@@ -1,4 +1,4 @@
-import '../beta/waterloo_date_field.dart';
+import 'waterloo_date_field.dart';
 
 ///
 /// A simple class that converts a [reference] into a text value

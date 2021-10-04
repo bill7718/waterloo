@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:serializable_data/serializable_data.dart';
-import '../src/waterloo_text_field.dart';
-import '../src/waterloo_text_provider.dart';
-import '../src/waterloo_theme.dart';
+import 'waterloo_text_field.dart';
+import 'waterloo_text_provider.dart';
+import 'waterloo_theme.dart';
 
 ///
 /// A [WaterlooTextField] that allows input of a date.
@@ -104,8 +104,8 @@ class WaterlooDateFieldState extends State<WaterlooDateField> {
             onPressed: () {
               var f = showDatePicker(context: context,
                   initialDate: value ?? DateTime.now(),
-                  firstDate: DateTime.now().subtract(widget.maxPastDuration ?? Provider.of<WaterlooTheme>(context).dateFieldTheme.past),
-                  lastDate: DateTime.now().add(widget.maxFutureDuration ?? Provider.of<WaterlooTheme>(context).dateFieldTheme.future),
+                  firstDate: DateTime.now().subtract(widget.maxPastDuration ?? Provider.of<WaterlooTheme>(context, listen: false).dateFieldTheme.past),
+                  lastDate: DateTime.now().add(widget.maxFutureDuration ?? Provider.of<WaterlooTheme>(context, listen: false).dateFieldTheme.future),
               );
               f.then((r) {
                 if (r != null) {

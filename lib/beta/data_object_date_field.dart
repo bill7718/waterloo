@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:serializable_data/serializable_data.dart';
 
-import 'waterloo_date_field.dart';
+import '../src/waterloo_date_field.dart';
 
 class DataObjectDateField extends StatelessWidget {
   /// The label for the field

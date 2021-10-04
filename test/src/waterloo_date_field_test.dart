@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:waterloo/beta/waterloo_date_field.dart';
+import 'package:waterloo/src/waterloo_date_field.dart';
 
 import '../mocks/mock_text_provider.dart';
 import '../util.dart';
@@ -116,6 +116,57 @@ void main() {
       expect(checkTextInputField(label), true);
       expect(currentValue, null);
       expect(find.text(MockTextProvider.text(WaterlooDateFieldState.formatError) ?? ''), findsOneWidget);
+    });
+
+    testWidgets('When I tap the date icon I expect a calendar widget to be shown and when I set a date it is updated ', (WidgetTester tester) async {
+      var label = 'Greeting';
+      Widget page = MockPage(WaterlooDateField(
+        valueBinder: binder,
+        validator: validator,
+        label: label,
+      ));
+
+      await tester.pumpWidget(page);
+      await tapIcon(Icons.calendar_today_outlined, tester);
+      await tester.pumpWidget(page);
+      Finder f1 = find.byWidgetPredicate((widget) => widget is DatePickerDialog );
+      expect(f1, findsOneWidget);
+      Finder fTextButton = find.descendant(of: f1,
+          matching: find.byWidgetPredicate((widget) => widget is TextButton ));
+      expect(fTextButton, findsWidgets);
+
+      Finder fIconButton = find.byWidgetPredicate((widget) => widget is IconButton && (widget.icon as Icon).icon == Icons.edit);
+      expect(fIconButton, findsOneWidget);
+      await tester.tap(fIconButton);
+      await tester.pumpWidget(page);
+      Finder fTextInput =  find.descendant(of: f1,
+          matching: find.byWidgetPredicate((widget) => widget is TextField ));
+      expect(fTextInput, findsOneWidget);
+
+      await tester.enterText(fTextInput, '12/12/2011');
+
+      Finder fButton =  find.descendant(of: f1,
+          matching: find.byWidgetPredicate((widget) => widget is TextButton && (widget.child as Text ).data == 'OK'));
+      expect(fButton, findsOneWidget);
+
+      await tester.tap(fButton);
+      await tester.pumpWidget(page);
+
+      expect(currentValue?.day, 12);
+      expect(currentValue?.month, 12);
+      expect(currentValue?.year, 2011);
+
+    });
+
+    testWidgets('When I do not provide a binder then no binding takes place ', (WidgetTester tester) async {
+      Widget page = const MockPage(WaterlooDateField(
+        label: 'Greeting',
+        help: 'assistanceHere',
+      ));
+
+      await tester.pumpWidget(page);
+      await enterText(tester, 'Greeting', '21/12/1999');
+      expect(currentValue , null);
     });
   });
 }

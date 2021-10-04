@@ -99,7 +99,27 @@ Future<void> tap(String text, WidgetTester tester) async {
   return c.future;
 }
 
+Future<void> tapIcon(IconData icon, WidgetTester tester) async {
+  var c = Completer<void>();
+  Finder fIconButton = find.byWidgetPredicate((widget) => widget is IconButton && (widget.icon as Icon).icon == icon);
+  expect(fIconButton, findsOneWidget);
+  await tester.tap(fIconButton);
+  c.complete();
+  return c.future;
+}
+
+
+
 Finder findButtonByText(String text) {
   Finder f = find.byWidgetPredicate((widget) => widget is WaterlooTextButton && widget.text == text);
   return f;
+}
+
+Future<void> enterTextInCalendarWidget(String text, WidgetTester tester) async {
+  var c = Completer<void>();
+  Finder fIconButton = find.byWidgetPredicate((widget) => widget is IconButton && (widget.icon as Icon).icon == Icons.edit);
+  expect(fIconButton, findsOneWidget);
+  await tester.tap(fIconButton);
+  c.complete();
+  return c.future;
 }
