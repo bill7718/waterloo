@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 ///
 /// A simple wrapper around a [TextButton]
 ///
-///
+/// The child widget is a [Text] widget and it accepts an [exceptionHandler] Function to
+/// use if the [onPressed] method generates an exception.
 ///
 class WaterlooTextButton extends StatelessWidget {
   /// The Text of the Button

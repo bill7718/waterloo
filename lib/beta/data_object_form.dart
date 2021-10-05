@@ -7,7 +7,7 @@ import 'waterloo_event_handler.dart';
 import 'waterloo_form_container.dart';
 import 'waterloo_form_message.dart';
 import 'waterloo_grid.dart';
-import 'waterloo_text_button.dart';
+import '../src/waterloo_text_button.dart';
 import '../src/waterloo_theme.dart';
 import '../src/waterloo_text_provider.dart';
 

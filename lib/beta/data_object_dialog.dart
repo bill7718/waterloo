@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:serializable_data/serializable_data.dart';
 import 'waterloo_event_handler.dart';
-import 'waterloo_text_button.dart';
+import '../src/waterloo_text_button.dart';
 
 import 'data_object_form.dart';
 

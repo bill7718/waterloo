@@ -21,7 +21,7 @@ export 'beta/waterloo_drop_drown_list.dart';
 
 export 'beta/waterloo_form_container.dart';
 export 'beta/waterloo_form_message.dart';
-export 'beta/waterloo_text_button.dart';
+export 'src/waterloo_text_button.dart';
 
 export 'src/waterloo_currency_field.dart';
 export 'beta/waterloo_percent_field.dart';
