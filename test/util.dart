@@ -79,6 +79,24 @@ bool checkIconButton(IconData iconData) {
   }
 }
 
+bool checkSwitchTile(String label, { bool? initialValue } ) {
+  try {
+    Finder fWaterloo = find.byWidgetPredicate((widget) => widget is WaterlooSwitchTile && widget.label == label);
+    Finder fTile = find.descendant(
+        of: fWaterloo, matching: find.byWidgetPredicate((widget) => widget is SwitchListTile && ((widget.title as Text).data?.contains(label) ?? false)));
+    expect(fTile, findsOneWidget);
+    if (initialValue != null) {
+      Finder fInitial = find.descendant(
+          of: fWaterloo, matching: find.byWidgetPredicate((widget) => widget is SwitchListTile && widget.value == initialValue));
+      expect(fInitial, findsOneWidget);
+    }
+
+    return true;
+  } catch (ex) {
+    return false;
+  }
+}
+
 Future<void> enterText(WidgetTester tester, String label, String text) {
   var c = Completer<void>();
   tester.enterText(findTextInputFieldByLabel(label), text).then((v) {
@@ -125,6 +143,15 @@ Future<void> enterTextInCalendarWidget(String text, WidgetTester tester) async {
   Finder fIconButton = find.byWidgetPredicate((widget) => widget is IconButton && (widget.icon as Icon).icon == Icons.edit);
   expect(fIconButton, findsOneWidget);
   await tester.tap(fIconButton);
+  c.complete();
+  return c.future;
+}
+
+Future<void> tapSwitchTile(String label, WidgetTester tester) async {
+  var c = Completer<void>();
+  Finder fTile = find.byWidgetPredicate((widget) => widget is WaterlooSwitchTile && widget.label == label);
+  expect(fTile, findsOneWidget);
+  await tester.tap(fTile);
   c.complete();
   return c.future;
 }

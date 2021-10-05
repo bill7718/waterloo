@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:serializable_data/serializable_data.dart';
 
-import 'waterloo_switch_tile.dart';
+import '../src/waterloo_switch_tile.dart';
 
 class DataObjectSwitchTile extends StatelessWidget {
   /// The label for the field

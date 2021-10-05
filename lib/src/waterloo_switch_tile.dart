@@ -3,12 +3,26 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
+import 'waterloo_text_provider.dart';
 
-import '../src/waterloo_theme.dart';
+import 'waterloo_theme.dart';
 
+///
+/// A wrapper around a [SwitchListTile] that provides a label. Use this to show and update Yes/No values
+/// instead of a Tick box.
+///
+/// It flex's it's width based on available space
+///
 class WaterlooSwitchTile extends StatefulWidget {
+
+  /// The initial value for this widget
   final bool initialValue;
+
+  /// Binds the value to an external object
   final Function valueBinder;
+
+  /// The text for the [SwitchListTile] [title] widget. This widget accepts a reference value in the label
+  /// and it uses [WaterlooTextProvider] to convert the reference into the required text value.
   final String label;
 
   const WaterlooSwitchTile(
@@ -42,7 +56,7 @@ class WaterlooSwitchTileState extends State<WaterlooSwitchTile> {
               SizedBox(
                   width: w,
                   child: SwitchListTile(
-                    title: Text(widget.label),
+                    title: Text(Provider.of<WaterlooTextProvider>(context).get(widget.label)!),
                     value: itemValue,
                     onChanged: (b) {
                       setState(() {
@@ -59,7 +73,12 @@ class WaterlooSwitchTileState extends State<WaterlooSwitchTile> {
   static void emptyBinder(bool? v) {}
 }
 
+///
+/// Default parameters used by the [WaterlooSwitchTile]
+///
 class WaterlooSwitchTileTheme {
+
+  /// The default width for this widget.
   final double fieldWidth;
 
   const WaterlooSwitchTileTheme({this.fieldWidth = 400});

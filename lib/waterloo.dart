@@ -16,7 +16,7 @@ export 'beta/filtered_list.dart';
 export 'beta/drop_target_list_view.dart';
 export 'beta/waterloo_vm.dart';
 export 'beta/change_notifier_list.dart';
-export 'beta/waterloo_switch_tile.dart';
+export 'src/waterloo_switch_tile.dart';
 export 'beta/waterloo_drop_drown_list.dart';
 
 export 'beta/waterloo_form_container.dart';

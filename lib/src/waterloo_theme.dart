@@ -7,7 +7,7 @@ import '../beta/data_object_form.dart';
 import '../beta/data_object_table.dart';
 import '../beta/waterloo_drop_drown_list.dart';
 import '../beta/waterloo_percent_field.dart';
-import '../beta/waterloo_switch_tile.dart';
+import 'waterloo_switch_tile.dart';
 import 'waterloo_text_field.dart';
 
 ///

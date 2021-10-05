@@ -7,7 +7,8 @@ var fullCoverageExpected = <String>{
   'waterloo_text_field.dart',
   'waterloo_date_field.dart',
   'waterloo_currency_field.dart',
-  'waterloo_text_button.dart'
+  'waterloo_text_button.dart',
+  'waterloo_switch_tile.dart'
 };
 
 void main() {
