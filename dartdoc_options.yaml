@@ -7,8 +7,11 @@ dartdoc:
     - unresolved-doc-reference
     - non-canonical-found
     - unknown-file
+
   include:
     - waterloo
+    - data_object_widgets
+
 
 
 

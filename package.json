@@ -5,7 +5,7 @@
     "upgrade_dartdoc": "pub global activate dartdoc",
     "test": "flutter test test/all_test.dart --coverage",
     "doc": "flutter pub global run dartdoc:dartdoc -q",
-    "fullDoc" : "dartdoc --auto-include-dependencies",
+    "fullDoc" : "flutter pub global run dartdoc:dartdoc -q",
     "show_doc": "dhttpd --path doc/api",
     "all": "npm run test && npm run show_coverage  && npm run doc && npm run show_doc",
     "part": "npm run test && npm run show_coverage",

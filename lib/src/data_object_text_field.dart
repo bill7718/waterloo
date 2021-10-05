@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:serializable_data/serializable_data.dart';
 
-import '../src/waterloo_text_field.dart';
-import '../src/waterloo_text_provider.dart';
+import 'waterloo_text_field.dart';
+import 'waterloo_text_provider.dart';
 
+///
+/// Wrapper around a [WaterlooTextField] that binds the value to a field in a [DataObject]
+///
 class DataObjectTextField extends StatelessWidget {
   /// The label for the field
   final String label;
