@@ -72,7 +72,7 @@ class DataObjectForm extends StatelessWidget {
               }
               s == null
                   ? eventHandler.handleEvent(context, event: event.event, output: data)
-                  : error.error = Provider.of<WaterlooTextProvider>(context).get(s) ?? '';
+                  : error.error = Provider.of<WaterlooTextProvider>(context, listen: false).get(s) ?? '';
             }
           } else {
             eventHandler.handleEvent(context, event: event.event, output: data);
@@ -91,7 +91,7 @@ class DataObjectForm extends StatelessWidget {
             handleAction: act
                 ? () {
                     eventHandler.handleEvent(context,
-                        event: Provider.of<WaterlooTheme>(context)
+                        event: Provider.of<WaterlooTheme>(context, listen: false)
                             .dataObjectFormTheme
                             .homeEvent);
                   }
@@ -130,7 +130,7 @@ class DataObjectGrid extends StatelessWidget {
 
     return WaterlooGrid(
         children: widgets,
-        minimumColumnWidth: Provider.of<WaterlooTheme>(context)
+        minimumColumnWidth: Provider.of<WaterlooTheme>(context, listen: false)
             .dataObjectFormTheme
             .minimumColumnWidth,
         pad: false);

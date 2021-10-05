@@ -41,7 +41,7 @@ class DataObjectCurrencyField extends StatelessWidget {
         validator: (v) {
           var s = validator(v);
           s ??= data.validate(fields: [fieldName]);
-          return s == null ? null : Provider.of<WaterlooTextProvider>(context).get(s);
+          return s == null ? null : Provider.of<WaterlooTextProvider>(context, listen: false).get(s);
         });
   }
 }

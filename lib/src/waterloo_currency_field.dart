@@ -57,8 +57,8 @@ class WaterlooCurrencyFieldState extends State<WaterlooCurrencyField> {
   @override
   Widget build(BuildContext context) {
 
-    final decimalPlaces = Provider.of<WaterlooTheme>(context).currencyFieldTheme.decimalPlaces;
-    final decimalPoint = Provider.of<WaterlooTheme>(context).currencyFieldTheme.decimalPoint;
+    final decimalPlaces = Provider.of<WaterlooTheme>(context, listen: false).currencyFieldTheme.decimalPlaces;
+    final decimalPoint = Provider.of<WaterlooTheme>(context, listen: false).currencyFieldTheme.decimalPoint;
 
     return Row(children: [
       WaterlooTextField(
@@ -66,7 +66,7 @@ class WaterlooCurrencyFieldState extends State<WaterlooCurrencyField> {
         readOnly: widget.readOnly,
         help: widget.help,
         initialValue: toDecimal(widget.initialValue, decimalPlaces, decimalPoint),
-        width: Provider.of<WaterlooTheme>(context).currencyFieldTheme.inputFieldWidth,
+        width: Provider.of<WaterlooTheme>(context, listen: false).currencyFieldTheme.inputFieldWidth,
         valueBinder: (v) {
           if (validateCurrencyAmount(v, decimalPlaces, decimalPoint)) {
             int? amount = toAmount(v, decimalPlaces, decimalPoint);
@@ -76,7 +76,7 @@ class WaterlooCurrencyFieldState extends State<WaterlooCurrencyField> {
         validator: (v) {
           var valid = validateCurrencyAmount(v, decimalPlaces, decimalPoint);
           var error = valid ? widget.validator(v) : formatError;
-          return error == null ? null : Provider.of<WaterlooTextProvider>(context).get(error);
+          return error == null ? null : Provider.of<WaterlooTextProvider>(context, listen: false).get(error);
         },
       )
     ]);

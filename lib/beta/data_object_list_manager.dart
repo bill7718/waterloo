@@ -39,7 +39,8 @@ class DataObjectListManagerState extends State<DataObjectListManager> {
       fieldNames.addAll(constructor().fields);
     }
 
-    return WaterlooGrid(preferredColumnCount: 3, children: [
+    return WaterlooGrid(preferredColumnCount: 3,
+        children: [
       WaterlooGridChild(
           layoutRule: WaterlooGridChildLayoutRule.full,
           child: WaterlooSwitchTile(
