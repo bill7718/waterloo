@@ -51,7 +51,8 @@ class DataObjectDialogEventHandler implements WaterlooEventHandler {
   }
 
   @override
-  void handleException(context, Exception ex, StackTrace? st) {
+  void handleException(context, dynamic ex, StackTrace? st) {
+    print(ex.toString());
     Navigator.pop(context, ex);
   }
 }

@@ -32,7 +32,7 @@ class DataObjectCellContent extends StatelessWidget {
       return Text(ListEntry.getDescription(value, dataSpecification!.list) ?? '');
     }
 
-    if (dataSpecification?.type == 'date') {
+    if (dataSpecification?.type == DataSpecification.dateType) {
       String dateValue = '';
       DateTime? d = toDateTime(value);
       if (d != null) {
@@ -41,6 +41,10 @@ class DataObjectCellContent extends StatelessWidget {
       } else {
         return Container();
       }
+    }
+
+    if (dataSpecification?.type == DataSpecification.currencyType) {
+      return Text(toDecimal(value, 2, '.') ?? '');
     }
 
     return Text(value);

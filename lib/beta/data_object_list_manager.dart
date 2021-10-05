@@ -67,8 +67,12 @@ class DataObjectListManagerState extends State<DataObjectListManager> {
                 showDataObjectDialog(
                     context, [o], [o.fields], widget.specifications, (d) {
                   if (d != null) {
-                    list.add(d.first);
-                    widget.data.set(widget.fieldName, list.list);
+                    if (d is List) {
+                      list.add(d.first);
+                      widget.data.set(widget.fieldName, list.list);
+                    } else {
+                      print(d.toString());
+                    }
                   }
                 });
               }),

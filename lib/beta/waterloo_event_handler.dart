@@ -7,7 +7,7 @@ abstract class WaterlooEventHandler {
   ///
   /// Process an Exception thrown by the Application
   ///
-  void handleException(dynamic context, Exception ex, StackTrace? st );
+  void handleException(dynamic context, dynamic ex, StackTrace? st );
 }
 
 
