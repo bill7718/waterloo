@@ -1,3 +1,4 @@
+import 'waterloo_currency_field.dart';
 import 'waterloo_date_field.dart';
 
 ///
@@ -21,6 +22,7 @@ abstract class WaterlooTextProvider {
   /// Contains default text values for field references used by the Waterloo base widgets
   ///
   static const Map<String, String> defaultErrorMessages = <String, String>{
-    WaterlooDateFieldState.formatError: 'Please enter a date in dd/mm/yyyy format'
+    WaterlooDateFieldState.formatError: 'Please enter a date in dd/mm/yyyy format',
+    WaterlooCurrencyFieldState.formatError: 'Please enter a monetary amount'
   };
 }
