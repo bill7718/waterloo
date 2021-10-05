@@ -42,7 +42,6 @@ class WaterlooSwitchTileState extends State<WaterlooSwitchTile> {
               SizedBox(
                   width: w,
                   child: SwitchListTile(
-                    contentPadding: const EdgeInsets.all(0),
                     title: Text(widget.label),
                     value: itemValue,
                     onChanged: (b) {

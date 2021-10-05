@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:waterloo/src/waterloo_text_button.dart';
 
+import '../mocks/mock_text_provider.dart';
 import '../util.dart';
 
 void main() {
@@ -20,8 +21,12 @@ void main() {
   });
 
  testWidgets('Add a WaterlooTextButton to a page', (WidgetTester tester) async {
+
+   var text = 'Hello';
+   var expectedButtonText = MockTextProvider.text(text) ?? '';
+
     Widget page = MockPage(
-      WaterlooTextButton(text: 'Hello', exceptionHandler: exceptionHandler ,
+      WaterlooTextButton(text: text, exceptionHandler: exceptionHandler ,
         onPressed: () {
         pressed = true;
         },
@@ -30,8 +35,8 @@ void main() {
     );
 
     await tester.pumpWidget(page);
-    expect(find.text('Hello'), findsOneWidget);
-    var f = findButtonByText('Hello');
+    expect(find.text(expectedButtonText), findsOneWidget);
+    var f = findButtonByText(text);
     expect (f, findsOneWidget);
   });
 

@@ -90,6 +90,11 @@ Future<void> enterText(WidgetTester tester, String label, String text) {
   return c.future;
 }
 
+///
+/// Finds a [WaterlooTextButton] using the text provided and taps it
+///
+/// Note that the [text] is provided as given to the [WaterlooTextButton].
+///
 Future<void> tap(String text, WidgetTester tester) async {
   var c = Completer<void>();
   var f = find.byWidgetPredicate((widget) => widget is WaterlooTextButton && widget.text == text);

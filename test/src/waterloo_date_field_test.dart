@@ -41,8 +41,8 @@ void main() {
       expect(checkTextInputField(label, initialValue: '21/12/2015',
           obscure: false,
           readOnly: false,
-          hint: 'dd/mm/yyyy',
-          help: help,
+          hint: MockTextProvider.text('dd/mm/yyyy'),
+          help: MockTextProvider.text(help),
           width: 250), true);
 
       expect(checkIconButton(Icons.calendar_today_outlined), true);
@@ -64,8 +64,6 @@ void main() {
       expect(checkTextInputField(label, initialValue: '21/12/2015',
           obscure: false,
           readOnly: true,
-          hint: 'dd/mm/yyyy',
-          help: help,
           width: 400), true);
 
       expect(checkIconButton(Icons.calendar_today_outlined), false);

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:waterloo/src/waterloo_text_field.dart';
 
+import '../mocks/mock_text_provider.dart';
 import '../util.dart';
 
 void main() {
@@ -49,8 +50,8 @@ void main() {
       expect(checkTextInputField(label, initialValue: initialValue,
           obscure: obscure,
           readOnly: readOnly,
-          hint: hint,
-          help: help,
+          hint: MockTextProvider.text(hint),
+          help: MockTextProvider.text(help) ?? '',
           width: width), true);
     });
 

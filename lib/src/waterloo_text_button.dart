@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'waterloo_text_provider.dart';
 
 ///
 /// A simple wrapper around a [TextButton]
@@ -22,7 +25,7 @@ class WaterlooTextButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      child: Text(text),
+      child: Text(Provider.of<WaterlooTextProvider>(context).get(text)!),
       onPressed: () async {
         try {
           await onPressed();

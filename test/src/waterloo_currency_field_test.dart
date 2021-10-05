@@ -42,7 +42,7 @@ void main() {
       expect(checkTextInputField(label, initialValue: '21.15',
           obscure: false,
           readOnly: false,
-          help: help,
+          help: MockTextProvider.text(help),
           width: 250), true);
 
     });
@@ -64,7 +64,6 @@ void main() {
       expect(checkTextInputField(label, initialValue: '21.15',
           obscure: false,
           readOnly: true,
-          help: help,
           width: 250), true);
     });
 

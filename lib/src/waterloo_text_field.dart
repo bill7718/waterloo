@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
+import 'package:waterloo/src/waterloo_text_provider.dart';
 import 'waterloo_theme.dart';
 
 ///
@@ -62,6 +63,7 @@ class WaterlooTextField extends StatelessWidget {
     var focus = FocusNode();
     return LayoutBuilder(
       builder: (context, constraints) {
+        var textProvider = Provider.of<WaterlooTextProvider>(context);
         var w = width ?? Provider.of<WaterlooTheme>(context).textFieldTheme.fieldWidth;
         w = min(constraints.maxWidth, w);
         return Container(
@@ -76,7 +78,10 @@ class WaterlooTextField extends StatelessWidget {
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       obscureText: obscure,
                       focusNode: focus,
-                      decoration: InputDecoration(labelText: label, helperText: help, hintText: hint),
+                      decoration: InputDecoration(
+                          labelText: textProvider.get(label),
+                          helperText: textProvider.get(help),
+                          hintText: textProvider.get(hint)),
                       validator: validator,
                       onChanged: (v) => valueBinder(v),
                       readOnly: readOnly,

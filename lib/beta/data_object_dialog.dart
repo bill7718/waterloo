@@ -28,7 +28,7 @@ class DataObjectDialog extends StatelessWidget {
       fieldNames: fieldNames,
       specifications: specifications,
       eventHandler: DataObjectDialogEventHandler(),
-      events: [
+      events: const [
         EventSpecification(event: 'Ok', description: 'Ok'),
         EventSpecification(
             event: 'cancel', description: 'Cancel', mustValidate: false)
