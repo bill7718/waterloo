@@ -22,18 +22,20 @@ class DataObjectForm extends StatelessWidget {
   final String formTitle;
   final String? formSubtitle;
   final bool act;
+  final Function? widgetsBuilder;
 
   DataObjectForm(
       {Key? key,
       required this.eventHandler,
       required this.data,
-      required this.fieldNames,
-      required this.specifications,
+      this.fieldNames = const [<String>[]],
+      this.specifications = const <String, DataSpecification>{},
       required this.events,
       required this.formTitle,
       this.formSubtitle,
       this.act = false,
-      this.formMessage = ''})
+      this.formMessage = '',
+      this.widgetsBuilder})
       : super(key: key);
 
   @override
@@ -44,15 +46,9 @@ class DataObjectForm extends StatelessWidget {
       error: error,
       text: formMessage,
     ));
-    var i = 0;
-    while (i < data.length) {
-      widgets.add(DataObjectGrid(
-        data: data[i],
-        fieldNames: fieldNames[i],
-        specifications: specifications,
-      ));
-      i++;
-    }
+
+    // by default add a DataGrid for each data object using the dataWidgetBuilder method
+    widgets.addAll(widgetsBuilder == null ? _dataWidgetsBuilder() : widgetsBuilder!());
 
     var buttons = <Widget>[];
     for (var event in events) {
@@ -101,6 +97,21 @@ class DataObjectForm extends StatelessWidget {
           formKey: formKey,
         ));
   }
+
+  List<Widget> _dataWidgetsBuilder() {
+    var widgets = <Widget>[];
+
+    var i = 0;
+    while (i < data.length) {
+      widgets.add(DataObjectGrid(
+        data: data[i],
+        fieldNames: fieldNames[i],
+        specifications: specifications,
+      ));
+      i++;
+    }
+    return widgets;
+  }
 }
 
 class DataObjectGrid extends StatelessWidget {
@@ -135,6 +146,8 @@ class DataObjectGrid extends StatelessWidget {
             .minimumColumnWidth,
         pad: false);
   }
+
+
 }
 
 class DataObjectFormTheme {

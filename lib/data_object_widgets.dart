@@ -12,3 +12,5 @@ export 'beta/data_object_table.dart';
 
 export 'beta/data_object_form.dart';
 export 'beta/data_object_dialog.dart';
+
+export 'beta/data_object_relationship_field.dart';
