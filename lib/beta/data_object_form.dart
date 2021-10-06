@@ -98,7 +98,7 @@ class BespokeDataObjectForm extends StatelessWidget {
     var error = FormError();
     widgets.add(WaterlooFormMessage(
       error: error,
-      text: formMessage,
+      text: Provider.of<WaterlooTextProvider>(context, listen: false).get(formMessage) ?? ''
     ));
 
     widgets.addAll(children);
@@ -132,9 +132,9 @@ class BespokeDataObjectForm extends StatelessWidget {
 
     return Scaffold(
         appBar: WaterlooAppBar.get(
-            title: formTitle,
+            title: Provider.of<WaterlooTextProvider>(context, listen: false).get(formTitle) ?? '',
             context: context,
-            subtitle: formSubtitle,
+            subtitle: Provider.of<WaterlooTextProvider>(context, listen: false).get(formSubtitle) ?? '',
             handleAction: act
                 ? () {
                     eventHandler.handleEvent(context, event: Provider.of<WaterlooTheme>(context, listen: false).dataObjectFormTheme.homeEvent);

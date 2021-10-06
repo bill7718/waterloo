@@ -16,6 +16,24 @@ class DataObjectGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    if (rebuildFields == null) {
+      return WaterlooGrid(
+          children: buildWidgets(),
+          minimumColumnWidth: Provider.of<WaterlooTheme>(context, listen: false).dataObjectFormTheme.minimumColumnWidth,
+          pad: false);
+    } else {
+      return DataObjectChangeNotifier(
+          data: [data],
+          fieldNames: [rebuildFields!],
+          builder: () =>WaterlooGrid(
+              children: buildWidgets(),
+              minimumColumnWidth: Provider.of<WaterlooTheme>(context, listen: false).dataObjectFormTheme.minimumColumnWidth,
+              pad: false));
+    }
+  }
+
+  List<Widget> buildWidgets() {
     var widgets = <Widget>[];
     for (var field in fieldNames) {
       if (specifications[field] != null) {
@@ -26,20 +44,6 @@ class DataObjectGrid extends StatelessWidget {
         ));
       }
     }
-
-    if (rebuildFields == null) {
-      return WaterlooGrid(
-          children: widgets,
-          minimumColumnWidth: Provider.of<WaterlooTheme>(context, listen: false).dataObjectFormTheme.minimumColumnWidth,
-          pad: false);
-    } else {
-      return DataObjectChangeNotifier(
-          data: [data],
-          fieldNames: [rebuildFields!],
-          child: WaterlooGrid(
-              children: widgets,
-              minimumColumnWidth: Provider.of<WaterlooTheme>(context, listen: false).dataObjectFormTheme.minimumColumnWidth,
-              pad: false));
-    }
+    return widgets;
   }
 }

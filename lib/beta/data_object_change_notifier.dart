@@ -8,16 +8,16 @@ class DataObjectChangeNotifier extends StatelessWidget {
 
   final List<DataObject> data;
   final List<List<String>> fieldNames;
-  final Widget child;
+  final Function builder;
 
   const DataObjectChangeNotifier({Key? key,
-    required this.data, required this.fieldNames, required this.child
+    required this.data, required this.fieldNames, required this.builder
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
 
-    var notify = _DataChangeNotifier();
+    final notify = _DataChangeNotifier();
 
     var i = 0;
     while (i < data.length) {
@@ -26,22 +26,28 @@ class DataObjectChangeNotifier extends StatelessWidget {
           notify.notify();
         });
       }
+      i++;
     }
-    i++;
+
 
     return ChangeNotifierProvider<_DataChangeNotifier>.value(
       value: notify,
-      child: Consumer ( builder: (context, n, _) {
-        return child;
+      child: Consumer<_DataChangeNotifier> (
+      key: GlobalKey(),
+          builder: (context, n, _) {
+        return  builder();
       }),
 
     );
   }
 }
 
-class _DataChangeNotifier with ChangeNotifier {
+class _DataChangeNotifier extends ChangeNotifier {
+
+  int value = 1;
 
   void notify() {
+    value++;
     notifyListeners();
   }
 }

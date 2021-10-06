@@ -12,6 +12,7 @@ export 'beta/data_object_date_field.dart';
 export 'beta/data_object_currency_field.dart';
 export 'beta/data_object_percent_field.dart';
 export 'beta/data_object_table.dart';
+export 'beta/data_object_change_notifier.dart';
 
 export 'beta/data_object_form.dart';
 export 'beta/data_object_dialog.dart';
