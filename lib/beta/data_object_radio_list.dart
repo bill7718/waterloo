@@ -24,13 +24,15 @@ class DataObjectRadioList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return WaterlooRadioButtonList(
+    return Container(
+      margin: const EdgeInsets.fromLTRB(0, 25, 0, 0),
+    child :WaterlooRadioButtonList(
       label: label,
       valueBinder: (v) {
         data.set(fieldName, v);
       },
       initialValue: data.get(fieldName),
       items: items,
-    );
+    ));
   }
 }

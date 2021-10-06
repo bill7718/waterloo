@@ -16,6 +16,8 @@ class DataObjectList extends StatelessWidget {
 
   final String descriptionLabel;
 
+  final String? screenFieldLabel;
+
   final String idLabel;
 
   final DatabaseReader reader;
@@ -24,13 +26,13 @@ class DataObjectList extends StatelessWidget {
 
   const DataObjectList({Key? key, required this.objectType, required this.filterLabel, this.filterValue,
     required this.descriptionLabel, this.idLabel = PersistableDataObject.idLabel, required this.reader,
-    required this.valueBinder
+    required this.valueBinder, this.screenFieldLabel
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
 
-    return FutureWaterlooDropDownList(label: descriptionLabel, valueBinder: valueBinder,
+    return FutureWaterlooDropDownList(label: screenFieldLabel ?? descriptionLabel, valueBinder: valueBinder,
     getter: DataListGetter(objectType, filterLabel, filterValue, descriptionLabel, idLabel, reader),);
   }
 }

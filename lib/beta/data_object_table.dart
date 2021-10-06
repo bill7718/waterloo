@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:serializable_data/serializable_data.dart';
 import 'package:waterloo/data_object_widgets.dart';
+import 'package:waterloo/src/waterloo_text_provider.dart';
 import 'package:waterloo/src/waterloo_theme.dart';
 import 'data_object_cell_content.dart';
 
@@ -25,13 +26,15 @@ class DataObjectTable<T extends DataObject> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<ChangeNotifierList<T>>.value(
+    return Card(
+    elevation: 10,
+        child : ChangeNotifierProvider<ChangeNotifierList<T>>.value(
         value: data,
         child: Consumer<ChangeNotifierList<T>>(builder: (context, l, _) {
           var columns = <DataColumn>[];
           for (var field in fieldNames) {
             columns.add(
-                DataColumn(label: Text(specifications[field]?.label ?? '')));
+                DataColumn(label: Text(Provider.of<WaterlooTextProvider>(context).get(specifications[field]?.label ?? field) ?? '')));
           }
           if (edit) {
             columns.add(
@@ -87,7 +90,7 @@ class DataObjectTable<T extends DataObject> extends StatelessWidget {
           } else {
             return Container();
           }
-        }));
+        })));
   }
 }
 
