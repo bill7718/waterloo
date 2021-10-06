@@ -6,6 +6,7 @@ import 'data_object_drop_down_list.dart';
 import 'data_object_list_manager.dart';
 import 'data_object_percent_field.dart';
 import '../src/data_object_text_field.dart';
+import 'data_object_radio_list.dart';
 import 'waterloo_drop_drown_list.dart';
 import 'data_object_switch_tile.dart';
 
@@ -19,8 +20,8 @@ class DataObjectWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var value = data.get(fieldName);
-    if (value is bool || (value == null && specifications[fieldName]?.type == 'bool')) {
+
+    if (specifications[fieldName]?.type == 'bool') {
       return DataObjectSwitchTile(
         label: specifications[fieldName]?.label ?? '',
         data: data,
@@ -28,18 +29,27 @@ class DataObjectWidget extends StatelessWidget {
       );
     }
 
-    if ((specifications[fieldName]?.list ?? []).isNotEmpty) {
+    if (specifications[fieldName]?.type == DataSpecification.listType) {
       var items = <ListItem>[];
       for (var entry in specifications[fieldName]!.list) {
         items.add(ListItem(entry.id, entry.description));
       }
       return DataObjectDropDownList(
-          label: specifications[fieldName]?.label ?? '', data: data, fieldName: fieldName, items: items);
+          label: specifications[fieldName]?.label ?? fieldName, data: data, fieldName: fieldName, items: items);
+    }
+
+    if (specifications[fieldName]?.type == DataSpecification.radioListType) {
+      var items = <ListItem>[];
+      for (var entry in specifications[fieldName]!.list) {
+        items.add(ListItem(entry.id, entry.description));
+      }
+      return DataObjectRadioList(
+          label: specifications[fieldName]?.label ?? fieldName, data: data, fieldName: fieldName, items: items);
     }
 
     if (specifications[fieldName]?.type == 'date') {
       return DataObjectDateField(
-        label: specifications[fieldName]?.label ?? '',
+        label: specifications[fieldName]?.label ?? fieldName,
         data: data,
         fieldName: fieldName,
         help: specifications[fieldName]?.help ?? '',
@@ -50,7 +60,7 @@ class DataObjectWidget extends StatelessWidget {
 
     if (specifications[fieldName]?.type == 'currency') {
       return DataObjectCurrencyField(
-        label: specifications[fieldName]?.label ?? '',
+        label: specifications[fieldName]?.label ?? fieldName,
         data: data,
         fieldName: fieldName,
         help: specifications[fieldName]?.help ?? '',
@@ -59,7 +69,7 @@ class DataObjectWidget extends StatelessWidget {
 
     if (specifications[fieldName]?.type == 'percent') {
       return DataObjectPercentField(
-        label: specifications[fieldName]?.label ?? '',
+        label: specifications[fieldName]?.label ?? fieldName,
         data: data,
         fieldName: fieldName,
         help: specifications[fieldName]?.help ?? '',
@@ -76,7 +86,7 @@ class DataObjectWidget extends StatelessWidget {
     }
 
     return DataObjectTextField(
-      label: specifications[fieldName]?.label ?? '',
+      label: specifications[fieldName]?.label ?? fieldName,
       data: data,
       fieldName: fieldName,
       obscure: specifications[fieldName]?.obscure ?? false,

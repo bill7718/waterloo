@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:serializable_data/serializable_data.dart';
 import 'package:waterloo/waterloo.dart';
+import 'data_object_grid.dart';
 import 'data_object_widget.dart';
 import 'waterloo_event_handler.dart';
 import 'waterloo_form_container.dart';
@@ -13,8 +14,6 @@ import '../src/waterloo_text_provider.dart';
 
 class DataObjectForm extends StatelessWidget {
   final List<DataObject> data;
-  final List<List<String>> fieldNames;
-  final Map<String, DataSpecification> specifications;
   final GlobalKey formKey = GlobalKey();
   final WaterlooEventHandler eventHandler;
   final List<EventSpecification> events;
@@ -22,21 +21,77 @@ class DataObjectForm extends StatelessWidget {
   final String formTitle;
   final String? formSubtitle;
   final bool act;
-  final Function? widgetsBuilder;
+  final List<List<String>> fieldNames;
+  final List<List<String>>? rebuildFieldNames;
+  final Map<String, DataSpecification> specifications;
 
   DataObjectForm(
       {Key? key,
       required this.eventHandler,
       required this.data,
-      this.fieldNames = const [<String>[]],
-      this.specifications = const <String, DataSpecification>{},
       required this.events,
       required this.formTitle,
       this.formSubtitle,
       this.act = false,
       this.formMessage = '',
-      this.widgetsBuilder})
+      required this.fieldNames,
+      required this.specifications,
+      this.rebuildFieldNames})
       : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    var children = _dataWidgetsBuilder();
+
+    return BespokeDataObjectForm(
+        data: data,
+        eventHandler: eventHandler,
+        events: events,
+        formMessage: formMessage,
+        formTitle: formTitle,
+        formSubtitle: formSubtitle,
+        act: act,
+        children: children);
+  }
+
+  List<Widget> _dataWidgetsBuilder() {
+    var widgets = <Widget>[];
+
+    var i = 0;
+    while (i < data.length) {
+      widgets.add(DataObjectGrid(
+          data: data[i],
+          fieldNames: fieldNames[i],
+          specifications: specifications,
+          rebuildFields: rebuildFieldNames == null ? null : rebuildFieldNames![i]));
+      i++;
+    }
+    return widgets;
+  }
+}
+
+class BespokeDataObjectForm extends StatelessWidget {
+  final List<DataObject> data;
+  final GlobalKey formKey = GlobalKey();
+  final WaterlooEventHandler eventHandler;
+  final List<EventSpecification> events;
+  final String formMessage;
+  final String formTitle;
+  final String? formSubtitle;
+  final bool act;
+  final List<Widget> children;
+
+  BespokeDataObjectForm({
+    Key? key,
+    required this.eventHandler,
+    required this.data,
+    required this.events,
+    required this.formTitle,
+    this.formSubtitle,
+    this.act = false,
+    this.formMessage = '',
+    required this.children,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -47,8 +102,7 @@ class DataObjectForm extends StatelessWidget {
       text: formMessage,
     ));
 
-    // by default add a DataGrid for each data object using the dataWidgetBuilder method
-    widgets.addAll(widgetsBuilder == null ? _dataWidgetsBuilder() : widgetsBuilder!());
+    widgets.addAll(children);
 
     var buttons = <Widget>[];
     for (var event in events) {
@@ -60,9 +114,7 @@ class DataObjectForm extends StatelessWidget {
           if (event.mustValidate) {
             var formState = formKey.currentState as FormState;
             if (formState.validate()) {
-              var s = event.additionalValidation == null
-                  ? null
-                  : event.additionalValidation!();
+              var s = event.additionalValidation == null ? null : event.additionalValidation!();
               for (var d in data) {
                 s ??= d.validate();
               }
@@ -86,10 +138,7 @@ class DataObjectForm extends StatelessWidget {
             subtitle: formSubtitle,
             handleAction: act
                 ? () {
-                    eventHandler.handleEvent(context,
-                        event: Provider.of<WaterlooTheme>(context, listen: false)
-                            .dataObjectFormTheme
-                            .homeEvent);
+                    eventHandler.handleEvent(context, event: Provider.of<WaterlooTheme>(context, listen: false).dataObjectFormTheme.homeEvent);
                   }
                 : null),
         body: WaterlooFormContainer(
@@ -97,57 +146,6 @@ class DataObjectForm extends StatelessWidget {
           formKey: formKey,
         ));
   }
-
-  List<Widget> _dataWidgetsBuilder() {
-    var widgets = <Widget>[];
-
-    var i = 0;
-    while (i < data.length) {
-      widgets.add(DataObjectGrid(
-        data: data[i],
-        fieldNames: fieldNames[i],
-        specifications: specifications,
-      ));
-      i++;
-    }
-    return widgets;
-  }
-}
-
-class DataObjectGrid extends StatelessWidget {
-  final DataObject data;
-  final List<String> fieldNames;
-  final Map<String, DataSpecification> specifications;
-
-  const DataObjectGrid(
-      {Key? key,
-      required this.data,
-      required this.fieldNames,
-      required this.specifications})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    var widgets = <Widget>[];
-    for (var field in fieldNames) {
-      if (specifications[field] != null) {
-        widgets.add(DataObjectWidget(
-          data: data,
-          specifications: specifications,
-          fieldName: field,
-        ));
-      }
-    }
-
-    return WaterlooGrid(
-        children: widgets,
-        minimumColumnWidth: Provider.of<WaterlooTheme>(context, listen: false)
-            .dataObjectFormTheme
-            .minimumColumnWidth,
-        pad: false);
-  }
-
-
 }
 
 class DataObjectFormTheme {
@@ -155,8 +153,5 @@ class DataObjectFormTheme {
   final EdgeInsets margin;
   final String homeEvent;
 
-  const DataObjectFormTheme(
-      {this.minimumColumnWidth = 401,
-      this.margin = const EdgeInsets.fromLTRB(20, 20, 20, 20),
-      this.homeEvent = 'home'});
+  const DataObjectFormTheme({this.minimumColumnWidth = 401, this.margin = const EdgeInsets.fromLTRB(20, 20, 20, 20), this.homeEvent = 'home'});
 }

@@ -3,13 +3,21 @@ import 'package:provider/provider.dart';
 import '../src/waterloo_text_field.dart';
 import '../src/waterloo_theme.dart';
 
+///
+/// Shows a list of values as a [PopupMenuEntry] which wraps a [ListTile]
+///
 class WaterlooDropDownList extends StatefulWidget {
+
+  /// The items to be selected. They should be sorted by the ancestor widget
   final List<ListItem> items;
 
+  /// The initial value to show
   final String? initialValue;
 
+  /// The label of the field
   final String label;
 
+  /// Binds the selected value to an external object
   final Function valueBinder;
 
   const WaterlooDropDownList(
@@ -21,7 +29,11 @@ class WaterlooDropDownList extends StatefulWidget {
 }
 
 class WaterlooDropDownListState extends State<WaterlooDropDownList> {
+
+  /// The displayed value of the selected item
   String textValue = '';
+
+  /// The current value of the selected item
   String? value;
 
   @override
@@ -74,6 +86,18 @@ class WaterlooDropDownListState extends State<WaterlooDropDownList> {
   }
 }
 
+/// Contains the id and description of the data shown in a list
+class ListItem {
+
+  /// The id of a list item
+  final String id;
+
+  /// The description corresponding to the id
+  final String description;
+
+  ListItem(this.id, this.description);
+}
+
 class FutureWaterlooDropDownList extends StatelessWidget {
 
   final ListGetter getter;
@@ -113,12 +137,7 @@ abstract class ListGetter {
   Future<List<ListItem>> getList();
 }
 
-class ListItem {
-  final String id;
-  final String description;
 
-  ListItem(this.id, this.description);
-}
 
 class WaterlooDropDownListTheme {
   final double inputFieldWidth;
