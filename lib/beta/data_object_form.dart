@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:serializable_data/serializable_data.dart';
 import 'package:waterloo/waterloo.dart';
 import 'data_object_grid.dart';
-import 'data_object_widget.dart';
 import 'waterloo_event_handler.dart';
 import 'waterloo_form_container.dart';
 import 'waterloo_form_message.dart';
