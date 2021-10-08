@@ -49,7 +49,7 @@ class DataObjectTextField extends StatelessWidget {
       validator: (v) {
         var s = validator(v);
         s ??= data.validate(fields: [fieldName]);
-        return Provider.of<WaterlooTextProvider>(context).get(s);
+        return Provider.of<WaterlooTextProvider>(context, listen: false).get(s);
       },
     );
   }

@@ -4,13 +4,17 @@ import 'package:flutter/material.dart';
 class WaterlooGrid extends StatelessWidget {
   final List<Widget> children;
 
-  final double minimumColumnWidth;
+  final double? minimumColumnWidth;
 
-  final double maximumColumnWidth;
+  final double? maximumColumnWidth;
 
-  final int preferredColumnCount;
+  final int? preferredColumnCount;
 
-  final double columnSeparation;
+  final int? maximumColumnCount;
+
+  final double? preferredColumnWidth;
+
+  final double? columnSeparation;
 
   final double rowSeparation;
 
@@ -19,11 +23,13 @@ class WaterlooGrid extends StatelessWidget {
   const WaterlooGrid({
     Key? key,
     required this.children,
-    this.minimumColumnWidth = 0.0,
-    this.maximumColumnWidth = 999,
-    this.preferredColumnCount = 3,
-    this.columnSeparation = 25,
-    this.rowSeparation = 25,
+    this.minimumColumnWidth ,
+    this.maximumColumnWidth,
+    this.preferredColumnWidth,
+    this.preferredColumnCount,
+    this.maximumColumnCount,
+    this.columnSeparation,
+    this.rowSeparation = 1,
     this.pad = true,
   }) : super(key: key);
 
@@ -31,15 +37,17 @@ class WaterlooGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
       var layoutConstraints =
-          WaterlooGridLayoutConstraints.calculateConstraints(
+          WaterlooGridLayoutConstraints.getConstraints(
               gridWidth: constraints.maxWidth,
               minimumColumnWidth: minimumColumnWidth,
               maximumColumnWidth: maximumColumnWidth,
               preferredColumnCount: preferredColumnCount,
+              preferredWidth: preferredColumnWidth,
+              maximumColumnCount: maximumColumnCount,
               columnSeparation: columnSeparation,
               pad: pad);
 
-      List<Row> rows = <Row>[];
+      List<Widget> rows = <Widget>[];
 
       // compute the layout for each widget in turn - this is needed because each widgets needs
       // to know the layout for the next widget in the list to determine the correct flex values
@@ -48,7 +56,6 @@ class WaterlooGrid extends StatelessWidget {
       for (var widget in children) {
         if (widget is HasWaterlooGridChildLayout) {
           var w = widget as HasWaterlooGridChildLayout;
-          if (w.show) {
             layouts.add(WaterlooGridChild.getChildLayout(
                 layoutConstraints.columnWidth,
                 remainingColumns,
@@ -56,10 +63,8 @@ class WaterlooGrid extends StatelessWidget {
                 preferredColumnCount: w.columnCount,
                 preferredColumnWidth: w.preferredWidth,
                 rule: w.layoutRule));
-          } else {
-            layouts.add(WaterlooGridElementLayout(0, false, 0));
           }
-        } else {
+         else {
           layouts.add(WaterlooGridChild.getChildLayout(
               layoutConstraints.columnWidth,
               remainingColumns,
@@ -81,15 +86,14 @@ class WaterlooGrid extends StatelessWidget {
       var rowContents = <Widget>[];
       var cumulativeFlex = 0;
       while (i < children.length) {
-        if (layouts[i].columnCount != 0 || layouts[1].preferredWidth != 0) {
-          // do not show this widget
-          if (pad && columnSeparation > 0 && rowContents.isEmpty) {
+        if (layouts[i].columnCount != 0) {
+          if (rowContents.isEmpty) {
             rowContents.add(Expanded(
               child: Container(),
-              flex: layoutConstraints.columnSeparatorFlex,
+              flex: layoutConstraints.marginFlex,
             ));
             cumulativeFlex =
-                cumulativeFlex + layoutConstraints.columnSeparatorFlex;
+                cumulativeFlex + layoutConstraints.marginFlex;
           }
 
           var flex = layouts[i].columnCount * layoutConstraints.columnFlex +
@@ -109,13 +113,13 @@ class WaterlooGrid extends StatelessWidget {
                 child: Container(),
                 flex: layoutConstraints.totalFlex - cumulativeFlex,
               ));
-              cumulativeFlex =
-                  cumulativeFlex + layoutConstraints.columnSeparatorFlex;
             }
-            rows.add(Row(
+            rows.add(Container(
+              margin: EdgeInsets.fromLTRB(0, rowSeparation / 2, 0, rowSeparation / 2),
+                child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: rowContents,
-            ));
+            )));
             rowContents = <Widget>[];
             cumulativeFlex = 0;
           } else {
@@ -140,68 +144,96 @@ class WaterlooGridLayoutConstraints {
   final double columnWidth;
   final int columnFlex;
   final int columnSeparatorFlex;
-  final bool pad;
+  final double margin;
+  final int marginFlex;
 
   WaterlooGridLayoutConstraints(this.numberOfColumns, this.columnWidth,
-      this.columnFlex, this.columnSeparatorFlex, this.pad);
+      this.columnFlex, this.columnSeparatorFlex, this.margin, this.marginFlex);
 
-  static WaterlooGridLayoutConstraints calculateConstraints(
-      {double minimumColumnWidth = 0.0,
-      double maximumColumnWidth = 999,
-      int preferredColumnCount = 3,
-      double columnSeparation = 25,
-      bool pad = true,
-      required double gridWidth}) {
-    double availableWidth = gridWidth + columnSeparation;
+  static WaterlooGridLayoutConstraints getConstraints(
+      {double? minimumColumnWidth,
+        double? maximumColumnWidth,
+        double? preferredWidth ,
+        int? preferredColumnCount,
+        int? maximumColumnCount,
+        double? columnSeparation,
+        bool pad = true,
+        required double gridWidth}) {
+
+    var separation = columnSeparation ?? 1;
+
+    double availableWidth = gridWidth + separation;
     if (!pad) {
-      availableWidth = gridWidth - columnSeparation;
+      availableWidth = gridWidth - separation;
     }
 
-    int maxColumnCount = 32;
-    if (minimumColumnWidth > 0) {
-      maxColumnCount = max(1,
-          min(32, availableWidth ~/ (minimumColumnWidth + columnSeparation)));
-    }
+    // initialise the width and column count constraints
+    double maxColWidth = maximumColumnWidth ?? 999.00;
+    double minColWidth = minimumColumnWidth ?? 1.00;
+    int minColCount = 1;
+    int maxColCount = maximumColumnCount ?? 999;
 
-    int minColumnCount = 1;
-    if (minimumColumnWidth > 0) {
-      minColumnCount =
-          max(1, availableWidth ~/ (minimumColumnWidth + columnSeparation));
-    }
+    // if we respect the minimum column count then this implies a maximum column width
+    maxColWidth = min(maxColWidth, (availableWidth / minColCount - separation));
 
-    int actualColumnCount = preferredColumnCount;
-    if (minColumnCount > preferredColumnCount) {
-      actualColumnCount = minColumnCount;
-    }
+    // if we respect the minimum column width then this implies a maximum column count
+    maxColCount = min(maxColCount, availableWidth ~/ (minColWidth + separation));
 
-    if (maxColumnCount < preferredColumnCount) {
-      actualColumnCount = maxColumnCount;
-    }
+    // if we respect the maximum column count then this implies a minimum column width
+    minColWidth = max(minColWidth, (availableWidth / maxColCount - separation));
 
-    double actualColumnWidth =
-        (availableWidth / actualColumnCount) - columnSeparation;
-    int columnSeparationFlex = 100;
-    int columnFlex = 1;
-    if (columnSeparation <= 0) {
-      columnSeparationFlex = 0;
+    // if we respect the maximum column width then this implies a minimum column count
+    minColCount = max(minColCount, (availableWidth ~/ (maxColWidth + separation)));
+
+    if (preferredWidth != null) {
+      double actColWidth = preferredWidth;
+      actColWidth = min(actColWidth, maxColWidth);
+      actColWidth = max(actColWidth, minimumColumnWidth ?? 0);
+
+      int actColCount = availableWidth ~/ (actColWidth + separation);
+      actColCount = min(actColCount, preferredColumnCount ?? 999);
+
+      // now I know the column count the columnWidth and the separation I can calculate the margin
+      double margin = (gridWidth - actColCount * actColWidth - (actColCount - 1) * separation) / 2;
+
+      // now I can calculate the flex values needed to support this
+
+      int separationFlex = 1000;
+      int columnFlex = separationFlex * actColWidth ~/ separation;
+      int marginFlex = separationFlex * margin ~/ separation;
+
+      return WaterlooGridLayoutConstraints(actColCount, actColWidth, columnFlex, separationFlex, margin, marginFlex);
+
     } else {
-      columnFlex =
-          (columnSeparationFlex * actualColumnWidth ~/ columnSeparation) + 1;
+      int actColCount = availableWidth ~/ (minColWidth + separation);
+      actColCount = min(actColCount, preferredColumnCount ?? 999);
+
+      double actColWidth = availableWidth / actColCount - separation;
+      actColWidth = min(actColWidth, maxColWidth);
+      actColWidth = max(actColWidth, minColWidth);
+
+      // now I know the column count the columnWidth and the separation I can calculate the margin
+      double margin = (gridWidth - actColCount * actColWidth - (actColCount - 1) * separation) / 2;
+
+      // now I can calculate the flex values needed to support this
+
+      int separationFlex = 1000;
+      int columnFlex = separationFlex * actColWidth ~/ separation;
+      int marginFlex = separationFlex * margin ~/ separation;
+
+      return WaterlooGridLayoutConstraints(actColCount, actColWidth, columnFlex, separationFlex, margin, marginFlex);
+
     }
 
-    return WaterlooGridLayoutConstraints(actualColumnCount, actualColumnWidth,
-        columnFlex, columnSeparationFlex, pad);
+
+
+
+
+
   }
 
-  int get totalFlex {
-    if (pad) {
-      return (columnFlex + columnSeparatorFlex) * numberOfColumns +
-          columnSeparatorFlex;
-    } else {
-      return (columnFlex + columnSeparatorFlex) * numberOfColumns -
-          columnSeparatorFlex;
-    }
-  }
+  int get totalFlex=>2 * marginFlex + columnFlex * numberOfColumns + columnSeparatorFlex * (numberOfColumns - 1);
+
 }
 
 class WaterlooGridChild extends StatelessWidget

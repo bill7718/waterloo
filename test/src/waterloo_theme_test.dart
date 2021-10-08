@@ -17,7 +17,7 @@ void main() {
        }));
      await tester.pumpWidget(page);
      expect(theme == null, false);
-     expect(theme?.textFieldTheme.fieldWidth, 400);
+     expect(theme?.textFieldTheme.margin.top, 5);
    });
  });
 }

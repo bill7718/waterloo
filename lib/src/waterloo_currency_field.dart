@@ -66,7 +66,6 @@ class WaterlooCurrencyFieldState extends State<WaterlooCurrencyField> {
         readOnly: widget.readOnly,
         help: widget.help,
         initialValue: toDecimal(widget.initialValue, decimalPlaces, decimalPoint),
-        width: Provider.of<WaterlooTheme>(context, listen: false).currencyFieldTheme.inputFieldWidth,
         valueBinder: (v) {
           if (validateCurrencyAmount(v, decimalPlaces, decimalPoint)) {
             int? amount = toAmount(v, decimalPlaces, decimalPoint);

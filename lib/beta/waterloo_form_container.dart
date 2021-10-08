@@ -17,8 +17,8 @@ class WaterlooFormContainer extends StatelessWidget {
           margin: const EdgeInsets.fromLTRB(20, 20, 20, 20),
           child: Container(
               margin: const EdgeInsets.fromLTRB(20, 20, 20, 20),
-              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: children)),
-              //child: GridView.count(crossAxisCount: 1, children: children,))
+              child: ListView(children: children)),
+
         ));
   }
 }

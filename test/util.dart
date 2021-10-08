@@ -97,6 +97,32 @@ bool checkSwitchTile(String label, { bool? initialValue } ) {
   }
 }
 
+bool checkRadioButtonList(String label, { String? initialValue, List<ListItem>? items} ) {
+  try {
+    Finder fWaterloo = find.byWidgetPredicate((widget) => widget is WaterlooRadioButtonList && widget.label == label);
+
+    if (items != null) {
+      for (var item in items) {
+        Finder fTile = find.descendant(
+            of: fWaterloo, matching: find.byWidgetPredicate((widget) => widget is RadioListTile
+            && ((widget.title as Text).data! == item.description  && widget.value == item.id
+            && widget.groupValue == initialValue)));
+        expect(fTile, findsOneWidget);
+      }
+    }
+
+    if (initialValue != null) {
+      Finder fInitial = find.descendant(
+          of: fWaterloo, matching: find.byWidgetPredicate((widget) => widget is RadioListTile && widget.value == initialValue));
+      expect(fInitial, findsOneWidget);
+    }
+
+    return true;
+  } catch (ex) {
+    return false;
+  }
+}
+
 Future<void> enterText(WidgetTester tester, String label, String text) {
   var c = Completer<void>();
   tester.enterText(findTextInputFieldByLabel(label), text).then((v) {

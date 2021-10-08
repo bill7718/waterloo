@@ -6,8 +6,6 @@ import 'waterloo_drop_drown_list.dart';
 ///
 /// Shows a list of radio buttons
 ///
-/// {@image <image alt='' src='doc/images/waterloo_radio_button_list.png'>}
-///
 class WaterlooRadioButtonList extends StatefulWidget {
 
   /// The items to be selected. They should be sorted by the ancestor widget

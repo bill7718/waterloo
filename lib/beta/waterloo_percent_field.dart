@@ -50,9 +50,6 @@ class WaterlooPercentFieldState extends State<WaterlooPercentField> {
         label: widget.label,
         initialValue:
             toDecimal(widget.initialValue, decimalPlaces, decimalPoint),
-        width: Provider.of<WaterlooTheme>(context)
-            .currencyFieldTheme
-            .inputFieldWidth,
         valueBinder: (v) {
           if (validatePercentAmount(v, decimalPlaces, decimalPoint) == null) {
             List<String> l = v.split(decimalPoint);

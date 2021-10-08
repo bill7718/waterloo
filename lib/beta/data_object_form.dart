@@ -63,6 +63,7 @@ class DataObjectForm extends StatelessWidget {
           fieldNames: fieldNames[i],
           specifications: specifications,
           rebuildFields: rebuildFieldNames == null ? null : rebuildFieldNames![i]));
+
       i++;
     }
     return widgets;
@@ -96,10 +97,7 @@ class BespokeDataObjectForm extends StatelessWidget {
   Widget build(BuildContext context) {
     var widgets = <Widget>[];
     var error = FormError();
-    widgets.add(WaterlooFormMessage(
-      error: error,
-      text: Provider.of<WaterlooTextProvider>(context, listen: false).get(formMessage) ?? ''
-    ));
+    widgets.add(WaterlooFormMessage(error: error, text: Provider.of<WaterlooTextProvider>(context, listen: false).get(formMessage) ?? ''));
 
     widgets.addAll(children);
 
@@ -149,8 +147,13 @@ class BespokeDataObjectForm extends StatelessWidget {
 
 class DataObjectFormTheme {
   final double minimumColumnWidth;
+  final double preferredColumnWidth;
   final EdgeInsets margin;
   final String homeEvent;
 
-  const DataObjectFormTheme({this.minimumColumnWidth = 401, this.margin = const EdgeInsets.fromLTRB(20, 20, 20, 20), this.homeEvent = 'home'});
+  const DataObjectFormTheme(
+      {this.minimumColumnWidth = 299,
+      this.preferredColumnWidth = 300,
+      this.margin = const EdgeInsets.fromLTRB(20, 20, 20, 20),
+      this.homeEvent = 'home'});
 }

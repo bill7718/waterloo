@@ -16,19 +16,23 @@ class DataObjectGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     if (rebuildFields == null) {
       return WaterlooGrid(
           children: buildWidgets(),
           minimumColumnWidth: Provider.of<WaterlooTheme>(context, listen: false).dataObjectFormTheme.minimumColumnWidth,
+          preferredColumnWidth: Provider.of<WaterlooTheme>(context, listen: false).dataObjectFormTheme.preferredColumnWidth,
+          preferredColumnCount: 3,
+          columnSeparation: 25,
           pad: false);
     } else {
       return DataObjectChangeNotifier(
           data: [data],
           fieldNames: [rebuildFields!],
-          builder: () =>WaterlooGrid(
+          builder: () => WaterlooGrid(
               children: buildWidgets(),
               minimumColumnWidth: Provider.of<WaterlooTheme>(context, listen: false).dataObjectFormTheme.minimumColumnWidth,
+              preferredColumnWidth: Provider.of<WaterlooTheme>(context, listen: false).dataObjectFormTheme.preferredColumnWidth,
+              preferredColumnCount: 3,
               pad: false));
     }
   }

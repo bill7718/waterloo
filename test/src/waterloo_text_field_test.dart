@@ -42,7 +42,6 @@ void main() {
         obscure: obscure,
         hint: hint,
         help: help,
-        width: width,
         readOnly: readOnly,
       ));
 

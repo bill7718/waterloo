@@ -21,7 +21,7 @@ class DataObjectRelationshipField extends StatelessWidget {
       descriptionLabel: relationshipSpecification.descriptionLabel ?? '',
       screenFieldLabel : relationshipSpecification.relationshipLabel,
       valueBinder: (id) {
-        data.set(DataObjectRelationship.toLabel, PersistableDataObject.buildDBReference(relationshipSpecification.to, id));
+        data.set(DataObjectRelationship.toIdLabel, id);
       },
     );
   }
