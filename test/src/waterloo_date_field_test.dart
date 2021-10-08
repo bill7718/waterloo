@@ -43,7 +43,7 @@ void main() {
           readOnly: false,
           hint: MockTextProvider.text('dd/mm/yyyy'),
           help: MockTextProvider.text(help),
-          width: 250), true);
+          ), true);
 
       expect(checkIconButton(Icons.calendar_today_outlined), true);
     });
@@ -64,7 +64,7 @@ void main() {
       expect(checkTextInputField(label, initialValue: '21/12/2015',
           obscure: false,
           readOnly: true,
-          width: 400), true);
+          ), true);
 
       expect(checkIconButton(Icons.calendar_today_outlined), false);
     });

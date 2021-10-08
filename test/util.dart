@@ -32,7 +32,7 @@ Finder findTextInputFieldByLabel(String label) {
 }
 
 bool checkTextInputField(String label,
-    {String? initialValue, bool obscure = false, bool readOnly = false, String? hint, String? help, double? width}) {
+    {String? initialValue, bool obscure = false, bool readOnly = false, String? hint, String? help}) {
   try {
     Finder fWaterloo = find.byWidgetPredicate((widget) => widget is WaterlooTextField && widget.label == label);
     expect(fWaterloo, findsOneWidget);
@@ -57,10 +57,7 @@ bool checkTextInputField(String label,
           find.descendant(of: fWaterloo, matching: find.byWidgetPredicate((widget) => widget is TextField && widget.decoration?.helperText == help));
       expect(fHelp, findsOneWidget);
     }
-    if (width != null) {
-      Finder fWidth = find.descendant(of: fWaterloo, matching: find.byWidgetPredicate((widget) => widget is SizedBox && widget.width == width));
-      expect(fWidth, findsOneWidget);
-    }
+
     return true;
   } catch (ex) {
     return false;

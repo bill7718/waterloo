@@ -51,7 +51,7 @@ void main() {
           readOnly: readOnly,
           hint: MockTextProvider.text(hint),
           help: MockTextProvider.text(help) ?? '',
-          width: width), true);
+          ), true);
     });
 
     testWidgets('When I enter valid  text the value is updated ', (WidgetTester tester) async {

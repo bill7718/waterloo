@@ -56,29 +56,26 @@ class WaterlooCurrencyFieldState extends State<WaterlooCurrencyField> {
 
   @override
   Widget build(BuildContext context) {
-
     final decimalPlaces = Provider.of<WaterlooTheme>(context, listen: false).currencyFieldTheme.decimalPlaces;
     final decimalPoint = Provider.of<WaterlooTheme>(context, listen: false).currencyFieldTheme.decimalPoint;
 
-    return Row(children: [
-      WaterlooTextField(
-        label: widget.label,
-        readOnly: widget.readOnly,
-        help: widget.help,
-        initialValue: toDecimal(widget.initialValue, decimalPlaces, decimalPoint),
-        valueBinder: (v) {
-          if (validateCurrencyAmount(v, decimalPlaces, decimalPoint)) {
-            int? amount = toAmount(v, decimalPlaces, decimalPoint);
-            widget.valueBinder(amount);
-          }
-        },
-        validator: (v) {
-          var valid = validateCurrencyAmount(v, decimalPlaces, decimalPoint);
-          var error = valid ? widget.validator(v) : formatError;
-          return error == null ? null : Provider.of<WaterlooTextProvider>(context, listen: false).get(error);
-        },
-      )
-    ]);
+    return WaterlooTextField(
+      label: widget.label,
+      readOnly: widget.readOnly,
+      help: widget.help,
+      initialValue: toDecimal(widget.initialValue, decimalPlaces, decimalPoint),
+      valueBinder: (v) {
+        if (validateCurrencyAmount(v, decimalPlaces, decimalPoint)) {
+          int? amount = toAmount(v, decimalPlaces, decimalPoint);
+          widget.valueBinder(amount);
+        }
+      },
+      validator: (v) {
+        var valid = validateCurrencyAmount(v, decimalPlaces, decimalPoint);
+        var error = valid ? widget.validator(v) : formatError;
+        return error == null ? null : Provider.of<WaterlooTextProvider>(context, listen: false).get(error);
+      },
+    );
   }
 }
 
@@ -86,15 +83,11 @@ class WaterlooCurrencyFieldState extends State<WaterlooCurrencyField> {
 /// Default parameters used by the [WaterlooCurrencyField]
 ///
 class WaterlooCurrencyFieldTheme {
-
-  /// The width to apply to the currency input field
-  final double inputFieldWidth;
-
   /// The number of decimal places for the currency amount
   final int decimalPlaces;
 
   /// The character to use for the decimal point
   final String decimalPoint;
 
-  const WaterlooCurrencyFieldTheme({this.inputFieldWidth = 250, this.decimalPlaces = 2, this.decimalPoint = '.'});
+  const WaterlooCurrencyFieldTheme({this.decimalPlaces = 2, this.decimalPoint = '.'});
 }

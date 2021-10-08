@@ -43,7 +43,7 @@ void main() {
           obscure: false,
           readOnly: false,
           help: MockTextProvider.text(help),
-          width: 250), true);
+         ), true);
 
     });
 
@@ -64,7 +64,7 @@ void main() {
       expect(checkTextInputField(label, initialValue: '21.15',
           obscure: false,
           readOnly: true,
-          width: 250), true);
+          ), true);
     });
 
     testWidgets('When I enter a valid currency amount the value is updated ', (WidgetTester tester) async {

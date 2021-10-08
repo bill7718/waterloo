@@ -30,7 +30,7 @@ void main() {
 
       await tester.pumpWidget(page);
       expect(
-          checkTextInputField(label, initialValue: data.get(field), obscure: obscure, readOnly: false, help: MockTextProvider.text(help), width: 400),
+          checkTextInputField(label, initialValue: data.get(field), obscure: obscure, readOnly: false, help: MockTextProvider.text(help)),
           true);
     });
 
@@ -52,7 +52,7 @@ void main() {
 
       await tester.pumpWidget(page);
       expect(
-          checkTextInputField(label, initialValue: data.get(field), obscure: obscure, readOnly: false, help: MockTextProvider.text(help), width: 400),
+          checkTextInputField(label, initialValue: data.get(field), obscure: obscure, readOnly: false, help: MockTextProvider.text(help)),
           true);
     });
 
