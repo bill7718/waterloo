@@ -22,7 +22,7 @@ export 'beta/waterloo_drop_drown_list.dart';
 export 'beta/waterloo_radio_button_list.dart';
 
 export 'beta/waterloo_form_container.dart';
-export 'beta/waterloo_form_message.dart';
+export 'src/waterloo_form_message.dart';
 
 
 export 'src/waterloo_currency_field.dart';

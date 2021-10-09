@@ -11,33 +11,25 @@ import 'package:provider/provider.dart';
 ///
 ///
 class WaterlooFormMessage extends StatelessWidget {
-
   /// The message to show in the absence of an error
   final String text;
 
   /// Contains the error message to be shown instead of the default message
   final FormError error;
 
-  const WaterlooFormMessage( {Key? key, this.text = '', required this.error }) : super(key: key);
+  const WaterlooFormMessage({Key? key, this.text = '', required this.error}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<FormError>.value(
         value: error,
-        child: Consumer<FormError>(
-            builder: (consumerContext, error, _ ) {
-              if (error.error.isEmpty) {
-                return Container(
-                    alignment: Alignment.centerLeft,
-                    child : Text(text));
-              } else {
-                return Container(
-                    alignment: Alignment.centerLeft,
-                    child : Text(error.error));
-              }
-            })
-
-    );
+        child: Consumer<FormError>(builder: (consumerContext, error, _) {
+          if (error.error.isEmpty) {
+            return Container(alignment: Alignment.centerLeft, child: Text(text));
+          } else {
+            return Container(alignment: Alignment.centerLeft, child: Text(error.error));
+          }
+        }));
   }
 }
 
@@ -45,8 +37,6 @@ class WaterlooFormMessage extends StatelessWidget {
 /// A simple class that holds a String and fires a Change Notification when the value is changed.
 ///
 class FormError with ChangeNotifier {
-
-
   String _error = '';
 
   set error(String e) {
@@ -54,5 +44,5 @@ class FormError with ChangeNotifier {
     notifyListeners();
   }
 
-  String get error=>_error;
+  String get error => _error;
 }
