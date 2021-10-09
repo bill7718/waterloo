@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:waterloo/beta/waterloo_grid.dart';
 import 'package:waterloo/src/waterloo_currency_field.dart';
 import 'package:waterloo/src/waterloo_date_field.dart';
 import 'package:waterloo/beta/waterloo_form_container.dart';
@@ -25,6 +26,7 @@ class WaterlooTheme {
   final WaterlooPercentFieldTheme percentFieldTheme;
   final DataObjectTableTheme tableTheme;
   final WaterlooAppBarTheme appBarTheme;
+  final WaterlooGridTheme gridTheme;
 
   WaterlooTheme(
       {this.textFieldTheme = const WaterlooTextFieldTheme(),
@@ -35,5 +37,6 @@ class WaterlooTheme {
       this.currencyFieldTheme = const WaterlooCurrencyFieldTheme(),
       this.percentFieldTheme = const WaterlooPercentFieldTheme(),
       this.tableTheme = const DataObjectTableTheme(),
-      this.appBarTheme = const WaterlooAppBarTheme()});
+      this.appBarTheme = const WaterlooAppBarTheme(),
+      this.gridTheme = const WaterlooGridTheme() });
 }

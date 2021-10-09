@@ -1,5 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:waterloo/src/waterloo_theme.dart';
 
 class WaterlooGrid extends StatelessWidget {
   final List<Widget> children;
@@ -16,7 +18,7 @@ class WaterlooGrid extends StatelessWidget {
 
   final double? columnSeparation;
 
-  final double rowSeparation;
+  final double? rowSeparation;
 
   final bool pad;
 
@@ -29,7 +31,7 @@ class WaterlooGrid extends StatelessWidget {
     this.preferredColumnCount,
     this.maximumColumnCount,
     this.columnSeparation,
-    this.rowSeparation = 1,
+    this.rowSeparation,
     this.pad = true,
   }) : super(key: key);
 
@@ -41,13 +43,15 @@ class WaterlooGrid extends StatelessWidget {
               gridWidth: constraints.maxWidth,
               minimumColumnWidth: minimumColumnWidth,
               maximumColumnWidth: maximumColumnWidth,
-              preferredColumnCount: preferredColumnCount,
+              preferredColumnCount: preferredColumnCount ?? Provider.of<WaterlooTheme>(context).gridTheme.preferredColumnCount,
               preferredWidth: preferredColumnWidth,
               maximumColumnCount: maximumColumnCount,
-              columnSeparation: columnSeparation,
+              columnSeparation: columnSeparation ?? Provider.of<WaterlooTheme>(context).gridTheme.columnSeparation,
               pad: pad);
 
       List<Widget> rows = <Widget>[];
+
+      var rowSep = rowSeparation ?? Provider.of<WaterlooTheme>(context).gridTheme.rowSeparation;
 
       // compute the layout for each widget in turn - this is needed because each widgets needs
       // to know the layout for the next widget in the list to determine the correct flex values
@@ -115,7 +119,7 @@ class WaterlooGrid extends StatelessWidget {
               ));
             }
             rows.add(Container(
-              margin: EdgeInsets.fromLTRB(0, rowSeparation / 2, 0, rowSeparation / 2),
+              margin: EdgeInsets.fromLTRB(0, rowSep / 2, 0, rowSep / 2),
                 child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: rowContents,
@@ -334,10 +338,10 @@ class WaterlooGridElementLayout {
 enum WaterlooGridChildLayoutRule { start, full, fill, normal }
 
 abstract class HasWaterlooGridChildLayout {
-  int get columnCount;
-  double? get preferredWidth;
-  WaterlooGridChildLayoutRule get layoutRule;
-  bool get show;
+  int get columnCount => 1;
+  double? get preferredWidth => null;
+  WaterlooGridChildLayoutRule get layoutRule => WaterlooGridChildLayoutRule.normal;
+  bool get show =>true;
 }
 
 class WaterlooGridRow extends StatelessWidget
@@ -361,11 +365,27 @@ class WaterlooGridRow extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: children,
     );
   }
 
   @override
   bool get show => true;
+}
+
+///
+/// Default parameters used by the [WaterlooGrid]
+///
+class WaterlooGridTheme {
+  /// The default value of the preferred number of columns for a grid
+  final int preferredColumnCount;
+
+  /// The default value of the separation between columns
+  final double columnSeparation;
+
+  /// The default value of the separation between columns
+  final double rowSeparation;
+
+  const WaterlooGridTheme({this.preferredColumnCount = 3, this.columnSeparation = 25, this.rowSeparation = 5});
 }

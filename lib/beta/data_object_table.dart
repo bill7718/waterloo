@@ -26,9 +26,7 @@ class DataObjectTable<T extends DataObject> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-    elevation: 10,
-        child : ChangeNotifierProvider<ChangeNotifierList<T>>.value(
+    return ChangeNotifierProvider<ChangeNotifierList<T>>.value(
         value: data,
         child: Consumer<ChangeNotifierList<T>>(builder: (context, l, _) {
           var columns = <DataColumn>[];
@@ -86,11 +84,13 @@ class DataObjectTable<T extends DataObject> extends StatelessWidget {
           }
 
           if (rows.isNotEmpty) {
-            return DataTable(columns: columns, rows: rows);
+            return SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: DataTable(columns: columns, rows: rows));
           } else {
             return Container();
           }
-        })));
+        }));
   }
 }
 

@@ -21,9 +21,9 @@ class DataObjectWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    if (specifications[fieldName]?.type == 'bool') {
+    if (specifications[fieldName]?.type == DataSpecification.boolType) {
       return DataObjectSwitchTile(
-        label: specifications[fieldName]?.label ?? '',
+        label: specifications[fieldName]?.label ?? fieldName,
         data: data,
         fieldName: fieldName,
       );
@@ -47,7 +47,7 @@ class DataObjectWidget extends StatelessWidget {
           label: specifications[fieldName]?.label ?? fieldName, data: data, fieldName: fieldName, items: items);
     }
 
-    if (specifications[fieldName]?.type == 'date') {
+    if (specifications[fieldName]?.type == DataSpecification.dateType) {
       return DataObjectDateField(
         label: specifications[fieldName]?.label ?? fieldName,
         data: data,

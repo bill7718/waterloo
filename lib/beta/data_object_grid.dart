@@ -11,8 +11,9 @@ class DataObjectGrid extends StatelessWidget {
   final List<String> fieldNames;
   final List<String>? rebuildFields;
   final Map<String, DataSpecification> specifications;
+  final int? preferredColumnCount;
 
-  const DataObjectGrid({Key? key, required this.data, required this.fieldNames, required this.specifications, this.rebuildFields}) : super(key: key);
+  const DataObjectGrid({Key? key, required this.data, required this.fieldNames, required this.specifications, this.rebuildFields, this.preferredColumnCount}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +22,7 @@ class DataObjectGrid extends StatelessWidget {
           children: buildWidgets(),
           minimumColumnWidth: Provider.of<WaterlooTheme>(context, listen: false).dataObjectFormTheme.minimumColumnWidth,
           preferredColumnWidth: Provider.of<WaterlooTheme>(context, listen: false).dataObjectFormTheme.preferredColumnWidth,
-          preferredColumnCount: 3,
-          columnSeparation: 25,
+          preferredColumnCount: preferredColumnCount ?? 3,
           pad: false);
     } else {
       return DataObjectChangeNotifier(
@@ -32,7 +32,7 @@ class DataObjectGrid extends StatelessWidget {
               children: buildWidgets(),
               minimumColumnWidth: Provider.of<WaterlooTheme>(context, listen: false).dataObjectFormTheme.minimumColumnWidth,
               preferredColumnWidth: Provider.of<WaterlooTheme>(context, listen: false).dataObjectFormTheme.preferredColumnWidth,
-              preferredColumnCount: 3,
+              preferredColumnCount: preferredColumnCount ?? 3,
               pad: false));
     }
   }

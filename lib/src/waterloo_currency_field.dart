@@ -59,7 +59,8 @@ class WaterlooCurrencyFieldState extends State<WaterlooCurrencyField> {
     final decimalPlaces = Provider.of<WaterlooTheme>(context, listen: false).currencyFieldTheme.decimalPlaces;
     final decimalPoint = Provider.of<WaterlooTheme>(context, listen: false).currencyFieldTheme.decimalPoint;
 
-    return WaterlooTextField(
+
+     return  WaterlooTextField(
       label: widget.label,
       readOnly: widget.readOnly,
       help: widget.help,

@@ -23,6 +23,7 @@ class DataObjectForm extends StatelessWidget {
   final List<List<String>> fieldNames;
   final List<List<String>>? rebuildFieldNames;
   final Map<String, DataSpecification> specifications;
+  final int? preferredColumnCount;
 
   DataObjectForm(
       {Key? key,
@@ -35,7 +36,8 @@ class DataObjectForm extends StatelessWidget {
       this.formMessage = '',
       required this.fieldNames,
       required this.specifications,
-      this.rebuildFieldNames})
+      this.rebuildFieldNames,
+      this.preferredColumnCount})
       : super(key: key);
 
   @override
@@ -59,10 +61,12 @@ class DataObjectForm extends StatelessWidget {
     var i = 0;
     while (i < data.length) {
       widgets.add(DataObjectGrid(
-          data: data[i],
-          fieldNames: fieldNames[i],
-          specifications: specifications,
-          rebuildFields: rebuildFieldNames == null ? null : rebuildFieldNames![i]));
+        data: data[i],
+        fieldNames: fieldNames[i],
+        specifications: specifications,
+        rebuildFields: rebuildFieldNames == null ? null : rebuildFieldNames![i],
+        preferredColumnCount: preferredColumnCount,
+      ));
 
       i++;
     }
