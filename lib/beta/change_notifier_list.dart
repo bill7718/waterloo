@@ -1,6 +1,15 @@
 import 'package:flutter/material.dart';
 
+///
+/// Create a List<T> and then fires a notification if
+/// - an item is added or removed
+/// - the whole list is rebuilt
+///
+/// Used to autoregnerate a table if the contents of a list are added to or removed
+///
 class ChangeNotifierList<T extends Object> with ChangeNotifier {
+
+  /// The list which is listened to
   final List<T> _list = <T>[];
 
   ChangeNotifierList();

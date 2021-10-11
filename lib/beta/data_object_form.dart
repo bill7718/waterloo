@@ -24,6 +24,7 @@ class DataObjectForm extends StatelessWidget {
   final List<List<String>>? rebuildFieldNames;
   final Map<String, DataSpecification> specifications;
   final int? preferredColumnCount;
+  final String? initialError;
 
   DataObjectForm(
       {Key? key,
@@ -37,6 +38,7 @@ class DataObjectForm extends StatelessWidget {
       required this.fieldNames,
       required this.specifications,
       this.rebuildFieldNames,
+        this.initialError,
       this.preferredColumnCount})
       : super(key: key);
 
@@ -52,6 +54,7 @@ class DataObjectForm extends StatelessWidget {
         formTitle: formTitle,
         formSubtitle: formSubtitle,
         act: act,
+        initialError: initialError,
         children: children);
   }
 
@@ -84,6 +87,7 @@ class BespokeDataObjectForm extends StatelessWidget {
   final String? formSubtitle;
   final bool act;
   final List<Widget> children;
+  final String? initialError;
 
   BespokeDataObjectForm({
     Key? key,
@@ -94,6 +98,7 @@ class BespokeDataObjectForm extends StatelessWidget {
     this.formSubtitle,
     this.act = false,
     this.formMessage = '',
+    this.initialError,
     required this.children,
   }) : super(key: key);
 
@@ -101,6 +106,7 @@ class BespokeDataObjectForm extends StatelessWidget {
   Widget build(BuildContext context) {
     var widgets = <Widget>[];
     var error = FormError();
+    error.error = initialError ?? '';
     widgets.add(WaterlooFormMessage(error: error, text: Provider.of<WaterlooTextProvider>(context, listen: false).get(formMessage) ?? ''));
 
     widgets.addAll(children);

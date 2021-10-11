@@ -4,7 +4,8 @@ import 'package:provider/provider.dart';
 ///
 /// A wrapper around [Text] widgets that is designed to show messages on the top of a form.
 ///
-/// A default message is passed in but if the [error] property has an error message set then the error is show instead.
+/// A default message is passed in but if the [error] property has an error message set then the error is show instead. Errors can
+/// be reset by setting the [error.error] property to an empty String
 ///
 /// This allows the same piece of screen real estate to be used for both an initial explanatory message and an form wide error
 /// messages
@@ -46,3 +47,5 @@ class FormError with ChangeNotifier {
 
   String get error => _error;
 }
+
+//TODO add styling theme to FormMessage

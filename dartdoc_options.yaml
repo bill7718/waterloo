@@ -5,12 +5,16 @@ dartdoc:
     - missing-from-search-index
     - unresolved-export
     - unresolved-doc-reference
-    - non-canonical-found
+    - no-canonical-found
     - unknown-file
+    - no-documentable-libraries
 
   include:
     - waterloo
     - data_object_widgets
+
+
+
 
 
 

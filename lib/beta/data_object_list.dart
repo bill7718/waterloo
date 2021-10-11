@@ -62,8 +62,8 @@ class DataListGetter implements ListGetter {
 
     f.then( (r) {
       var response = <ListItem>[];
-      for (var map in r) {
-        response.add(ListItem(map[idLabel], map[descriptionLabel]));
+      for (var item in r) {
+        response.add(ListItem(item.get(idLabel),  item.get(descriptionLabel)));
       }
       c.complete(response);
 
