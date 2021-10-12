@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:serializable_data/serializable_data.dart';
 import 'data_object_currency_field.dart';
 import 'data_object_date_field.dart';
-import 'data_object_drop_down_list.dart';
+import '../src/data_object_drop_down_list.dart';
 import 'data_object_list_manager.dart';
 import 'data_object_percent_field.dart';
 import '../src/data_object_text_field.dart';

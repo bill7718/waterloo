@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:serializable_data/serializable_data.dart';
-import '../src/waterloo_drop_down_list.dart';
+import 'waterloo_drop_down_list.dart';
 
 ///
-/// Shows a drop down list corresponding to the field referenced by the [fieldName] in the [data]
+/// Shows a drop down list corresponding to the field referenced by the [fieldName] in the [DataObject] [data]
 ///
 class DataObjectDropDownList extends StatelessWidget {
   /// The label for the field
