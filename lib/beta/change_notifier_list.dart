@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 /// - an item is added or removed
 /// - the whole list is rebuilt
 ///
-/// Used to autoregnerate a table if the contents of a list are added to or removed
+/// Used to auto-regenerate a table if the contents of a list are added to or removed
 ///
 class ChangeNotifierList<T extends Object> with ChangeNotifier {
 

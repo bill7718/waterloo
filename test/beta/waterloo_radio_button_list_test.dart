@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:waterloo/beta/waterloo_drop_drown_list.dart';
+import 'package:waterloo/src/waterloo_drop_down_list.dart';
 import 'package:waterloo/beta/waterloo_radio_button_list.dart';
 
 
@@ -40,33 +40,6 @@ void main() {
           true);
     });
 
-    /*
-    testWidgets('When I enter tap the tile the value is updated ', (WidgetTester tester) async {
-      var label = 'Greeting';
-      Widget page = MockPage(WaterlooSwitchTile(
-        valueBinder: binder,
-        label: label,
-      ));
 
-      await tester.pumpWidget(page);
-      await tapSwitchTile(label, tester);
-      expect(currentValue, true);
-      await tester.pumpWidget(page);
-      await tapSwitchTile(label, tester);
-      expect(currentValue, false);
-    });
-
-    testWidgets('When I enter tap the tile without a binder then nothing happens ', (WidgetTester tester) async {
-      var label = 'Greeting';
-      Widget page = MockPage(WaterlooSwitchTile(
-        label: label,
-      ));
-
-      await tester.pumpWidget(page);
-      await tapSwitchTile(label, tester);
-      expect(currentValue, false);
-    });
-
-     */
   });
 }

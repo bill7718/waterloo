@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:waterloo/src/waterloo_text_provider.dart';
 
-import 'waterloo_drop_drown_list.dart';
+import '../src/waterloo_drop_down_list.dart';
 ///
 /// Shows a list of radio buttons
 ///

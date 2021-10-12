@@ -31,8 +31,7 @@ Finder findTextInputFieldByLabel(String label) {
   return f;
 }
 
-bool checkTextInputField(String label,
-    {String? initialValue, bool obscure = false, bool readOnly = false, String? hint, String? help}) {
+bool checkTextInputField(String label, {String? initialValue, bool obscure = false, bool readOnly = false, String? hint, String? help}) {
   try {
     Finder fWaterloo = find.byWidgetPredicate((widget) => widget is WaterlooTextField && widget.label == label);
     expect(fWaterloo, findsOneWidget);
@@ -76,15 +75,16 @@ bool checkIconButton(IconData iconData) {
   }
 }
 
-bool checkSwitchTile(String label, { bool? initialValue } ) {
+bool checkSwitchTile(String label, {bool? initialValue}) {
   try {
     Finder fWaterloo = find.byWidgetPredicate((widget) => widget is WaterlooSwitchTile && widget.label == label);
     Finder fTile = find.descendant(
-        of: fWaterloo, matching: find.byWidgetPredicate((widget) => widget is SwitchListTile && ((widget.title as Text).data?.contains(label) ?? false)));
+        of: fWaterloo,
+        matching: find.byWidgetPredicate((widget) => widget is SwitchListTile && ((widget.title as Text).data?.contains(label) ?? false)));
     expect(fTile, findsOneWidget);
     if (initialValue != null) {
-      Finder fInitial = find.descendant(
-          of: fWaterloo, matching: find.byWidgetPredicate((widget) => widget is SwitchListTile && widget.value == initialValue));
+      Finder fInitial =
+          find.descendant(of: fWaterloo, matching: find.byWidgetPredicate((widget) => widget is SwitchListTile && widget.value == initialValue));
       expect(fInitial, findsOneWidget);
     }
 
@@ -94,24 +94,80 @@ bool checkSwitchTile(String label, { bool? initialValue } ) {
   }
 }
 
-bool checkRadioButtonList(String label, { String? initialValue, List<ListItem>? items} ) {
+bool checkRadioButtonList(String label, {String? initialValue, List<ListItem>? items}) {
   try {
     Finder fWaterloo = find.byWidgetPredicate((widget) => widget is WaterlooRadioButtonList && widget.label == label);
 
-    if (items != null) {
-      for (var item in items) {
-        Finder fTile = find.descendant(
-            of: fWaterloo, matching: find.byWidgetPredicate((widget) => widget is RadioListTile
-            && ((widget.title as Text).data! == item.description  && widget.value == item.id
-            && widget.groupValue == initialValue)));
-        expect(fTile, findsOneWidget);
-      }
+    for (var item in items ?? []) {
+      Finder fTile = find.descendant(
+          of: fWaterloo,
+          matching: find.byWidgetPredicate((widget) =>
+              widget is RadioListTile &&
+              ((widget.title as Text).data! == item.description && widget.value == item.id && widget.groupValue == initialValue)));
+      expect(fTile, findsOneWidget);
     }
 
     if (initialValue != null) {
-      Finder fInitial = find.descendant(
-          of: fWaterloo, matching: find.byWidgetPredicate((widget) => widget is RadioListTile && widget.value == initialValue));
+      Finder fInitial =
+          find.descendant(of: fWaterloo, matching: find.byWidgetPredicate((widget) => widget is RadioListTile && widget.value == initialValue));
       expect(fInitial, findsOneWidget);
+    }
+
+    return true;
+  } catch (ex) {
+    return false;
+  }
+}
+
+bool checkClosedDropDownList(String label, {String? initialValue, String? value}) {
+  try {
+    Finder fWaterloo = find.byWidgetPredicate((widget) => widget is WaterlooDropDownList && widget.label == label);
+
+    Finder fText = find.byWidgetPredicate((widget) => widget is WaterlooTextField && widget.label == label && widget.readOnly);
+    expect(fText, findsOneWidget);
+
+    if (initialValue != null) {
+      Finder fInitial = find.descendant(
+          of: fWaterloo, matching: find.byWidgetPredicate((widget) => widget is WaterlooTextField && widget.initialValue == initialValue));
+      expect(fInitial, findsOneWidget);
+    }
+
+    Finder fIcon =
+        find.descendant(of: fWaterloo, matching: find.byWidgetPredicate((widget) => widget is Icon && widget.icon == Icons.keyboard_arrow_down));
+    expect(fIcon, findsOneWidget);
+    return true;
+  } catch (ex) {
+    return false;
+  }
+}
+
+bool checkOpenDropDownList(String label, {String? initialValue, List<ListItem>? items}) {
+  try {
+    Finder fWaterloo = find.byWidgetPredicate((widget) => widget is WaterlooDropDownList && widget.label == label);
+
+    Finder fText = find.byWidgetPredicate((widget) => widget is WaterlooTextField && widget.label == label && widget.readOnly);
+    expect(fText, findsOneWidget);
+
+    if (initialValue != null) {
+      Finder fInitial = find.descendant(
+          of: fWaterloo, matching: find.byWidgetPredicate((widget) => widget is WaterlooTextField && widget.initialValue == initialValue));
+      expect(fInitial, findsOneWidget);
+    }
+
+    Finder fIcon =
+        find.descendant(of: fWaterloo, matching: find.byWidgetPredicate((widget) => widget is Icon && widget.icon == Icons.keyboard_arrow_down));
+    expect(fIcon, findsOneWidget);
+
+    Finder fPopup = find.byWidgetPredicate((widget) => widget is PopupMenuButton );
+    expect(fPopup, findsOneWidget);
+
+    for (var item in items ?? []) {
+      Finder fTile = find.byWidgetPredicate((widget) =>
+          widget is ListTile
+             &&
+             ((widget.title as Text).data! == item.description)
+          );
+      expect(fTile, findsOneWidget);
     }
 
     return true;
@@ -154,8 +210,6 @@ Future<void> tapIcon(IconData icon, WidgetTester tester) async {
   return c.future;
 }
 
-
-
 Finder findButtonByText(String text) {
   Finder f = find.byWidgetPredicate((widget) => widget is WaterlooTextButton && widget.text == text);
   return f;
@@ -177,4 +231,19 @@ Future<void> tapSwitchTile(String label, WidgetTester tester) async {
   await tester.tap(fTile);
   c.complete();
   return c.future;
+}
+
+Future<void> tapTile(String label, String description,  WidgetTester tester) async {
+  var c = Completer<void>();
+  await tester.pumpAndSettle();
+  Finder fTile = find.byWidgetPredicate((widget) =>
+  widget is ListTile
+      &&
+      ((widget.title as Text).data! == description)
+  );
+  expect(fTile, findsOneWidget);
+  await tester.tap(fTile);
+  c.complete();
+  return c.future;
+  //TODO get this to work properly
 }

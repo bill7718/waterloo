@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../src/waterloo_text_field.dart';
-import '../src/waterloo_theme.dart';
+import 'waterloo_text_field.dart';
+import 'waterloo_theme.dart';
 
 ///
 /// Shows a list of values as a [PopupMenuEntry] which wraps a [ListTile]
@@ -54,7 +54,7 @@ class WaterlooDropDownListState extends State<WaterlooDropDownList> {
         readOnly: true,
       )),
       SizedBox(
-          width: 50,
+          width: Provider.of<WaterlooTheme>(context).waterlooDropDownListTheme.iconWidth,
           child: PopupMenuButton<ListItem>(
             icon: Icon(
               Provider.of<WaterlooTheme>(context).waterlooDropDownListTheme.dropIcon,
@@ -97,42 +97,16 @@ class ListItem {
   ListItem(this.id, this.description);
 }
 
-class FutureWaterlooDropDownList extends StatelessWidget {
-  final ListGetter getter;
-
-  final String? initialValue;
-
-  final String label;
-
-  final Function valueBinder;
-
-  const FutureWaterlooDropDownList({Key? key, required this.label, required this.getter, required this.valueBinder, this.initialValue})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return FutureBuilder<List<ListItem>>(
-        future: getter.getList(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return WaterlooDropDownList(label: label, items: snapshot.data ?? [], valueBinder: valueBinder, initialValue: initialValue);
-          } else {
-            return WaterlooTextField(
-              label: label,
-              readOnly: true,
-            );
-          }
-        });
-  }
-}
-
-abstract class ListGetter {
-  Future<List<ListItem>> getList();
-}
-
+///
+/// Default parameters used by the [WaterlooCurrencyField]
+///
 class WaterlooDropDownListTheme {
-  final double inputFieldWidth;
+
+  /// The icon for the down arrow shown in the drop down list
   final IconData dropIcon;
 
-  const WaterlooDropDownListTheme({this.inputFieldWidth = 250, this.dropIcon = Icons.keyboard_arrow_down});
+  /// The width allocated to the drop down icon
+  final double iconWidth;
+
+  const WaterlooDropDownListTheme({this.dropIcon = Icons.keyboard_arrow_down, this.iconWidth = 50});
 }
