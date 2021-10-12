@@ -91,10 +91,10 @@ class DataObjectWidget extends StatelessWidget {
       fieldName: fieldName,
       obscure: specifications[fieldName]?.obscure ?? false,
       help: specifications[fieldName]?.help ?? '',
-      validator: v,
+      validator: _fieldValidator,
     );
   }
 
-  String? v(String? v) => specifications[fieldName]?.validator(v);
+  String? _fieldValidator(String? v) => specifications[fieldName]?.validator(v);
 }
 

@@ -26,6 +26,7 @@ class DataObjectGridForm extends StatelessWidget {
   final double? preferredColumnWidth;
   final double? columnSeparation;
   final double? rowSeparation;
+  final String? initialError;
 
   DataObjectGridForm(
       {Key? key,
@@ -36,6 +37,7 @@ class DataObjectGridForm extends StatelessWidget {
       this.formSubtitle,
       this.act = false,
       this.formMessage = '',
+        this.initialError,
       required this.children,
       this.minimumColumnWidth,
       this.maximumColumnWidth,
@@ -46,11 +48,13 @@ class DataObjectGridForm extends StatelessWidget {
       this.columnSeparation})
       : super(key: key);
 
+
   @override
   Widget build(BuildContext context) {
     var widgets = <Widget>[];
 
     var error = FormError();
+    error.error = initialError ?? '';
     widgets.add(WaterlooGridChild(
         layoutRule: WaterlooGridChildLayoutRule.full,
         child: WaterlooFormMessage(error: error, text: Provider.of<WaterlooTextProvider>(context, listen: false).get(formMessage) ?? '')));
