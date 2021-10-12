@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:waterloo/src/waterloo_theme.dart';
 
 ///
 /// A wrapper around [Text] widgets that is designed to show messages on the top of a form.
@@ -28,7 +29,9 @@ class WaterlooFormMessage extends StatelessWidget {
           if (error.error.isEmpty) {
             return Container(alignment: Alignment.centerLeft, child: Text(text));
           } else {
-            return Container(alignment: Alignment.centerLeft, child: Text(error.error));
+            var errorStyle = Theme.of(context).textTheme.bodyText1?.copyWith(
+                color: Provider.of<WaterlooTheme>(context).formMessageTheme.errorColor);
+            return Container(alignment: Alignment.centerLeft, child: Text(error.error, style: errorStyle,));
           }
         }));
   }
@@ -48,4 +51,10 @@ class FormError with ChangeNotifier {
   String get error => _error;
 }
 
-//TODO add styling theme to FormMessage
+/// Parameters for the display of the WaterlooFormContainer
+class WaterlooFormMessageTheme {
+  /// If provided then override the default margin around this widget
+  final Color errorColor;
+
+  const WaterlooFormMessageTheme({this.errorColor = Colors.red});
+}

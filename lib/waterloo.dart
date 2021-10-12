@@ -17,7 +17,7 @@ export 'src/waterloo_text_button.dart';
 export 'beta/filtered_list.dart';
 export 'beta/drop_target_list_view.dart';
 export 'beta/waterloo_vm.dart';
-export 'beta/change_notifier_list.dart';
+export 'src/change_notifier_list.dart';
 
 export 'src/waterloo_drop_down_list.dart';
 export 'beta/waterloo_radio_button_list.dart';

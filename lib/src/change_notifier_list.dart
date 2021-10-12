@@ -14,8 +14,11 @@ class ChangeNotifierList<T extends Object> with ChangeNotifier {
 
   ChangeNotifierList();
 
+  /// The list which is listened to
   List<T> get list => _list;
 
+  /// Add an item to the list optionally add it before
+  /// the [beforeItem]
   void add(T value, {T? beforeItem}) {
     if (_list.contains(value)) {
       _list.remove(value);
@@ -30,6 +33,9 @@ class ChangeNotifierList<T extends Object> with ChangeNotifier {
     notifyListeners();
   }
 
+  ///
+  /// Remove the item from the list and notify the listeners
+  ///
   void remove(T value) {
     if (_list.contains(value)) {
       _list.remove(value);
@@ -37,11 +43,13 @@ class ChangeNotifierList<T extends Object> with ChangeNotifier {
     }
   }
 
+  ///
+  /// Replace all the items in the list
+  ///
   void replaceAll(Iterable<T> i) {
     _list.clear();
     _list.addAll(i);
     notifyListeners();
   }
 
-  Type get type => T;
 }

@@ -6,7 +6,7 @@ import 'package:waterloo/src/waterloo_text_provider.dart';
 import 'package:waterloo/src/waterloo_theme.dart';
 import 'data_object_cell_content.dart';
 
-import 'change_notifier_list.dart';
+import '../src/change_notifier_list.dart';
 
 class DataObjectTable<T extends DataObject> extends StatelessWidget {
   final ChangeNotifierList<T> data;

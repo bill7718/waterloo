@@ -8,6 +8,7 @@ import 'src/waterloo_text_button_test.dart' as button;
 import 'src/waterloo_switch_tile_test.dart' as switch_tile;
 import 'src/waterloo_form_message_test.dart' as form_message;
 import 'src/waterloo_drop_down_list_test.dart' as drop;
+import 'src/change_notifier_list_test.dart' as list;
 
 
 import 'src/data_object_text_field_test.dart' as data_object_text;
@@ -23,6 +24,8 @@ main () {
   switch_tile.main();
   form_message.main();
   drop.main();
+
+  list.main();
 
   data_object_text.main();
   data_object_drop.main();

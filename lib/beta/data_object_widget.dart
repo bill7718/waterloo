@@ -15,12 +15,10 @@ class DataObjectWidget extends StatelessWidget {
   final String fieldName;
   final Map<String, DataSpecification> specifications;
 
-  const DataObjectWidget({Key? key, required this.data, required this.fieldName, required this.specifications})
-      : super(key: key);
+  const DataObjectWidget({Key? key, required this.data, required this.fieldName, required this.specifications}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
     if (specifications[fieldName]?.type == DataSpecification.boolType) {
       return DataObjectSwitchTile(
         label: specifications[fieldName]?.label ?? fieldName,
@@ -34,8 +32,7 @@ class DataObjectWidget extends StatelessWidget {
       for (var entry in specifications[fieldName]!.list) {
         items.add(ListItem(entry.id, entry.description));
       }
-      return DataObjectDropDownList(
-          label: specifications[fieldName]?.label ?? fieldName, data: data, fieldName: fieldName, items: items);
+      return DataObjectDropDownList(label: specifications[fieldName]?.label ?? fieldName, data: data, fieldName: fieldName, items: items);
     }
 
     if (specifications[fieldName]?.type == DataSpecification.radioListType) {
@@ -43,8 +40,7 @@ class DataObjectWidget extends StatelessWidget {
       for (var entry in specifications[fieldName]!.list) {
         items.add(ListItem(entry.id, entry.description));
       }
-      return DataObjectRadioList(
-          label: specifications[fieldName]?.label ?? fieldName, data: data, fieldName: fieldName, items: items);
+      return DataObjectRadioList(label: specifications[fieldName]?.label ?? fieldName, data: data, fieldName: fieldName, items: items);
     }
 
     if (specifications[fieldName]?.type == DataSpecification.dateType) {
@@ -77,12 +73,7 @@ class DataObjectWidget extends StatelessWidget {
     }
 
     if (specifications[fieldName]?.type == DataSpecification.dataObjectListType) {
-      return DataObjectListManager(
-        data: data,
-        fieldName: fieldName,
-          specifications: specifications
-
-      );
+      return DataObjectListManager(data: data, fieldName: fieldName, specifications: specifications);
     }
 
     return DataObjectTextField(
@@ -98,3 +89,20 @@ class DataObjectWidget extends StatelessWidget {
   String? _fieldValidator(String? v) => specifications[fieldName]?.validator(v);
 }
 
+List<Widget> dataObjectList(List<DataObject> data, List<List<String>> fieldNames, Map<String, DataSpecification> specifications) {
+  var widgets = <Widget>[];
+
+  var i = 0;
+  while (i < data.length) {
+    for (var field in fieldNames[i]) {
+      widgets.add(DataObjectWidget(
+        data: data[i],
+        fieldName: field,
+        specifications: specifications,
+      ));
+    }
+
+    i++;
+  }
+  return widgets;
+}

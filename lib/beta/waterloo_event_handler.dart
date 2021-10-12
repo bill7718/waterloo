@@ -20,4 +20,8 @@ class EventSpecification {
 
   const EventSpecification({ required this.event, required this.description, this.mustValidate = true, this.additionalValidation });
 
+  factory EventSpecification.from(EventSpecification specification, { String? event, String? description, Function? additionalValidation }) {
+    return EventSpecification(event: event ?? specification.event, description: description = description ?? specification.description,
+    additionalValidation: additionalValidation ?? specification.additionalValidation);
+  }
 }

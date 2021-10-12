@@ -12,7 +12,8 @@ var fullCoverageExpected = <String>{
   'waterloo_switch_tile.dart',
   'data_object_text_field.dart',
   'waterloo_form_message.dart',
-  'data_object_drop_down_list.dart'
+  'data_object_drop_down_list.dart',
+  'change_notifier_list.dart'
 };
 
 void main() {

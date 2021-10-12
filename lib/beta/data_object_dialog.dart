@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:serializable_data/serializable_data.dart';
-import 'package:waterloo/beta/data_object_widget_list.dart';
+import 'data_object_grid.dart';
 import 'waterloo_event_handler.dart';
 import '../src/waterloo_text_button.dart';
 
@@ -46,7 +46,6 @@ class DataObjectDialogEventHandler implements WaterlooEventHandler {
 
   @override
   void handleException(context, dynamic ex, StackTrace? st) {
-    print(ex.toString());
     Navigator.pop(context, ex);
   }
 }

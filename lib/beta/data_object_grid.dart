@@ -51,3 +51,24 @@ class DataObjectGrid extends StatelessWidget {
     return widgets;
   }
 }
+
+
+List<Widget> dataObjectGridBuilder(List<DataObject> data, List<List<String>> fieldNames,
+    Map<String, DataSpecification> specifications, {List<List<String>>? rebuildFieldNames, int? preferredColumnCount }) {
+  var widgets = <Widget>[];
+
+  var i = 0;
+  while (i < data.length) {
+    widgets.add(DataObjectGrid(
+      data: data[i],
+      fieldNames: fieldNames[i],
+      specifications: specifications,
+      rebuildFields: rebuildFieldNames == null ? null : rebuildFieldNames[i],
+      preferredColumnCount: preferredColumnCount,
+    ));
+
+    i++;
+  }
+  return widgets;
+}
+

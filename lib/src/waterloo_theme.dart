@@ -3,6 +3,7 @@ import 'package:waterloo/beta/waterloo_grid.dart';
 import 'package:waterloo/src/waterloo_currency_field.dart';
 import 'package:waterloo/src/waterloo_date_field.dart';
 import 'package:waterloo/beta/waterloo_form_container.dart';
+import 'package:waterloo/src/waterloo_form_message.dart';
 
 import '../beta/data_object_form.dart';
 import '../beta/data_object_table.dart';
@@ -27,6 +28,7 @@ class WaterlooTheme {
   final DataObjectTableTheme tableTheme;
   final WaterlooAppBarTheme appBarTheme;
   final WaterlooGridTheme gridTheme;
+  final WaterlooFormMessageTheme formMessageTheme;
 
   WaterlooTheme(
       {this.textFieldTheme = const WaterlooTextFieldTheme(),
@@ -38,5 +40,7 @@ class WaterlooTheme {
       this.percentFieldTheme = const WaterlooPercentFieldTheme(),
       this.tableTheme = const DataObjectTableTheme(),
       this.appBarTheme = const WaterlooAppBarTheme(),
-      this.gridTheme = const WaterlooGridTheme() });
+      this.gridTheme = const WaterlooGridTheme(),
+      this.formMessageTheme = const WaterlooFormMessageTheme()
+      });
 }

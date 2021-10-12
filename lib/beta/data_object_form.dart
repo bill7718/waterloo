@@ -37,9 +37,11 @@ class DataObjectForm extends StatelessWidget {
         data: data,
         events: events,
         formTitle: formTitle,
+        formSubtitle: formSubtitle,
         formMessage: formMessage,
         initialError: initialError,
         children: children,
+        preferredColumnCount: 1,
         act: act);
   }
 }
