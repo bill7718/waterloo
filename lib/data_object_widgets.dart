@@ -2,7 +2,6 @@
 /// Widgets that utilise [DataObject] classes
 ///
 library data_object_widgets;
-
 export 'src/data_object_text_field.dart';
 
 
@@ -15,8 +14,9 @@ export 'beta/data_object_date_field.dart';
 export 'beta/data_object_currency_field.dart';
 export 'beta/data_object_percent_field.dart';
 export 'beta/data_object_table.dart';
-export 'beta/data_object_change_notifier.dart';
+export 'src/data_object_change_notifier.dart';
 export 'beta/data_object_grid_form.dart';
+export 'beta/data_object_cell_content.dart';
 
 export 'beta/data_object_form.dart';
 export 'beta/data_object_dialog.dart';

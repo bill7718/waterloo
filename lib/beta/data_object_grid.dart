@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:serializable_data/serializable_data.dart';
-import 'package:waterloo/beta/data_object_change_notifier.dart';
+import 'package:waterloo/src/data_object_change_notifier.dart';
 import 'package:waterloo/src/waterloo_theme.dart';
 import 'data_object_widget.dart';
 import 'waterloo_grid.dart';

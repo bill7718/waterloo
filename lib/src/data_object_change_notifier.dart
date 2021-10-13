@@ -4,10 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:serializable_data/serializable_data.dart';
 
+///
+/// This widgets rebuilds its ren using a [builder] if any of the fields in [fieldNames] in any of the
+/// data objects in [data] notify this widget of a change.
+///
 class DataObjectChangeNotifier extends StatelessWidget {
 
+  /// The [DataObject]s ot be listened to
   final List<DataObject> data;
+
+  /// The fields within the data objects that trigger a rebuild
   final List<List<String>> fieldNames;
+
+  /// Builds the child widget
   final Function builder;
 
   const DataObjectChangeNotifier({Key? key,

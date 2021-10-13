@@ -7,6 +7,7 @@
 /// {@category overview}
 library waterloo;
 
+
 export 'src/waterloo_theme.dart';
 export 'src/waterloo_text_field.dart';
 export 'src/waterloo_date_field.dart';
@@ -25,7 +26,7 @@ export 'beta/waterloo_future_drop_down_list.dart';
 
 export 'beta/waterloo_form_container.dart';
 export 'src/waterloo_form_message.dart';
-
+export 'beta/text.dart';
 
 export 'src/waterloo_currency_field.dart';
 export 'beta/waterloo_percent_field.dart';
