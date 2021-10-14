@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:waterloo/beta/waterloo_grid.dart';
+import 'package:waterloo/beta/waterloo_journey_scaffold.dart';
 import 'package:waterloo/src/waterloo_currency_field.dart';
 import 'package:waterloo/src/waterloo_date_field.dart';
 import 'package:waterloo/beta/waterloo_form_container.dart';
@@ -29,6 +30,7 @@ class WaterlooTheme {
   final WaterlooAppBarTheme appBarTheme;
   final WaterlooGridTheme gridTheme;
   final WaterlooFormMessageTheme formMessageTheme;
+  final WaterlooJourneyScaffoldTheme scaffoldTheme;
 
   WaterlooTheme(
       {this.textFieldTheme = const WaterlooTextFieldTheme(),
@@ -41,6 +43,7 @@ class WaterlooTheme {
       this.tableTheme = const DataObjectTableTheme(),
       this.appBarTheme = const WaterlooAppBarTheme(),
       this.gridTheme = const WaterlooGridTheme(),
-      this.formMessageTheme = const WaterlooFormMessageTheme()
+      this.formMessageTheme = const WaterlooFormMessageTheme(),
+        this.scaffoldTheme = const WaterlooJourneyScaffoldTheme()
       });
 }

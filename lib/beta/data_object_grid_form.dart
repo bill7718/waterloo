@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:serializable_data/serializable_data.dart';
 import 'package:waterloo/beta/waterloo_event_handler.dart';
 import 'package:waterloo/beta/waterloo_form_container.dart';
+import 'package:waterloo/beta/waterloo_journey_scaffold.dart';
 import 'package:waterloo/src/waterloo_form_message.dart';
 import 'package:waterloo/beta/waterloo_grid.dart';
 import 'package:waterloo/src/waterloo_text_button.dart';
@@ -100,20 +101,12 @@ class DataObjectGridForm extends StatelessWidget {
       rowSeparation: rowSeparation,
     );
 
-    return Scaffold(
-        appBar: WaterlooAppBar.get(
-            title: Provider.of<WaterlooTextProvider>(context, listen: false).get(formTitle) ?? '',
-            context: context,
-            subtitle: Provider.of<WaterlooTextProvider>(context, listen: false).get(formSubtitle) ?? '',
-            handleAction: act
-                ? () {
-                    eventHandler.handleEvent(context, event: Provider.of<WaterlooTheme>(context, listen: false).dataObjectFormTheme.homeEvent);
-                  }
-                : null),
-        body: WaterlooFormContainer(
-          children: [grid],
-          formKey: formKey,
-        ));
+    return WaterlooJourneyScaffold(
+        eventHandler: eventHandler,
+        formKey: formKey,
+        title: formTitle,
+        subTitle: formSubtitle,
+        child: grid);
   }
 }
 

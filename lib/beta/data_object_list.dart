@@ -7,7 +7,7 @@ import '../src/waterloo_drop_down_list.dart';
 import 'waterloo_future_drop_down_list.dart';
 
 
-class DataObjectList extends StatelessWidget {
+class DataObjectList<T extends PersistableDataObject> extends StatelessWidget {
 
   final String objectType;
 
@@ -34,11 +34,11 @@ class DataObjectList extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return FutureWaterlooDropDownList(label: screenFieldLabel ?? descriptionLabel, valueBinder: valueBinder,
-    getter: DataListGetter(objectType, filterLabel, filterValue, descriptionLabel, idLabel, reader),);
+    getter: DataListGetter<T>(objectType, filterLabel, filterValue, descriptionLabel, idLabel, reader),);
   }
 }
 
-class DataListGetter implements ListGetter {
+class DataListGetter<T extends PersistableDataObject> implements ListGetter {
 
   final String objectType;
 
@@ -59,7 +59,7 @@ class DataListGetter implements ListGetter {
   Future<List<ListItem>> getList() {
     var c = Completer<List<ListItem>>();
 
-    var f = reader.query(objectType, field: filterLabel, value: filterValue);
+    var f = reader.query<T>(objectType, field: filterLabel, value: filterValue);
 
     f.then( (r) {
       var response = <ListItem>[];

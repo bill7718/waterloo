@@ -52,4 +52,9 @@ class ChangeNotifierList<T extends Object> with ChangeNotifier {
     notifyListeners();
   }
 
+  //TODO doc and test this
+  void notify() {
+    notifyListeners();
+  }
+
 }

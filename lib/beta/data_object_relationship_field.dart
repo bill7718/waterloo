@@ -4,7 +4,7 @@ import 'package:serializable_data/serializable_data.dart';
 
 import 'data_object_list.dart';
 
-class DataObjectRelationshipField extends StatelessWidget {
+class DataObjectRelationshipField<T extends PersistableDataObject> extends StatelessWidget {
   final DataObjectRelationship data;
 
   final RelationshipSpecification relationshipSpecification;
@@ -13,7 +13,7 @@ class DataObjectRelationshipField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DataObjectList(
+    return DataObjectList<T>(
       reader: Provider.of<DatabaseReader>(context),
       objectType: relationshipSpecification.to,
       filterLabel: relationshipSpecification.filterLabel,

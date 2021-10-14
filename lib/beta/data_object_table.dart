@@ -8,6 +8,9 @@ import 'data_object_cell_content.dart';
 
 import '../src/change_notifier_list.dart';
 
+//TODO color used in the edit/delete icons
+
+
 class DataObjectTable<T extends DataObject> extends StatelessWidget {
   final ChangeNotifierList<T> data;
   final Map<String, DataSpecification> specifications;
@@ -15,13 +18,11 @@ class DataObjectTable<T extends DataObject> extends StatelessWidget {
   final bool edit;
   final bool delete;
 
+  /// Title to use for the edit dialog if edit is enabled
+  final String? title;
+
   const DataObjectTable(
-      {Key? key,
-      required this.data,
-      required this.specifications,
-      required this.fieldNames,
-      this.edit = false,
-      this.delete = false})
+      {Key? key, required this.data, required this.specifications, required this.fieldNames, this.edit = false, this.delete = false, this.title})
       : super(key: key);
 
   @override
@@ -31,17 +32,14 @@ class DataObjectTable<T extends DataObject> extends StatelessWidget {
         child: Consumer<ChangeNotifierList<T>>(builder: (context, l, _) {
           var columns = <DataColumn>[];
           for (var field in fieldNames) {
-            columns.add(
-                DataColumn(label: Text(Provider.of<WaterlooTextProvider>(context).get(specifications[field]?.label ?? field) ?? '')));
+            columns.add(DataColumn(label: Text(Provider.of<WaterlooTextProvider>(context).get(specifications[field]?.label ?? field) ?? '')));
           }
           if (edit) {
-            columns.add(
-                const DataColumn(label: Text('')));
+            columns.add(const DataColumn(label: Text('')));
           }
 
           if (delete) {
-            columns.add(
-                const DataColumn(label: Text('')));
+            columns.add(const DataColumn(label: Text('')));
           }
 
           var rows = <DataRow>[];
@@ -59,9 +57,8 @@ class DataObjectTable<T extends DataObject> extends StatelessWidget {
               cells.add(DataCell(IconButton(
                 icon: Icon(Provider.of<WaterlooTheme>(context).tableTheme.editIcon),
                 onPressed: () {
-                  showDataObjectDialog(
-                      context, [item], [item.fields], specifications, (d) {
-                    data.replaceAll(data.list);
+                  showDataObjectDialog(context, [item], [item.fields], title, specifications, (d) {
+                    data.notify();
                   });
                 },
               )));
@@ -84,9 +81,7 @@ class DataObjectTable<T extends DataObject> extends StatelessWidget {
           }
 
           if (rows.isNotEmpty) {
-            return SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: DataTable(columns: columns, rows: rows));
+            return SingleChildScrollView(scrollDirection: Axis.horizontal, child: DataTable(columns: columns, rows: rows));
           } else {
             return Container();
           }
@@ -94,10 +89,9 @@ class DataObjectTable<T extends DataObject> extends StatelessWidget {
   }
 }
 
-
 class DataObjectTableTheme {
   final IconData editIcon;
   final IconData deleteIcon;
 
-  const DataObjectTableTheme({this.editIcon = Icons.edit, this.deleteIcon = Icons.delete });
+  const DataObjectTableTheme({this.editIcon = Icons.edit, this.deleteIcon = Icons.delete});
 }

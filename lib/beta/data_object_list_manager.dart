@@ -7,12 +7,17 @@ class DataObjectListManager extends StatefulWidget {
   final String fieldName;
   final DataObject data;
   final Map<String, DataSpecification> specifications;
+  final bool edit;
+  final bool delete;
 
   const DataObjectListManager(
       {Key? key,
       required this.fieldName,
       required this.data,
-      required this.specifications})
+      required this.specifications,
+      this.edit = true,
+      this.delete = true
+      })
       : super(key: key);
 
   @override
@@ -55,7 +60,10 @@ class DataObjectListManagerState extends State<DataObjectListManager> {
             child: DataObjectTable(
                 data: list,
                 fieldNames: fieldNames,
-                specifications: widget.specifications),
+                specifications: widget.specifications,
+            edit: widget.edit,
+              delete: widget.delete
+            ),
             layoutRule: WaterlooGridChildLayoutRule.full),
       if (switchValue || list.list.isNotEmpty)
         WaterlooGridChild(
@@ -66,7 +74,9 @@ class DataObjectListManagerState extends State<DataObjectListManager> {
               onPressed: () {
                 var o = widget.specifications[widget.fieldName]!.constructor!();
                 showDataObjectDialog(
-                    context, [o], [o.fields], widget.specifications, (d) {
+                    context, [o], [o.fields],  widget.specifications[widget.fieldName]!.itemDialogTitle,
+                    widget.specifications,
+                        (d) {
                   if (d != null) {
                     if (d is List) {
                       list.add(d.first);
