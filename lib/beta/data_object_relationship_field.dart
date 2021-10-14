@@ -15,7 +15,6 @@ class DataObjectRelationshipField<T extends PersistableDataObject> extends State
   Widget build(BuildContext context) {
     return DataObjectList<T>(
       reader: Provider.of<DatabaseReader>(context),
-      objectType: relationshipSpecification.to,
       filterLabel: relationshipSpecification.filterLabel,
       filterValue: relationshipSpecification.filterValue,
       descriptionLabel: relationshipSpecification.descriptionLabel ?? '',

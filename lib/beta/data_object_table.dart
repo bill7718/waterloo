@@ -8,21 +8,19 @@ import 'data_object_cell_content.dart';
 
 import '../src/change_notifier_list.dart';
 
-//TODO color used in the edit/delete icons
-
-
 class DataObjectTable<T extends DataObject> extends StatelessWidget {
   final ChangeNotifierList<T> data;
   final Map<String, DataSpecification> specifications;
   final List<String> fieldNames;
   final bool edit;
+  final Function? editor;
   final bool delete;
 
   /// Title to use for the edit dialog if edit is enabled
   final String? title;
 
   const DataObjectTable(
-      {Key? key, required this.data, required this.specifications, required this.fieldNames, this.edit = false, this.delete = false, this.title})
+      {Key? key, required this.data, required this.specifications, required this.fieldNames, this.edit = false, this.editor,  this.delete = false, this.title})
       : super(key: key);
 
   @override
@@ -55,17 +53,24 @@ class DataObjectTable<T extends DataObject> extends StatelessWidget {
 
             if (edit) {
               cells.add(DataCell(IconButton(
+                color: Theme.of(context).primaryColor,
                 icon: Icon(Provider.of<WaterlooTheme>(context).tableTheme.editIcon),
                 onPressed: () {
-                  showDataObjectDialog(context, [item], [item.fields], title, specifications, (d) {
-                    data.notify();
-                  });
+                  if (editor != null) {
+                    editor!(item);
+                  } else {
+                    showDataObjectDialog(context, [item], [item.fields], title, specifications, (d) {
+                      data.notify();
+                    });
+                  }
+
                 },
               )));
             }
 
             if (delete) {
               cells.add(DataCell(IconButton(
+                color: Theme.of(context).primaryColor,
                 icon: Icon(Provider.of<WaterlooTheme>(context).tableTheme.deleteIcon),
                 onPressed: () {
                   showDataObjectDeleteDialog(context, item, (d) {
@@ -81,7 +86,7 @@ class DataObjectTable<T extends DataObject> extends StatelessWidget {
           }
 
           if (rows.isNotEmpty) {
-            return SingleChildScrollView(scrollDirection: Axis.horizontal, child: DataTable(columns: columns, rows: rows));
+            return Scrollbar(thickness: 10, child: SingleChildScrollView(scrollDirection: Axis.horizontal, child: DataTable(columns: columns, rows: rows)));
           } else {
             return Container();
           }

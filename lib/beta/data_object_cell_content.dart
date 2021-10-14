@@ -44,7 +44,7 @@ class DataObjectCellContent extends StatelessWidget {
     }
 
     if (dataSpecification?.type == DataSpecification.currencyType) {
-      return Text(toDecimal(value, 2, '.') ?? '');
+      return value == null ? Container() : Text(toDecimal(value, 2, '.') ?? '');
     }
 
     return Text(value);

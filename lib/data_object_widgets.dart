@@ -17,6 +17,7 @@ export 'beta/data_object_table.dart';
 export 'src/data_object_change_notifier.dart';
 export 'beta/data_object_grid_form.dart';
 export 'beta/data_object_cell_content.dart';
+export 'beta/data_object_grid_form_dialog.dart';
 
 export 'beta/data_object_form.dart';
 export 'beta/data_object_dialog.dart';

@@ -1,4 +1,8 @@
 
+import 'dart:async';
+
+import 'package:flutter/material.dart';
+
 abstract class WaterlooEventHandler {
 
   Future<void> handleEvent( dynamic context,
@@ -10,6 +14,33 @@ abstract class WaterlooEventHandler {
   void handleException(dynamic context, dynamic ex, StackTrace? st );
 }
 
+class DialogEventHandler implements WaterlooEventHandler {
+  @override
+  Future<void> handleEvent(context, {String event = '', output}) {
+    var c = Completer<void>();
+    if (event == 'Ok') {
+      Navigator.pop(context, output);
+    } else {
+      Navigator.pop(context);
+    }
+    c.complete();
+    return c.future;
+  }
+
+  @override
+  void handleException(context, dynamic ex, StackTrace? st) {
+    Navigator.pop(context, DialogException(ex.toString()));
+  }
+}
+
+class DialogException implements Exception {
+  final String _message;
+
+  DialogException(this._message);
+
+  @override
+  String toString() => _message;
+}
 
 class EventSpecification {
 

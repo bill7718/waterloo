@@ -29,6 +29,13 @@ class DataObjectGridForm extends StatelessWidget {
   final double? rowSeparation;
   final String? initialError;
 
+  /// If true then the form checks that all the data objects are valid before they are returned to the
+  /// event handler. Allows cross field validation to be easily applied at the data object level.
+  ///
+  /// Defaults to true. Set to false if this page leaves the data object invalid or if
+  /// it does not capture all the mandatory data for the objects
+  final bool validateDataObjects;
+
   DataObjectGridForm(
       {Key? key,
       required this.eventHandler,
@@ -46,7 +53,8 @@ class DataObjectGridForm extends StatelessWidget {
       this.preferredColumnWidth,
       this.preferredColumnCount,
       this.rowSeparation,
-      this.columnSeparation})
+      this.columnSeparation,
+      this.validateDataObjects = true})
       : super(key: key);
 
 
@@ -73,8 +81,10 @@ class DataObjectGridForm extends StatelessWidget {
             var formState = formKey.currentState as FormState;
             if (formState.validate()) {
               var s = event.additionalValidation == null ? null : event.additionalValidation!();
-              for (var d in data) {
-                s ??= d.validate();
+              if (validateDataObjects) {
+                for (var d in data) {
+                  s ??= d.validate();
+                }
               }
               s == null
                   ? eventHandler.handleEvent(context, event: event.event, output: data)

@@ -9,8 +9,6 @@ import 'waterloo_future_drop_down_list.dart';
 
 class DataObjectList<T extends PersistableDataObject> extends StatelessWidget {
 
-  final String objectType;
-
   final String? filterLabel;
 
   final dynamic filterValue;
@@ -25,7 +23,7 @@ class DataObjectList<T extends PersistableDataObject> extends StatelessWidget {
 
   final Function valueBinder;
 
-  const DataObjectList({Key? key, required this.objectType, required this.filterLabel, this.filterValue,
+  const DataObjectList({Key? key, required this.filterLabel, this.filterValue,
     required this.descriptionLabel, this.idLabel = PersistableDataObject.idLabel, required this.reader,
     required this.valueBinder, this.screenFieldLabel
   }) : super(key: key);
@@ -34,13 +32,11 @@ class DataObjectList<T extends PersistableDataObject> extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return FutureWaterlooDropDownList(label: screenFieldLabel ?? descriptionLabel, valueBinder: valueBinder,
-    getter: DataListGetter<T>(objectType, filterLabel, filterValue, descriptionLabel, idLabel, reader),);
+    getter: DataListGetter<T>(filterLabel, filterValue, descriptionLabel, idLabel, reader),);
   }
 }
 
 class DataListGetter<T extends PersistableDataObject> implements ListGetter {
-
-  final String objectType;
 
   final String? filterLabel;
 
@@ -52,14 +48,14 @@ class DataListGetter<T extends PersistableDataObject> implements ListGetter {
 
   final DatabaseReader reader;
 
-  DataListGetter(this.objectType, this.filterLabel, this.filterValue,
+  DataListGetter(this.filterLabel, this.filterValue,
     this.descriptionLabel, this.idLabel, this.reader);
 
   @override
   Future<List<ListItem>> getList() {
     var c = Completer<List<ListItem>>();
 
-    var f = reader.query<T>(objectType, field: filterLabel, value: filterValue);
+    var f = reader.query<T>(field: filterLabel, value: filterValue);
 
     f.then( (r) {
       var response = <ListItem>[];
