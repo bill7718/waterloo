@@ -38,3 +38,5 @@ export 'beta/waterloo_grid.dart';
 export 'beta/waterloo_event_handler.dart';
 
 export 'src/waterloo_text_provider.dart';
+
+export 'beta/markdown_viewer.dart';

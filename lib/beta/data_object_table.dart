@@ -20,7 +20,14 @@ class DataObjectTable<T extends DataObject> extends StatelessWidget {
   final String? title;
 
   const DataObjectTable(
-      {Key? key, required this.data, required this.specifications, required this.fieldNames, this.edit = false, this.editor,  this.delete = false, this.title})
+      {Key? key,
+      required this.data,
+      required this.specifications,
+      required this.fieldNames,
+      this.edit = false,
+      this.editor,
+      this.delete = false,
+      this.title})
       : super(key: key);
 
   @override
@@ -63,7 +70,6 @@ class DataObjectTable<T extends DataObject> extends StatelessWidget {
                       data.notify();
                     });
                   }
-
                 },
               )));
             }
@@ -86,7 +92,10 @@ class DataObjectTable<T extends DataObject> extends StatelessWidget {
           }
 
           if (rows.isNotEmpty) {
-            return Scrollbar(thickness: 10, child: SingleChildScrollView(scrollDirection: Axis.horizontal, child: DataTable(columns: columns, rows: rows)));
+            return Scrollbar(
+                child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: DataTable(columnSpacing: 28, columns: columns, rows: rows)));
           } else {
             return Container();
           }
@@ -100,3 +109,5 @@ class DataObjectTableTheme {
 
   const DataObjectTableTheme({this.editIcon = Icons.edit, this.deleteIcon = Icons.delete});
 }
+
+//TODO Horizontal scrolling

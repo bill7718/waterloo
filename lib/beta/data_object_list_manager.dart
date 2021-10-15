@@ -16,7 +16,7 @@ class DataObjectListManager extends StatefulWidget {
       required this.data,
       required this.specifications,
       this.edit = true,
-      this.delete = true
+      this.delete = true,
       })
       : super(key: key);
 
@@ -30,7 +30,7 @@ class DataObjectListManagerState extends State<DataObjectListManager> {
 
   @override
   void initState() {
-    switchValue = widget.data.get(widget.fieldName).isNotEmpty;
+    switchValue = widget.data.get(widget.fieldName).isNotEmpty | !(widget.specifications[widget.fieldName]?.showAddItemQuestion ?? true);
     list.replaceAll(widget.data.get(widget.fieldName) ?? []);
     super.initState();
   }
@@ -46,7 +46,7 @@ class DataObjectListManagerState extends State<DataObjectListManager> {
 
     return WaterlooGrid(preferredColumnCount: 3,
         children: [
-      WaterlooGridChild(
+      if (widget.specifications[widget.fieldName]?.showAddItemQuestion ?? true) WaterlooGridChild(
           layoutRule: WaterlooGridChildLayoutRule.full,
           child: WaterlooSwitchTile(
             label:

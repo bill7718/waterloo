@@ -47,6 +47,10 @@ class DataObjectCellContent extends StatelessWidget {
       return value == null ? Container() : Text(toDecimal(value, 2, '.') ?? '');
     }
 
+    if (dataSpecification?.type == DataSpecification.integerType) {
+      return value == null ? Container() : Text(value.toString());
+    }
+
     return Text(value);
   }
 }
