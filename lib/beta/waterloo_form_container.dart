@@ -15,32 +15,51 @@ class WaterlooFormContainer extends StatelessWidget {
         key: formKey,
         child: Card(
           margin: const EdgeInsets.fromLTRB(20, 20, 20, 20),
-          child: Container(
-              margin: const EdgeInsets.fromLTRB(20, 20, 20, 20),
-              child: ListView(children: children)),
-
+          child: Container(margin: const EdgeInsets.fromLTRB(20, 20, 20, 20), child: ListView(children: children)),
         ));
   }
 }
 
 class WaterlooAppBar {
-  static AppBar get({required String title, String? subtitle, required BuildContext context, Function? handleAction }) => AppBar(
-        title: Column ( children: [
-          Row(mainAxisAlignment: MainAxisAlignment.center , children: [Text(title), ]),
-          if (subtitle != null) Row(mainAxisAlignment: MainAxisAlignment.center , children: [Text(subtitle, style: Provider.of<WaterlooTheme>(context).appBarTheme.subTitleStyle,)])]),
-        actions: [ if (handleAction != null) IconButton( icon: Icon(Provider.of<WaterlooTheme>(context).appBarTheme.actionIcon), onPressed: () { handleAction(); },)],
+  static AppBar get({required String title, String? subtitle, required BuildContext context, Function? handleAction, Function? handleAction2}) => AppBar(
+        title: Column(children: [
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Text(title),
+          ]),
+          if (subtitle != null)
+            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Text(
+                subtitle,
+                style: Provider.of<WaterlooTheme>(context).appBarTheme.subTitleStyle,
+              )
+            ])
+        ]),
+        actions: [
+          if (handleAction != null)
+            IconButton(
+              icon: Icon(Provider.of<WaterlooTheme>(context).appBarTheme.actionIcon),
+              onPressed: () {
+                handleAction();
+              },
+            ),
+          if (handleAction2 != null)
+            IconButton(
+              icon: const Icon(Icons.refresh),
+              onPressed: () {
+                handleAction2();
+              },
+            ),
+        ],
         automaticallyImplyLeading: false,
       );
 }
 
 class WaterlooAppBarTheme {
-
   final IconData actionIcon;
   final TextStyle subTitleStyle;
 
-  const WaterlooAppBarTheme({this.actionIcon =  Icons.home, this.subTitleStyle = const TextStyle(fontSize: 16) });
+  const WaterlooAppBarTheme({this.actionIcon = Icons.home, this.subTitleStyle = const TextStyle(fontSize: 16)});
 }
-
 
 class WaterlooButtonRow extends StatelessWidget {
   final List<Widget> children;
@@ -65,10 +84,7 @@ class WaterlooLongFormContainer extends StatelessWidget {
         key: formKey,
         child: Card(
           margin: const EdgeInsets.fromLTRB(20, 20, 20, 20),
-          child: Container(
-              margin: const EdgeInsets.fromLTRB(20, 20, 20, 20),
-              child: ListView(children: children)),
+          child: Container(margin: const EdgeInsets.fromLTRB(20, 20, 20, 20), child: ListView(children: children)),
         ));
   }
 }
-

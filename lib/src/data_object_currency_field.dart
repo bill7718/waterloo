@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:serializable_data/serializable_data.dart';
 
-import '../src/waterloo_currency_field.dart';
-import '../src/waterloo_text_field.dart';
-import '../src/waterloo_text_provider.dart';
+import 'waterloo_currency_field.dart';
+import 'waterloo_text_field.dart';
 
+///
+/// Wrapper around a [WaterlooCurrencyField] that binds the value to a field in a [DataObject]
+///
 class DataObjectCurrencyField extends StatelessWidget {
   /// The label for the field
   final String label;
@@ -15,7 +16,7 @@ class DataObjectCurrencyField extends StatelessWidget {
 
   final DataObject data;
 
-  ///
+  /// The field within the data object that is bound
   final String fieldName;
 
   /// Validates the entered value. Returns an error message
@@ -41,7 +42,8 @@ class DataObjectCurrencyField extends StatelessWidget {
         validator: (v) {
           var s = validator(v);
           s ??= data.validate(fields: [fieldName]);
-          return s == null ? null : Provider.of<WaterlooTextProvider>(context, listen: false).get(s);
-        });
+          return s;
+        },
+    help: help,);
   }
 }

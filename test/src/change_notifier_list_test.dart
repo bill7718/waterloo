@@ -40,6 +40,10 @@ void main() {
      list.replaceAll( [ item2, item3, item4 ]);
      expect(count, 4);
 
+     // notify directly
+     list.notify();
+     expect(count, 5);
+
      var item5 = Item(5);
      list.add(item5, beforeItem: item4);
      expect(list.list[2].i, 5);
@@ -52,6 +56,8 @@ void main() {
      list.add(item2, beforeItem: item4);
      expect(list.list.length, 5);
      expect(list.list[3].i, 2);
+
+
 
    });
  });

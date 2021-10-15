@@ -1,16 +1,15 @@
 
 import 'dart:async';
 
-import 'package:http/http.dart' as http;
-
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class MarkdownViewer extends StatefulWidget {
 
   final String content;
   final String baseUrl;
 
-  const MarkdownViewer({Key? key, this.content = 'index.md', this.baseUrl = 'http://localhost:8081/doc/'}) : super(key:key);
+  const MarkdownViewer({Key? key, required this.content, this.baseUrl = 'http://localhost:8081/doc/'}) : super(key:key);
 
   @override
   State<StatefulWidget> createState()=>MarkdownViewerState();
@@ -22,6 +21,12 @@ class MarkdownViewerState extends State<MarkdownViewer> {
   List<String> docStack = <String>[];
 
   List<String> tableData = <String>[];
+
+  void refresh() {
+    setState(() {
+
+    });
+  }
 
   void back() {
     setState(() {
@@ -250,7 +255,13 @@ class MarkdownViewerState extends State<MarkdownViewer> {
       rows.add(DataRow(cells: cells));
     }
 
-    return DataTable(columnSpacing: 28, columns: columns, rows: rows, headingTextStyle: Theme.of(context).textTheme.subtitle2?.copyWith(color: Theme.of(context).primaryColor),);
+    return SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: DataTable(
+          columnSpacing: 10,
+          columns: columns,
+          rows: rows,
+          headingTextStyle: Theme.of(context).textTheme.subtitle2?.copyWith(color: Theme.of(context).primaryColor),));
   }
 
   Widget normalTextLine(String text, TextStyle? link) {
