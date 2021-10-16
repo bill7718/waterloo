@@ -11,7 +11,13 @@ import '../src/change_notifier_list.dart';
 class DataObjectTable<T extends DataObject> extends StatelessWidget {
   final ChangeNotifierList<T> data;
   final Map<String, DataSpecification> specifications;
+
   final List<String> fieldNames;
+
+  /// The field names to use in the dialog. If not provided then the default list of fields for the
+  /// DataObject is used
+  final List<String>? dialogFieldNames;
+
   final bool edit;
   final Function? editor;
   final bool delete;
@@ -24,6 +30,7 @@ class DataObjectTable<T extends DataObject> extends StatelessWidget {
       required this.data,
       required this.specifications,
       required this.fieldNames,
+      this.dialogFieldNames,
       this.edit = false,
       this.editor,
       this.delete = false,
@@ -32,6 +39,7 @@ class DataObjectTable<T extends DataObject> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Provider.of<WaterlooTheme>(context).tableTheme;
     return ChangeNotifierProvider<ChangeNotifierList<T>>.value(
         value: data,
         child: Consumer<ChangeNotifierList<T>>(builder: (context, l, _) {
@@ -61,12 +69,12 @@ class DataObjectTable<T extends DataObject> extends StatelessWidget {
             if (edit) {
               cells.add(DataCell(IconButton(
                 color: Theme.of(context).primaryColor,
-                icon: Icon(Provider.of<WaterlooTheme>(context).tableTheme.editIcon),
+                icon: Icon(theme.editIcon),
                 onPressed: () {
                   if (editor != null) {
                     editor!(item);
                   } else {
-                    showDataObjectDialog(context, [item], [item.fields], title, specifications, (d) {
+                    showDataObjectDialog(context, [item], [dialogFieldNames ?? item.fields], title, specifications, (d) {
                       data.notify();
                     });
                   }
@@ -77,7 +85,7 @@ class DataObjectTable<T extends DataObject> extends StatelessWidget {
             if (delete) {
               cells.add(DataCell(IconButton(
                 color: Theme.of(context).primaryColor,
-                icon: Icon(Provider.of<WaterlooTheme>(context).tableTheme.deleteIcon),
+                icon: Icon(theme.deleteIcon),
                 onPressed: () {
                   showDataObjectDeleteDialog(context, item, (d) {
                     if (d) {
@@ -94,8 +102,7 @@ class DataObjectTable<T extends DataObject> extends StatelessWidget {
           if (rows.isNotEmpty) {
             return Scrollbar(
                 child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: DataTable(columnSpacing: 28, columns: columns, rows: rows)));
+                    scrollDirection: Axis.horizontal, child: DataTable(columnSpacing: theme.columnSpacing, columns: columns, rows: rows)));
           } else {
             return Container();
           }
@@ -106,8 +113,9 @@ class DataObjectTable<T extends DataObject> extends StatelessWidget {
 class DataObjectTableTheme {
   final IconData editIcon;
   final IconData deleteIcon;
+  final double columnSpacing;
 
-  const DataObjectTableTheme({this.editIcon = Icons.edit, this.deleteIcon = Icons.delete});
+  const DataObjectTableTheme({this.editIcon = Icons.edit, this.deleteIcon = Icons.delete, this.columnSpacing = 28});
 }
 
 //TODO Horizontal scrolling

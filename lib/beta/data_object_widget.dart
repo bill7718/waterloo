@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:injector/injector.dart';
 import 'package:serializable_data/serializable_data.dart';
 import '../src/data_object_currency_field.dart';
 import 'data_object_date_field.dart';
