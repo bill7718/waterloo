@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:waterloo/beta/data_object_view.dart';
 import 'package:waterloo/beta/waterloo_grid.dart';
 import 'package:waterloo/beta/waterloo_journey_scaffold.dart';
 import 'package:waterloo/src/waterloo_currency_field.dart';
@@ -18,7 +19,6 @@ import 'waterloo_text_field.dart';
 /// Use [ThemeData] in preference to these theme parameters.
 ///
 class WaterlooTheme {
-
   final WaterlooTextFieldTheme textFieldTheme;
   final DataObjectFormTheme dataObjectFormTheme;
   final WaterlooDropDownListTheme waterlooDropDownListTheme;
@@ -31,19 +31,21 @@ class WaterlooTheme {
   final WaterlooGridTheme gridTheme;
   final WaterlooFormMessageTheme formMessageTheme;
   final WaterlooJourneyScaffoldTheme scaffoldTheme;
+  final DataObjectViewTheme viewTheme;
 
-  WaterlooTheme(
-      {this.textFieldTheme = const WaterlooTextFieldTheme(),
-      this.dataObjectFormTheme = const DataObjectFormTheme(),
-      this.waterlooDropDownListTheme = const WaterlooDropDownListTheme(),
-      this.switchTileTheme = const WaterlooSwitchTileTheme(),
-      this.dateFieldTheme = const WaterlooDateFieldTheme(),
-      this.currencyFieldTheme = const WaterlooCurrencyFieldTheme(),
-      this.percentFieldTheme = const WaterlooPercentFieldTheme(),
-      this.tableTheme = const DataObjectTableTheme(),
-      this.appBarTheme = const WaterlooAppBarTheme(),
-      this.gridTheme = const WaterlooGridTheme(),
-      this.formMessageTheme = const WaterlooFormMessageTheme(),
-        this.scaffoldTheme = const WaterlooJourneyScaffoldTheme()
-      });
+  WaterlooTheme({
+    this.textFieldTheme = const WaterlooTextFieldTheme(),
+    this.dataObjectFormTheme = const DataObjectFormTheme(),
+    this.waterlooDropDownListTheme = const WaterlooDropDownListTheme(),
+    this.switchTileTheme = const WaterlooSwitchTileTheme(),
+    this.dateFieldTheme = const WaterlooDateFieldTheme(),
+    this.currencyFieldTheme = const WaterlooCurrencyFieldTheme(),
+    this.percentFieldTheme = const WaterlooPercentFieldTheme(),
+    this.tableTheme = const DataObjectTableTheme(),
+    this.appBarTheme = const WaterlooAppBarTheme(),
+    this.gridTheme = const WaterlooGridTheme(),
+    this.formMessageTheme = const WaterlooFormMessageTheme(),
+    this.scaffoldTheme = const WaterlooJourneyScaffoldTheme(),
+    this.viewTheme = const DataObjectViewTheme(),
+  });
 }
