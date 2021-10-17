@@ -15,6 +15,7 @@ import 'src/data_object_text_field_test.dart' as data_object_text;
 import 'src/data_object_drop_down_list_test.dart' as data_object_drop;
 import 'src/data_object_change_notifier_test.dart' as data_object_change;
 import 'src/data_object_currency_field_test.dart' as data_object_currency;
+import 'src/data_object_view_test.dart' as data_object_view;
 
 main () {
 
@@ -33,6 +34,7 @@ main () {
   data_object_drop.main();
   data_object_change.main();
   data_object_currency.main();
+  data_object_view.main();
 
 }
 

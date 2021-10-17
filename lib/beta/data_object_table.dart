@@ -4,7 +4,7 @@ import 'package:serializable_data/serializable_data.dart';
 import 'package:waterloo/data_object_widgets.dart';
 import 'package:waterloo/src/waterloo_text_provider.dart';
 import 'package:waterloo/src/waterloo_theme.dart';
-import 'data_object_view.dart';
+import '../src/data_object_view.dart';
 
 import '../src/change_notifier_list.dart';
 

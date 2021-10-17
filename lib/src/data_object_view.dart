@@ -7,6 +7,7 @@ import 'package:waterloo/src/waterloo_theme.dart';
 /// A view only widget which displays the contents of a field in a [DataObject]
 ///
 class DataObjectView extends StatelessWidget {
+
   ///
   /// The object containing the data to be shown
   ///
@@ -34,8 +35,6 @@ class DataObjectView extends StatelessWidget {
     }
 
     switch (dataSpecification?.dataType) {
-      case null:
-        return Text(value.toString());
 
       case DataSpecification.boolType:
         if (value) {
@@ -74,7 +73,7 @@ class DataObjectView extends StatelessWidget {
         return Text(value.toString());
 
       default:
-        // [dataObjectType] [dataObjectListType] [percentType]
+        /// [dataObjectType] [dataObjectListType] [percentType]
         return Container();
     }
   }

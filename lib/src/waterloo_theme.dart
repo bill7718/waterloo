@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:waterloo/beta/data_object_view.dart';
+import 'package:waterloo/src/data_object_view.dart';
 import 'package:waterloo/beta/waterloo_grid.dart';
 import 'package:waterloo/beta/waterloo_journey_scaffold.dart';
 import 'package:waterloo/src/waterloo_currency_field.dart';
