@@ -3,20 +3,28 @@ import 'package:serializable_data/serializable_data.dart';
 
 import '../src/waterloo_date_field.dart';
 
+///
+/// Wrapper around a [WaterlooDateField] that binds the value to a field in a [DataObject]
+///
 class DataObjectDateField extends StatelessWidget {
+
   /// The label for the field
   final String label;
 
   /// Optional help to be shown with the field
   final String help;
 
+  /// The data object that contains the field being shown
   final DataObject data;
 
-  ///
+  /// The name of the field to show
   final String fieldName;
 
+
+  /// {@macro maxDurationBefore}
   final Duration? maxDurationBefore;
 
+  /// {@macro maxDurationAfter}
   final Duration? maxDurationAfter;
 
   const DataObjectDateField(

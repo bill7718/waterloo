@@ -15,12 +15,10 @@ class WaterlooDateField extends StatefulWidget {
   /// The text field label - passed directly to the [WaterlooTextField]
   final String label;
 
-  /// Used by the calendar widget to control the largest allowable date that can be selected.
-  /// Specified as a duration relative to the current date/time.
+  /// {@macro maxDurationAfter}
   final Duration? maxFutureDuration;
 
-  /// Used by the calendar widget to control the smallest allowable date that can be selected.
-  /// Specified as a duration relative to the current date/time.
+  /// {@macro maxDurationBefore}
   final Duration? maxPastDuration;
 
   /// The initial value to show in the field - this class converts to a DDD/MM/YYYY date
@@ -157,3 +155,4 @@ class WaterlooDateFieldTheme {
       this.past = const Duration(days: 99999),
       this.future = const Duration(days: 99999)});
 }
+

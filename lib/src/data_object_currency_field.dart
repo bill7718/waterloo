@@ -8,6 +8,7 @@ import 'waterloo_text_field.dart';
 /// Wrapper around a [WaterlooCurrencyField] that binds the value to a field in a [DataObject]
 ///
 class DataObjectCurrencyField extends StatelessWidget {
+
   /// The label for the field
   final String label;
 
