@@ -67,8 +67,7 @@ class WaterlooTextField extends StatelessWidget {
           autovalidateMode: AutovalidateMode.onUserInteraction,
           obscureText: obscure,
           focusNode: focus,
-          decoration: InputDecoration(labelText: textProvider.get(label), helperText: textProvider.get(help), hintText: textProvider.get(hint)),
-          validator: validator,
+          decoration: InputDecoration(labelText: textProvider.get(label), helperText: textProvider.get(help), hintText: textProvider.get(hint)),          validator: (v) => textProvider.get(validator(v)),
           onChanged: (v) => valueBinder(v),
           readOnly: readOnly,
         ));

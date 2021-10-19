@@ -94,7 +94,7 @@ class WaterlooDateFieldState extends State<WaterlooDateField> {
               validator: (v) {
                 var valid = validateDDMMYYYY(v);
                 var error = valid ? widget.validator(v) : formatError;
-                return Provider.of<WaterlooTextProvider>(context, listen: false).get(error);
+                return error;
               })),
       if (!widget.readOnly)
         SizedBox(

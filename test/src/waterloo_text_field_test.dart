@@ -78,7 +78,7 @@ void main() {
 
       await tester.pumpWidget(page);
       await enterText(tester, 'Greeting', 'bad');
-      expect(find.text('error'), findsOneWidget);
+      expect(find.text('lookup_error'), findsOneWidget);
       expect(currentValue, 'bad');
     });
 
@@ -92,7 +92,7 @@ void main() {
 
       await tester.pumpWidget(page);
       await enterText(tester, 'Greeting', 'bad');
-      expect(find.text('error'), findsOneWidget);
+      expect(find.text('lookup_error'), findsOneWidget);
       expect(currentValue.isEmpty , true, reason: currentValue);
     });
   });

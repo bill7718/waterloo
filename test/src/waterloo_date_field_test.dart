@@ -101,7 +101,7 @@ void main() {
       expect(find.text(MockTextProvider.text(error) ?? ''), findsOneWidget);
     });
 
-    testWidgets('When I enter a date in an in valid format the value is null and an error is shown ', (WidgetTester tester) async {
+    testWidgets('When I enter a date in an invalid format the value is null and an error is shown ', (WidgetTester tester) async {
       var label = 'Greeting';
       Widget page = MockPage(WaterlooDateField(
         valueBinder: binder,

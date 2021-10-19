@@ -34,31 +34,32 @@ Finder findTextInputFieldByLabel(String label) {
 bool checkTextInputField(String label, {String? initialValue, bool obscure = false, bool readOnly = false, String? hint, String? help}) {
   try {
     Finder fWaterloo = find.byWidgetPredicate((widget) => widget is WaterlooTextField && widget.label == label);
-    expect(fWaterloo, findsOneWidget);
+    expect(fWaterloo, findsOneWidget, reason: 'WaterlooTextField not found');
     if (initialValue != null) {
       Finder fInitial = find.descendant(
           of: fWaterloo, matching: find.byWidgetPredicate((widget) => widget is TextFormField && widget.initialValue == initialValue));
-      expect(fInitial, findsOneWidget);
+      expect(fInitial, findsOneWidget, reason: 'mismatch on initial value $initialValue');
     }
     Finder fObscure =
         find.descendant(of: fWaterloo, matching: find.byWidgetPredicate((widget) => widget is TextField && widget.obscureText == obscure));
-    expect(fObscure, findsOneWidget);
+    expect(fObscure, findsOneWidget, reason: 'mismatch on obscure');
     Finder fReadOnly =
         find.descendant(of: fWaterloo, matching: find.byWidgetPredicate((widget) => widget is TextField && widget.readOnly == readOnly));
-    expect(fReadOnly, findsOneWidget);
+    expect(fReadOnly, findsOneWidget, reason: 'mismatch on readonly');
     if (hint != null) {
       Finder fHint =
           find.descendant(of: fWaterloo, matching: find.byWidgetPredicate((widget) => widget is TextField && widget.decoration?.hintText == hint));
-      expect(fHint, findsOneWidget);
+      expect(fHint, findsOneWidget, reason: 'mismatch on hint');
     }
     if (help != null) {
       Finder fHelp =
           find.descendant(of: fWaterloo, matching: find.byWidgetPredicate((widget) => widget is TextField && widget.decoration?.helperText == help));
-      expect(fHelp, findsOneWidget);
+      expect(fHelp, findsOneWidget, reason: 'mismatch on help $help');
     }
 
     return true;
   } catch (ex) {
+    print(ex);
     return false;
   }
 }

@@ -74,7 +74,7 @@ class WaterlooCurrencyFieldState extends State<WaterlooCurrencyField> {
       validator: (v) {
         var valid = validateCurrencyAmount(v, decimalPlaces, decimalPoint);
         var error = valid ? widget.validator(v) : formatError;
-        return error == null ? null : Provider.of<WaterlooTextProvider>(context, listen: false).get(error);
+        return error;
       },
     );
   }
