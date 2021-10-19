@@ -57,7 +57,7 @@ class WaterlooTextField extends StatelessWidget {
 
     var focus = FocusNode();
 
-    var textProvider = Provider.of<WaterlooTextProvider>(context, listen: false);
+    final textProvider = Provider.of<WaterlooTextProvider>(context, listen: false);
 
     return Container(
         margin: Provider.of<WaterlooTheme>(context).textFieldTheme.margin,

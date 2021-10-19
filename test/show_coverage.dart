@@ -17,7 +17,8 @@ var fullCoverageExpected = <String>{
   'data_object_change_notifier.dart',
   'data_object_currency_field.dart',
   'data_object_view.dart',
-  'data_object_date_field.dart'
+  'data_object_date_field.dart',
+  'data_object_integer_field.dart'
 };
 
 void main() {

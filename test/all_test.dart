@@ -17,6 +17,7 @@ import 'src/data_object_change_notifier_test.dart' as data_object_change;
 import 'src/data_object_currency_field_test.dart' as data_object_currency;
 import 'src/data_object_view_test.dart' as data_object_view;
 import 'src/data_object_date_field_test.dart' as data_object_date;
+import 'src/data_object_integer_field_test.dart' as data_object_integer;
 
 main () {
 
@@ -37,6 +38,7 @@ main () {
   data_object_currency.main();
   data_object_view.main();
   data_object_date.main();
+  data_object_integer.main();
 
 }
 

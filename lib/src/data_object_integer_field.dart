@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:serializable_data/serializable_data.dart';
+import 'waterloo_text_field.dart';
 
-import '../src/waterloo_currency_field.dart';
-import '../src/waterloo_text_field.dart';
-import '../src/waterloo_text_provider.dart';
-
+///
+/// A wrapper around a [WaterlooTextField] that collects an integer and saves it
+/// to a field in a [DataObject]
+///
 class DataObjectIntegerField extends StatelessWidget {
-
   static const String integerError = 'integerError';
 
   /// The label for the field
@@ -16,12 +15,19 @@ class DataObjectIntegerField extends StatelessWidget {
   /// Optional help to be shown with the field
   final String help;
 
+  /// Optional hint to be shown with the field
+  final String hint;
+
+  /// The object containing the data
   final DataObject data;
 
-  ///
+  ///The name of the field
   final String fieldName;
 
-  /// Validates the entered value. Returns an error message
+  /// Validates the entered value. Returns an error message if
+  /// - the value is not an integer
+  /// - it fails the validation in the [DataObject]
+  /// - it fails any bespoke validation passed in to this widget
   final FormFieldValidator<String> validator;
 
   const DataObjectIntegerField(
@@ -30,6 +36,7 @@ class DataObjectIntegerField extends StatelessWidget {
       required this.data,
       required this.fieldName,
       this.help = '',
+      this.hint = '',
       this.validator = WaterlooTextField.emptyValidator})
       : super(key: key);
 
@@ -37,19 +44,22 @@ class DataObjectIntegerField extends StatelessWidget {
   Widget build(BuildContext context) {
     return WaterlooTextField(
         label: label,
+        help: help,
+        hint: hint,
         valueBinder: (v) {
-          data.set(fieldName, int.tryParse(v));
+          if (int.tryParse(v) != null) {
+            data.set(fieldName, int.parse(v));
+          }
         },
         initialValue: data.get(fieldName) == null ? '' : data.get(fieldName).toString(),
         validator: (v) {
-
           if (int.tryParse(v ?? '0') == null) {
-            return Provider.of<WaterlooTextProvider>(context, listen: false).get(integerError);
+            return integerError;
           }
 
           var s = validator(v);
           s ??= data.validate(fields: [fieldName]);
-          return s == null ? null : Provider.of<WaterlooTextProvider>(context, listen: false).get(s);
+          return s;
         });
   }
 }
