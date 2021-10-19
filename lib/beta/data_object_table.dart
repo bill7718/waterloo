@@ -57,6 +57,7 @@ class DataObjectTable<T extends DataObject> extends StatelessWidget {
 
           var rows = <DataRow>[];
           for (var item in data.list) {
+
             var cells = <DataCell>[];
             for (var field in fieldNames) {
               cells.add(DataCell(DataObjectView(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:injector/injector.dart';
 import 'package:serializable_data/serializable_data.dart';
 import 'package:waterloo/data_object_widgets.dart';
 import 'package:waterloo/waterloo.dart';
@@ -38,11 +39,9 @@ class DataObjectListManagerState extends State<DataObjectListManager> {
   @override
   Widget build(BuildContext context) {
 
-    final constructor =  widget.specifications[widget.fieldName]?.constructor;
-    var fieldNames = <String>[];
-    if (constructor != null) {
-      fieldNames.addAll(constructor().fields);
-    }
+
+    var object = Injector.appInstance.get<DataObject>(dependencyName: widget.specifications[widget.fieldName]!.type!);
+    var fieldNames = object.fields;
 
     return WaterlooGrid(preferredColumnCount: 3,
         children: [
@@ -72,7 +71,7 @@ class DataObjectListManagerState extends State<DataObjectListManager> {
                   'Add',
               exceptionHandler: () {},
               onPressed: () {
-                var o = widget.specifications[widget.fieldName]!.constructor!();
+                var o = Injector.appInstance.get<DataObject>(dependencyName: widget.specifications[widget.fieldName]!.type!);
                 showDataObjectDialog(
                     context, [o], [o.fields],  widget.specifications[widget.fieldName]!.itemDialogTitle,
                     widget.specifications,

@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:serializable_data/serializable_data.dart';
 import 'package:waterloo/beta/waterloo_event_handler.dart';
-import 'package:waterloo/beta/waterloo_form_container.dart';
 import 'package:waterloo/beta/waterloo_journey_scaffold.dart';
 import 'package:waterloo/src/waterloo_form_message.dart';
 import 'package:waterloo/beta/waterloo_grid.dart';
 import 'package:waterloo/src/waterloo_text_button.dart';
 import 'package:waterloo/src/waterloo_text_provider.dart';
-import 'package:waterloo/src/waterloo_theme.dart';
 
-class DataObjectGridForm extends StatelessWidget {
-  final List<DataObject> data;
+
+class WaterlooGridForm extends StatelessWidget {
+  final dynamic payload;
   final GlobalKey formKey = GlobalKey();
   final WaterlooEventHandler eventHandler;
   final List<EventSpecification> events;
@@ -36,10 +34,10 @@ class DataObjectGridForm extends StatelessWidget {
   /// it does not capture all the mandatory data for the objects
   final bool validateDataObjects;
 
-  DataObjectGridForm(
+  WaterlooGridForm(
       {Key? key,
       required this.eventHandler,
-      required this.data,
+      required this.payload,
       required this.events,
       required this.formTitle,
       this.formSubtitle,
@@ -82,16 +80,16 @@ class DataObjectGridForm extends StatelessWidget {
             if (formState.validate()) {
               var s = event.additionalValidation == null ? null : event.additionalValidation!();
               if (validateDataObjects) {
-                for (var d in data) {
+                for (var d in payload) {
                   s ??= d.validate();
                 }
               }
               s == null
-                  ? eventHandler.handleEvent(context, event: event.event, output: data)
+                  ? eventHandler.handleEvent(context, event: event.event, output: payload)
                   : error.error = Provider.of<WaterlooTextProvider>(context, listen: false).get(s) ?? '';
             }
           } else {
-            eventHandler.handleEvent(context, event: event.event, output: data);
+            eventHandler.handleEvent(context, event: event.event, output: payload);
           }
         },
       ));

@@ -164,7 +164,7 @@ packages:
     source: hosted
     version: "3.0.8"
   injector:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: injector
       url: "https://pub.dartlang.org"

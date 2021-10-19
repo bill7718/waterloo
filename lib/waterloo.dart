@@ -7,6 +7,8 @@
 /// {@category overview}
 library waterloo;
 
+import 'package:serializable_data/serializable_data.dart';
+
 export 'templates.dart';
 export 'src/waterloo_theme.dart';
 export 'src/waterloo_text_field.dart';
@@ -33,6 +35,7 @@ export 'beta/waterloo_percent_field.dart';
 export 'beta/waterloo_animate_scale_opacity.dart';
 
 export 'beta/waterloo_grid.dart';
+export 'beta/waterloo_grid_form.dart';
 
 export 'beta/waterloo_event_handler.dart';
 

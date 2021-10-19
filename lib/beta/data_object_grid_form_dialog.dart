@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:serializable_data/serializable_data.dart';
 import 'package:waterloo/beta/waterloo_event_handler.dart';
 
-import 'data_object_grid_form.dart';
+import 'waterloo_grid_form.dart';
 
 class DataObjectGridFormDialog extends StatelessWidget {
 
@@ -47,13 +47,13 @@ class DataObjectGridFormDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      child: DataObjectGridForm(
+      child: WaterlooGridForm(
         eventHandler: DialogEventHandler(),
         events: const [
           EventSpecification(event: 'Cancel', description: 'Cancel', mustValidate: false),
           EventSpecification(event: 'Ok', description: 'Ok', mustValidate: true),
         ],
-        data :data,
+        payload :data,
         formTitle: formTitle,
         formSubtitle : formSubtitle,
         act: false,

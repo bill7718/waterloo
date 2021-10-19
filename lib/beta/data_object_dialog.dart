@@ -15,8 +15,9 @@ class DataObjectDialog extends StatelessWidget {
   final List<List<String>> fieldNames;
   final Map<String, DataSpecification> specifications;
   final String? title;
+  final Function? validator;
 
-  const DataObjectDialog({Key? key, required this.data, required this.fieldNames, required this.specifications, this.title = 'Dialog'}) : super(key: key);
+  const DataObjectDialog({Key? key, this.validator, required this.data, required this.fieldNames, required this.specifications, this.title = 'Dialog'}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +26,9 @@ class DataObjectDialog extends StatelessWidget {
       formTitle: Provider.of<WaterlooTextProvider>(context, listen: false).get(title) ?? '',
       data: data,
       eventHandler: DataObjectDialogEventHandler(),
-      events: const [
-        EventSpecification(event: 'cancel', description: 'Cancel', mustValidate: false),
-        EventSpecification(event: 'Ok', description: 'Ok'),
+      events:  [
+        const EventSpecification(event: 'cancel', description: 'Cancel', mustValidate: false),
+        EventSpecification(event: 'Ok', description: 'Ok', additionalValidation: validator),
       ],
       children: dataObjectGridBuilder(data, fieldNames, specifications),
     ));
@@ -54,11 +55,12 @@ class DataObjectDialogEventHandler implements WaterlooEventHandler {
 }
 
 void showDataObjectDialog(
-    BuildContext context, List<DataObject> data, List<List<String>> fieldNames, String? title, Map<String, DataSpecification> specifications, Function callback) {
+    BuildContext context, List<DataObject> data, List<List<String>> fieldNames, String? title,
+    Map<String, DataSpecification> specifications, Function callback, { Function? validator }) {
   var f = showDialog(
       context: context,
       builder: (context) {
-        return DataObjectDialog(data: data, fieldNames: fieldNames, specifications: specifications, title: title,);
+        return DataObjectDialog(data: data, fieldNames: fieldNames, specifications: specifications, title: title, validator: validator,);
       });
 
   f.then((r) {

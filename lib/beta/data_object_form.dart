@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:serializable_data/serializable_data.dart';
-import 'package:waterloo/beta/data_object_grid_form.dart';
+import 'package:waterloo/beta/waterloo_grid_form.dart';
 import 'package:waterloo/waterloo.dart';
 import 'waterloo_event_handler.dart';
 
@@ -32,9 +32,9 @@ class DataObjectForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return DataObjectGridForm(
+    return WaterlooGridForm(
         eventHandler: eventHandler,
-        data: data,
+        payload: data,
         events: events,
         formTitle: formTitle,
         formSubtitle: formSubtitle,
