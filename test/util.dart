@@ -110,7 +110,7 @@ bool checkRadioButtonList(String label, {String? initialValue, List<ListItem>? i
 
     if (initialValue != null) {
       Finder fInitial =
-          find.descendant(of: fWaterloo, matching: find.byWidgetPredicate((widget) => widget is RadioListTile && widget.value == initialValue));
+          find.descendant(of: fWaterloo, matching: find.byWidgetPredicate((widget) => widget is RadioListTile && widget.value == initialValue && widget.checked == true));
       expect(fInitial, findsOneWidget);
     }
 
@@ -246,5 +246,18 @@ Future<void> tapTile(String label, String description,  WidgetTester tester) asy
   await tester.tap(fTile);
   c.complete();
   return c.future;
-  //TODO get this to work properly
+}
+
+Future<void> tapRadioTile(String label, String description,  WidgetTester tester) async {
+  var c = Completer<void>();
+  await tester.pumpAndSettle();
+  Finder fTile = find.byWidgetPredicate((widget) =>
+  widget is RadioListTile
+      &&
+      ((widget.title as Text).data! == description)
+  );
+  expect(fTile, findsOneWidget);
+  await tester.tap(fTile);
+  c.complete();
+  return c.future;
 }

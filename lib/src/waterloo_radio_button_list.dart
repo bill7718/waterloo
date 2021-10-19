@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:waterloo/src/waterloo_text_provider.dart';
 
-import '../src/waterloo_drop_down_list.dart';
+import 'waterloo_drop_down_list.dart';
 ///
 /// Shows a list of radio buttons
 class WaterlooRadioButtonList extends StatefulWidget {
@@ -25,6 +25,9 @@ class WaterlooRadioButtonList extends StatefulWidget {
   State<StatefulWidget> createState() => WaterlooRadioButtonListState();
 }
 
+///
+/// The State object corresponding to  [WaterlooRadioButtonList]
+///
 class WaterlooRadioButtonListState extends State<WaterlooRadioButtonList> {
   String? value;
 

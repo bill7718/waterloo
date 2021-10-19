@@ -23,7 +23,7 @@ export 'beta/waterloo_vm.dart';
 export 'src/change_notifier_list.dart';
 
 export 'src/waterloo_drop_down_list.dart';
-export 'beta/waterloo_radio_button_list.dart';
+export 'src/waterloo_radio_button_list.dart';
 export 'beta/waterloo_future_drop_down_list.dart';
 
 export 'beta/waterloo_form_container.dart';

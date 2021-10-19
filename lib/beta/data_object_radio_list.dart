@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:serializable_data/serializable_data.dart';
-import 'waterloo_radio_button_list.dart';
+import '../src/waterloo_radio_button_list.dart';
 import '../src/waterloo_drop_down_list.dart';
 
 class DataObjectRadioList extends StatelessWidget {

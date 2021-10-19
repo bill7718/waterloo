@@ -4,6 +4,7 @@ import 'dart:io';
 
 var fullCoverageExpected = <String>{
   'waterloo_drop_down_list.dart',
+  'waterloo_radio_button_list.dart',
   'waterloo_theme.dart',
   'waterloo_text_field.dart',
   'waterloo_date_field.dart',
