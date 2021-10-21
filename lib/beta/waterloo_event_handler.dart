@@ -1,6 +1,5 @@
 
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 
 abstract class WaterlooEventHandler {
@@ -55,4 +54,18 @@ class EventSpecification {
     return EventSpecification(event: event ?? specification.event, description: description = description ?? specification.description,
     additionalValidation: additionalValidation ?? specification.additionalValidation);
   }
+
+  static List<EventSpecification> addValidator(List<EventSpecification> events, Function validator) {
+    var response = <EventSpecification>[];
+    for (var event in events) {
+      if (event.mustValidate) {
+        response.add(EventSpecification.from(event, additionalValidation: validator));
+      } else {
+        response.add(event);
+      }
+    }
+
+    return response;
+  }
+
 }

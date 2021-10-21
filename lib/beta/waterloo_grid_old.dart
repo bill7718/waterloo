@@ -48,188 +48,95 @@ class WaterlooGrid extends StatelessWidget {
           columnSeparation: columnSeparation ?? Provider.of<WaterlooTheme>(context).gridTheme.columnSeparation,
           pad: pad);
 
+
+
       var rowSep = rowSeparation ?? Provider.of<WaterlooTheme>(context).gridTheme.rowSeparation;
 
+      // compute the layout for each widget in turn - this is needed because each widgets needs
+      // to know the layout for the next widget in the list to determine the correct flex values
+      List<WaterlooGridElementLayout> layouts = <WaterlooGridElementLayout>[];
+      var remainingColumns = layoutConstraints.numberOfColumns;
+      for (var widget in children) {
+        if (widget is HasWaterlooGridChildLayout) {
+          var w = widget as HasWaterlooGridChildLayout;
+          layouts.add(WaterlooGridChild.getChildLayout(layoutConstraints.columnWidth, remainingColumns, layoutConstraints.numberOfColumns,
+              preferredColumnCount: w.columnCount, preferredColumnWidth: w.preferredWidth, rule: w.layoutRule));
+        } else {
+          layouts.add(WaterlooGridChild.getChildLayout(layoutConstraints.columnWidth, remainingColumns, layoutConstraints.numberOfColumns));
+        }
+        if (layouts.last.newRow) {
+          remainingColumns = layoutConstraints.numberOfColumns - layouts.last.columnCount;
+        } else {
+          remainingColumns = remainingColumns - layouts.last.columnCount;
+        }
+      }
+
+      // add a dummy layouts row that indicates a new row after the last widget
+      layouts.add(WaterlooGridElementLayout(0, true, 0));
+
+
+
+      // now add widgets to the rows based on the layout rules for each child
       List<Widget> rows = <Widget>[];
       var i = 0;
       var rowContents = <Widget>[];
-      var remainingWidth = constraints.maxWidth;
 
       while (i < children.length) {
-        // work out the left margin. First item in row uses the column margin
-        // other items use the column separation
-        double colSeparation = columnSeparation ?? Provider.of<WaterlooTheme>(context).gridTheme.columnSeparation;
-        late double leftMargin;
-        if (rowContents.isEmpty) {
-          leftMargin = layoutConstraints.margin;
-        } else {
-          leftMargin = colSeparation;
-        }
 
-        // now determine the layout rule to apply to this widget
-        var rule = WaterlooGridChildLayoutRule.normal;
-        var columnCount = 1;
-        double? preferredWidth;
-        if (children[i] is HasWaterlooGridChildLayout) {
-          var w = children[i] as HasWaterlooGridChildLayout;
-          rule = w.layoutRule;
-          columnCount = w.columnCount;
-          preferredWidth = w.preferredWidth;
-        }
 
-        switch (rule) {
-          case WaterlooGridChildLayoutRule.normal:
-            var width = getWidth(columnCount, layoutConstraints.columnWidth, colSeparation, preferredWidth);
-            if (width > remainingWidth) {
-              if (rowContents.isNotEmpty) {
-                rowContents.add(SizedBox(
-                  width: remainingWidth,
-                ));
-                var row = Row(
-                  children: rowContents,
-                );
-                rows.add(Padding(
-                  child: row,
-                  padding: EdgeInsets.only(top: rowSep / 2, bottom: rowSep / 2),
-                ));
-              }
 
-              rowContents = <Widget>[];
-              rowContents.add(Padding(child: SizedBox(width: width, child: children[i]), padding: EdgeInsets.only(left: layoutConstraints.margin)));
-              remainingWidth = remainingWidth = constraints.maxWidth - width - layoutConstraints.margin;
-            } else {
-              rowContents.add(Padding(child: SizedBox(width: width, child: children[i]), padding: EdgeInsets.only(left: leftMargin)));
-              remainingWidth = remainingWidth - width - leftMargin;
-            }
-            break;
-
-          case WaterlooGridChildLayoutRule.start:
-            var width = getWidth(columnCount, layoutConstraints.columnWidth, colSeparation, preferredWidth);
-            if (rowContents.isNotEmpty) {
-              rowContents.add(SizedBox(
-                width: remainingWidth,
-              ));
-              var row = Row(
-                children: rowContents,
-              );
-              rows.add(Padding(
-                child: row,
-                padding: EdgeInsets.only(top: rowSep / 2, bottom: rowSep / 2),
-              ));
-            }
-
-            rowContents = <Widget>[];
-            rowContents.add(Padding(child: SizedBox(width: width, child: children[i]), padding: EdgeInsets.only(left: layoutConstraints.margin)));
-            remainingWidth = remainingWidth = constraints.maxWidth - width - layoutConstraints.margin;
-            break;
-
-          case WaterlooGridChildLayoutRule.full:
-            var width = constraints.maxWidth - 2 * layoutConstraints.margin;
-            if (rowContents.isNotEmpty) {
-              rowContents.add(SizedBox(
-                width: remainingWidth,
-              ));
-              var row = Row(
-                children: rowContents,
-              );
-              rows.add(Padding(
-                child: row,
-                padding: EdgeInsets.only(top: rowSep / 2, bottom: rowSep / 2),
-              ));
-            }
-
-            rowContents = <Widget>[];
-            rowContents.add(Padding(
-                child: SizedBox(width: width, child: children[i]),
-                padding: EdgeInsets.only(left: layoutConstraints.margin, right: layoutConstraints.margin)));
-            var row2 = Row(
-              children: rowContents,
-            );
-            rows.add(Padding(
-              child: row2,
-              padding: EdgeInsets.only(top: rowSep / 2, bottom: rowSep / 2),
-            ));
-
-            rowContents = <Widget>[];
-            remainingWidth = constraints.maxWidth;
-            break;
-
-          case WaterlooGridChildLayoutRule.fill:
-            var width = getWidth(columnCount, layoutConstraints.columnWidth, colSeparation, preferredWidth);
-            if (width > remainingWidth) {
-              width = constraints.maxWidth - 2 * layoutConstraints.margin;
-              if (rowContents.isNotEmpty) {
-                rowContents.add(SizedBox(
-                  width: remainingWidth,
-                ));
-                var row = Row(
-                  children: rowContents,
-                );
-                rows.add(Padding(
-                  child: row,
-                  padding: EdgeInsets.only(top: rowSep / 2, bottom: rowSep / 2),
-                ));
-              }
-
-              rowContents = <Widget>[];
-              rowContents.add(Padding(
-                  child: SizedBox(width: width, child: children[i]),
-                  padding: EdgeInsets.only(left: layoutConstraints.margin, right: layoutConstraints.margin)));
-              var row2 = Row(
-                children: rowContents,
-              );
-              rows.add(Padding(
-                child: row2,
-                padding: EdgeInsets.only(top: rowSep / 2, bottom: rowSep / 2),
-              ));
-
-              rowContents = <Widget>[];
-              remainingWidth = constraints.maxWidth;
-            } else {
-              rowContents.add(Padding(
-                  child: SizedBox(width: remainingWidth - leftMargin - layoutConstraints.margin, child: children[i]),
-                  padding: EdgeInsets.only(left: leftMargin, right: layoutConstraints.margin)));
-              var row2 = Row(
-                children: rowContents,
-              );
-              rows.add(Padding(
-                child: row2,
-                padding: EdgeInsets.only(top: rowSep / 2, bottom: rowSep / 2),
-              ));
-
-              rowContents = <Widget>[];
-              remainingWidth = constraints.maxWidth;
-            }
-            break;
-        }
         i++;
       }
-      if (rowContents.isNotEmpty) {
-        rowContents.add(SizedBox(
-          width: remainingWidth,
-        ));
-        var row = Row(
-          children: rowContents,
-        );
-        rows.add(Padding(
-          child: row,
-          padding: EdgeInsets.only(top: rowSep / 2, bottom: rowSep / 2),
-        ));
+
+
+      var cumulativeFlex = 0;
+      while (i < children.length) {
+        if (layouts[i].columnCount != 0) {
+          if (rowContents.isEmpty) {
+            rowContents.add(Expanded(
+              child: Container(),
+              flex: layoutConstraints.marginFlex,
+            ));
+            cumulativeFlex = cumulativeFlex + layoutConstraints.marginFlex;
+          }
+
+          var flex = layouts[i].columnCount * layoutConstraints.columnFlex + layoutConstraints.columnSeparatorFlex * (layouts[i].columnCount - 1);
+
+          rowContents.add(Expanded(
+            child: children[i],
+            flex: flex,
+          ));
+
+          cumulativeFlex = cumulativeFlex + flex;
+
+          if (layouts[i + 1].newRow) {
+            if (cumulativeFlex < layoutConstraints.totalFlex) {
+              rowContents.add(Expanded(
+                child: Container(),
+                flex: layoutConstraints.totalFlex - cumulativeFlex,
+              ));
+            }
+            rows.add(Container(
+                margin: EdgeInsets.fromLTRB(0, rowSep / 2, 0, rowSep / 2),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: rowContents,
+                )));
+            rowContents = <Widget>[];
+            cumulativeFlex = 0;
+          } else {
+            rowContents.add(Expanded(
+              child: Container(),
+              flex: layoutConstraints.columnSeparatorFlex,
+            ));
+            cumulativeFlex = cumulativeFlex + layoutConstraints.columnSeparatorFlex;
+          }
+        }
+        i++;
       }
 
       return Column(children: rows);
     });
-  }
-
-  double getWidth(int columnCount, double columnWidth, double columnSeparation, double? preferredWith) {
-    var width = 0.00;
-    if (preferredWith != null) {
-      var cols = preferredWith ~/ (columnWidth + columnSeparation) + 1;
-      width = cols * columnWidth + (cols - 1) * columnSeparation;
-    } else {
-      width = columnCount * columnWidth + (columnCount - 1) * columnSeparation;
-    }
-    return width;
   }
 }
 
@@ -338,6 +245,59 @@ class WaterlooGridChild extends StatelessWidget implements HasWaterlooGridChildL
       return child;
     });
   }
+
+  static WaterlooGridElementLayout getChildLayout(double columnWidth, int remainingColumns, int totalColumnCount,
+      {int? preferredColumnCount, double? preferredColumnWidth, WaterlooGridChildLayoutRule rule = WaterlooGridChildLayoutRule.normal}) {
+    switch (rule) {
+      case WaterlooGridChildLayoutRule.normal:
+        var c = min(totalColumnCount, getColumnCount(columnWidth, preferredColumnCount, preferredColumnWidth));
+        if (c > remainingColumns) {
+          return WaterlooGridElementLayout(c, true, preferredColumnWidth);
+        } else {
+          return WaterlooGridElementLayout(c, false, preferredColumnWidth);
+        }
+
+      case WaterlooGridChildLayoutRule.start:
+        var c = min(totalColumnCount, getColumnCount(columnWidth, preferredColumnCount, preferredColumnWidth));
+        return WaterlooGridElementLayout(c, true, preferredColumnWidth);
+
+      case WaterlooGridChildLayoutRule.full:
+        return WaterlooGridElementLayout(totalColumnCount, true, preferredColumnWidth);
+
+      case WaterlooGridChildLayoutRule.fill:
+        var c = min(totalColumnCount, getColumnCount(columnWidth, preferredColumnCount, preferredColumnWidth));
+        if (c > remainingColumns) {
+          return WaterlooGridElementLayout(totalColumnCount, true, preferredColumnWidth);
+        } else {
+          return WaterlooGridElementLayout(remainingColumns, false, preferredColumnWidth);
+        }
+
+      default:
+        throw Exception('Invalid rule');
+    }
+  }
+
+  static int getColumnCount(double columnWidth, int? preferredColumnCount, double? preferredColumnWidth) {
+    var response = 1;
+    if (preferredColumnCount != null) {
+      response = preferredColumnCount;
+    }
+    if (preferredColumnWidth != null) {
+      response = columnWidth ~/ preferredColumnWidth + 1;
+    }
+
+    return response;
+  }
+
+  @override
+  bool get show => true;
+}
+
+class WaterlooGridElementLayout {
+  final int columnCount;
+  final bool newRow;
+  final double? preferredWidth;
+  WaterlooGridElementLayout(this.columnCount, this.newRow, this.preferredWidth);
 }
 
 enum WaterlooGridChildLayoutRule { start, full, fill, normal }
@@ -346,6 +306,7 @@ abstract class HasWaterlooGridChildLayout {
   int get columnCount => 1;
   double? get preferredWidth => null;
   WaterlooGridChildLayoutRule get layoutRule => WaterlooGridChildLayoutRule.normal;
+  bool get show => true;
 }
 
 class WaterlooGridRow extends StatelessWidget implements HasWaterlooGridChildLayout {
@@ -368,6 +329,9 @@ class WaterlooGridRow extends StatelessWidget implements HasWaterlooGridChildLay
       children: children,
     );
   }
+
+  @override
+  bool get show => true;
 }
 
 ///

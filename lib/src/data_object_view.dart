@@ -34,7 +34,7 @@ class DataObjectView extends StatelessWidget {
       return Container();
     }
 
-    switch (dataSpecification?.dataType) {
+    switch (dataSpecification?.type) {
 
       case DataSpecification.boolType:
         if (value) {

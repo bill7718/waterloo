@@ -32,7 +32,7 @@ class WaterlooGridForm extends StatelessWidget {
   ///
   /// Defaults to true. Set to false if this page leaves the data object invalid or if
   /// it does not capture all the mandatory data for the objects
-  final bool validateDataObjects;
+  final bool validatePayload;
 
   WaterlooGridForm(
       {Key? key,
@@ -52,19 +52,20 @@ class WaterlooGridForm extends StatelessWidget {
       this.preferredColumnCount,
       this.rowSeparation,
       this.columnSeparation,
-      this.validateDataObjects = true})
+      this.validatePayload = true})
       : super(key: key);
 
 
   @override
   Widget build(BuildContext context) {
     var widgets = <Widget>[];
+    var textProvider = Provider.of<WaterlooTextProvider>(context, listen: false);
 
     var error = FormError();
-    error.error = initialError ?? '';
+    error.error = textProvider.get(initialError) ?? '';
     widgets.add(WaterlooGridChild(
         layoutRule: WaterlooGridChildLayoutRule.full,
-        child: WaterlooFormMessage(error: error, text: Provider.of<WaterlooTextProvider>(context, listen: false).get(formMessage) ?? '')));
+        child: WaterlooFormMessage(error: error, text: textProvider.get(formMessage) ?? '')));
 
     widgets.addAll(children);
 
@@ -78,15 +79,15 @@ class WaterlooGridForm extends StatelessWidget {
           if (event.mustValidate) {
             var formState = formKey.currentState as FormState;
             if (formState.validate()) {
-              var s = event.additionalValidation == null ? null : event.additionalValidation!();
-              if (validateDataObjects) {
+              var s = event.additionalValidation == null ? null : event.additionalValidation!(payload);
+              if (validatePayload) {
                 for (var d in payload) {
                   s ??= d.validate();
                 }
               }
               s == null
                   ? eventHandler.handleEvent(context, event: event.event, output: payload)
-                  : error.error = Provider.of<WaterlooTextProvider>(context, listen: false).get(s) ?? '';
+                  : error.error = textProvider.get(s) ?? '';
             }
           } else {
             eventHandler.handleEvent(context, event: event.event, output: payload);
@@ -143,3 +144,5 @@ class WaterlooGridTextRow extends StatelessWidget with HasWaterlooGridChildLayou
   @override
   WaterlooGridChildLayoutRule get layoutRule => WaterlooGridChildLayoutRule.full;
 }
+
+

@@ -17,7 +17,7 @@ void main() {
     testWidgets('When I view a field with value of null I expect to see a Container',
             (WidgetTester tester) async {
           var field = 'brian';
-          var spec = DataSpecification(dataType: DataSpecification.boolType);
+          var spec = DataSpecification(type: DataSpecification.boolType);
 
           Widget page = MockPage(DataObjectView(
               data: data,
@@ -36,7 +36,7 @@ void main() {
       testWidgets('When I view a boolean field with value true I expect to see "Yes"',
               (WidgetTester tester) async {
             var field = 'brian';
-            var spec = DataSpecification(dataType: DataSpecification.boolType);
+            var spec = DataSpecification(type: DataSpecification.boolType);
             data.set('brian', true);
 
             Widget page = MockPage(DataObjectView(
@@ -53,7 +53,7 @@ void main() {
       testWidgets('When I view a boolean field with value false I expect to see "No"',
               (WidgetTester tester) async {
             var field = 'brian';
-            var spec = DataSpecification(dataType: DataSpecification.boolType);
+            var spec = DataSpecification(type: DataSpecification.boolType);
             data.set('brian', false);
 
             Widget page = MockPage(DataObjectView(
@@ -73,7 +73,7 @@ void main() {
       testWidgets('When I view a currency field with a positive value I expect to see it',
               (WidgetTester tester) async {
             var field = 'brian';
-            var spec = DataSpecification(dataType: DataSpecification.currencyType);
+            var spec = DataSpecification(type: DataSpecification.currencyType);
             data.set('brian', 2354);
 
             Widget page = MockPage(DataObjectView(
@@ -90,7 +90,7 @@ void main() {
       testWidgets('When I view a currency field with a zero value I expect to see it',
               (WidgetTester tester) async {
             var field = 'brian';
-            var spec = DataSpecification(dataType: DataSpecification.currencyType);
+            var spec = DataSpecification(type: DataSpecification.currencyType);
             data.set('brian', 0);
 
             Widget page = MockPage(DataObjectView(
@@ -107,7 +107,7 @@ void main() {
       testWidgets('When I view a currency field with a negative value I expect to see it',
               (WidgetTester tester) async {
             var field = 'brian';
-            var spec = DataSpecification(dataType: DataSpecification.currencyType);
+            var spec = DataSpecification(type: DataSpecification.currencyType);
             data.set('brian', -12435);
 
             Widget page = MockPage(DataObjectView(
@@ -127,7 +127,7 @@ void main() {
       testWidgets('When I view a text field I expect to see it',
               (WidgetTester tester) async {
             var field = 'brian';
-            var spec = DataSpecification(dataType: DataSpecification.textType);
+            var spec = DataSpecification(type: DataSpecification.textType);
             data.set('brian', 'Hello Brian');
 
             Widget page = MockPage(DataObjectView(
@@ -144,7 +144,7 @@ void main() {
       testWidgets('When I view an empty text field I expect to see it',
               (WidgetTester tester) async {
             var field = 'brian';
-            var spec = DataSpecification(dataType: DataSpecification.textType);
+            var spec = DataSpecification(type: DataSpecification.textType);
             data.set('brian', '');
 
             Widget page = MockPage(DataObjectView(
@@ -165,7 +165,7 @@ void main() {
       testWidgets('When I view a date field with I expect to see it',
               (WidgetTester tester) async {
             var field = 'brian';
-            var spec = DataSpecification(dataType: DataSpecification.dateType);
+            var spec = DataSpecification(type: DataSpecification.dateType);
             data.set('brian', 18324);
 
             DateTime? d = toDateTime(18324);
@@ -189,7 +189,7 @@ void main() {
       testWidgets('When I view a list field I expect to see the description',
               (WidgetTester tester) async {
             var field = 'brian';
-            var spec = DataSpecification(dataType: DataSpecification.listType, list: [
+            var spec = DataSpecification(type: DataSpecification.listType, list: [
               ListEntry('M', 'Monthly'),
               ListEntry('A', 'Annually'),
             ]);
@@ -209,7 +209,7 @@ void main() {
       testWidgets('When I view a list field with no descriptions I expect an empty field',
               (WidgetTester tester) async {
             var field = 'brian';
-            var spec = DataSpecification(dataType: DataSpecification.listType
+            var spec = DataSpecification(type: DataSpecification.listType
             );
             data.set('brian', 'M');
 
@@ -230,7 +230,7 @@ void main() {
       testWidgets('When I view a radio list field I expect to see the description',
               (WidgetTester tester) async {
             var field = 'brian';
-            var spec = DataSpecification(dataType: DataSpecification.radioListType, list: [
+            var spec = DataSpecification(type: DataSpecification.radioListType, list: [
               ListEntry('M', 'Monthly'),
               ListEntry('A', 'Annually'),
             ]);
@@ -250,7 +250,7 @@ void main() {
       testWidgets('When I view a list field with no descriptions I expect an empty field',
               (WidgetTester tester) async {
             var field = 'brian';
-            var spec = DataSpecification(dataType: DataSpecification.radioListType
+            var spec = DataSpecification(type: DataSpecification.radioListType
             );
             data.set('brian', 'M');
 
@@ -271,7 +271,7 @@ void main() {
       testWidgets('When I view an integer field I expect to see it',
               (WidgetTester tester) async {
             var field = 'brian';
-            var spec = DataSpecification(dataType: DataSpecification.integerType);
+            var spec = DataSpecification(type: DataSpecification.integerType);
             data.set('brian', 1234);
 
             Widget page = MockPage(DataObjectView(
@@ -288,7 +288,7 @@ void main() {
       testWidgets('When I view an zero integer field I expect to see it',
               (WidgetTester tester) async {
             var field = 'brian';
-            var spec = DataSpecification(dataType: DataSpecification.integerType);
+            var spec = DataSpecification(type: DataSpecification.integerType);
             data.set('brian', 0);
 
             Widget page = MockPage(DataObjectView(
@@ -306,7 +306,7 @@ void main() {
       testWidgets('When I view a negative field I expect to see it',
               (WidgetTester tester) async {
             var field = 'brian';
-            var spec = DataSpecification(dataType: DataSpecification.integerType);
+            var spec = DataSpecification(type: DataSpecification.integerType);
             data.set('brian', -194);
 
             Widget page = MockPage(DataObjectView(
@@ -326,7 +326,7 @@ void main() {
       testWidgets('When I view a data object field I expect to see an empty field',
               (WidgetTester tester) async {
             var field = 'brian';
-            var spec = DataSpecification(dataType: DataSpecification.dataObjectType);
+            var spec = DataSpecification(type: DataSpecification.dataObjectType);
             data.set('brian', TestDataObject(<String, dynamic>{}));
 
             Widget page = MockPage(DataObjectView(
@@ -343,7 +343,7 @@ void main() {
       testWidgets('When I view a percent field I expect to see an empty field',
               (WidgetTester tester) async {
             var field = 'brian';
-            var spec = DataSpecification(dataType: DataSpecification.percentType);
+            var spec = DataSpecification(type: DataSpecification.percentType);
             data.set('brian', 1265);
 
             Widget page = MockPage(DataObjectView(
@@ -360,7 +360,7 @@ void main() {
       testWidgets('When I view a data list field I expect to see an empty field',
               (WidgetTester tester) async {
             var field = 'brian';
-            var spec = DataSpecification(dataType: DataSpecification.dataObjectListType);
+            var spec = DataSpecification(type: DataSpecification.dataObjectListType);
             data.set('brian', <TestDataObject>[]);
 
             Widget page = MockPage(DataObjectView(

@@ -43,10 +43,5 @@ export 'src/waterloo_text_provider.dart';
 
 export 'beta/markdown_viewer.dart';
 
-///
-/// {@template max_duration_before}
-/// Used by the calendar widget to control the smallest allowable date that can be selected.
-/// Specified as a duration relative to the current date/time.
-/// {@endtemplate}
-///
+
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:injector/injector.dart';
+import 'package:provider/provider.dart';
 import 'package:serializable_data/serializable_data.dart';
 import 'package:waterloo/data_object_widgets.dart';
 import 'package:waterloo/waterloo.dart';
@@ -39,11 +40,12 @@ class DataObjectListManagerState extends State<DataObjectListManager> {
   @override
   Widget build(BuildContext context) {
 
-
-    var object = Injector.appInstance.get<DataObject>(dependencyName: widget.specifications[widget.fieldName]!.type!);
+    var handler = Provider.of<WaterlooEventHandler>(context);
+    var object = Injector.appInstance.get<DataObject>(dependencyName: widget.specifications[widget.fieldName]!.dataType!);
     var fieldNames = object.fields;
 
-    return WaterlooGrid(preferredColumnCount: 3,
+    return WaterlooGrid(
+        preferredColumnCount: 3,
         children: [
       if (widget.specifications[widget.fieldName]?.showAddItemQuestion ?? true) WaterlooGridChild(
           layoutRule: WaterlooGridChildLayoutRule.full,
@@ -69,9 +71,9 @@ class DataObjectListManagerState extends State<DataObjectListManager> {
           child: WaterlooTextButton(
               text: widget.specifications[widget.fieldName]?.addItemButton ??
                   'Add',
-              exceptionHandler: () {},
+              exceptionHandler: handler.handleException,
               onPressed: () {
-                var o = Injector.appInstance.get<DataObject>(dependencyName: widget.specifications[widget.fieldName]!.type!);
+                var o = Injector.appInstance.get<DataObject>(dependencyName: widget.specifications[widget.fieldName]!.dataType!);
                 showDataObjectDialog(
                     context, [o], [o.fields],  widget.specifications[widget.fieldName]!.itemDialogTitle,
                     widget.specifications,

@@ -1,15 +1,7 @@
 
 
-///
-/// {@template maxDurationAfter}
-/// Used by the calendar widget to control the largest allowable date that can be selected.
-/// Specified as a duration relative to the current date/time.
-/// {@endtemplate}
-///
-/// {@template maxDurationBefore}
-/// Used by the calendar widget to control the smallest allowable date that can be selected.
-/// Specified as a duration relative to the current date/time.
-/// {@endtemplate}
+
+
 
 /// just contains templates for doc generation
 /// @nodoc

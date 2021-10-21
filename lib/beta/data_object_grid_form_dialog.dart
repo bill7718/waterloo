@@ -65,7 +65,7 @@ class DataObjectGridFormDialog extends StatelessWidget {
         preferredColumnCount: preferredColumnCount,
         rowSeparation: rowSeparation,
         columnSeparation: columnSeparation,
-        validateDataObjects :validateDataObjects
+        validatePayload :validateDataObjects
 
       ),
     );

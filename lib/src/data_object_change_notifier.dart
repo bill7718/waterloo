@@ -44,7 +44,7 @@ class DataObjectChangeNotifier extends StatelessWidget {
       child: Consumer<_DataChangeNotifier> (
       key: GlobalKey(),
           builder: (context, n, _) {
-        return  builder();
+        return  builder(context);
       }),
 
     );

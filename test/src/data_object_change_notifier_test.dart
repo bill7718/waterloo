@@ -17,7 +17,7 @@ void main() {
       Widget page = MockPage(DataObjectChangeNotifier(
         data: const [],
         fieldNames: const [],
-        builder: () {
+        builder: (context) {
           return Text('Change Count:$count');
         },
       ));
@@ -34,7 +34,7 @@ void main() {
       Widget page = MockPage(DataObjectChangeNotifier(
         data:  [object1],
         fieldNames: [ [field1]],
-        builder: () {
+        builder: (context) {
           count++;
           return Text('Change Count:$count');
         },
@@ -59,7 +59,7 @@ void main() {
       Widget page = MockPage(DataObjectChangeNotifier(
         data:  [object1],
         fieldNames: [ [field1]],
-        builder: () {
+        builder: (context) {
           count++;
           return Text('Change Count:$count');
         },
@@ -84,7 +84,7 @@ void main() {
       Widget page = MockPage(DataObjectChangeNotifier(
         data:  [object1],
         fieldNames: [ [field1, field2]],
-        builder: () {
+        builder: (context) {
           count++;
           return Text('Change Count:$count');
         },
@@ -111,7 +111,7 @@ void main() {
       Widget page = MockPage(DataObjectChangeNotifier(
         data:  [object1, object2],
         fieldNames: [ [field1, field2], [ field2, field3]],
-        builder: () {
+        builder: (context) {
           count++;
           return Text('Change Count:$count');
         },
