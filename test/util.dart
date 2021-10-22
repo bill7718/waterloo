@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
+import 'package:serializable_data/serializable_data.dart';
 import 'package:waterloo/waterloo.dart';
 
 import 'mocks/mock_text_provider.dart';
@@ -16,9 +17,14 @@ class MockPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var theme = WaterlooTheme();
     var text = MockTextProvider();
+    var calendar = Calendar();
 
     return MultiProvider(
-        providers: [Provider<WaterlooTheme>.value(value: theme), Provider<WaterlooTextProvider>.value(value: text)],
+        providers: [
+          Provider<WaterlooTheme>.value(value: theme),
+          Provider<WaterlooTextProvider>.value(value: text),
+          Provider<Calendar>.value(value: calendar),
+          ],
         child: MaterialApp(
             home: Card(
           child: child,
@@ -166,7 +172,7 @@ bool checkOpenDropDownList(String label, {String? initialValue, List<ListItem>? 
       Finder fTile = find.byWidgetPredicate((widget) =>
           widget is ListTile
              &&
-             ((widget.title as Text).data! == item.description)
+             ((widget.title as Text).data! == item.description && (widget.key as ValueKey).value == item.id )
           );
       expect(fTile, findsOneWidget);
     }

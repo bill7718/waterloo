@@ -19,6 +19,8 @@ class DataObjectRelationshipField<T extends PersistableDataObject> extends State
       filterValue: relationshipSpecification.filterValue,
       descriptionLabel: relationshipSpecification.descriptionLabel ?? '',
       screenFieldLabel : relationshipSpecification.relationshipLabel,
+      initialValue: data.get(DataObjectRelationship.toIdLabel),
+      filterRef: relationshipSpecification.to,
       valueBinder: (id) {
         data.set(DataObjectRelationship.toIdLabel, id);
       },

@@ -71,6 +71,7 @@ class WaterlooDropDownListState extends State<WaterlooDropDownList> {
                 widgets.add(PopupMenuItem<ListItem>(
                     child: Align(
                   child: ListTile(
+                    key: ValueKey(item.id),
                     title: Text(item.description),
                     onTap: () {
                       Navigator.pop(context, item);

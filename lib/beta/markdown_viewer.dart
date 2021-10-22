@@ -105,7 +105,7 @@ class MarkdownPageViewState extends State<MarkdownPageView> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             if (doc.endsWith('.feature')) {
-              return MarkdownViewer(content: snapshot.data!);
+              return FeatureViewer(content: snapshot.data!);
             }
 
             return buildMarkdown(context, snapshot.data!, link);
@@ -345,7 +345,7 @@ class MarkdownPageViewState extends State<MarkdownPageView> {
   }
 }
 
-enum MarkdownType { table, divider, normal, heading1, heading2, heading3, heading4, heading5, heading6, newLine, unOrderedList }
+enum MarkdownType {comment, table, divider, normal, heading1, heading2, heading3, heading4, heading5, heading6, newLine, unOrderedList }
 
 MarkdownType markdownType(String line, MarkdownType current) {
   if (line.startsWith('###### ')) {
@@ -389,4 +389,132 @@ MarkdownType markdownType(String line, MarkdownType current) {
   }
 
   return MarkdownType.normal;
+}
+
+MarkdownType featureViewType(String line) {
+  if (line.trim().startsWith('Feature:')) {
+    return MarkdownType.heading5;
+  }
+
+  if (line.trim().startsWith('Scenario:')) {
+    return MarkdownType.heading6;
+  }
+
+  if (line.trim().startsWith('#------')) {
+    return MarkdownType.divider;
+  }
+
+  if (line.trim().startsWith('#')) {
+    return MarkdownType.comment;
+  }
+
+  return MarkdownType.normal;
+}
+
+
+
+class FeatureViewer extends StatelessWidget {
+  final String content;
+  final double lineSeparation;
+
+  const FeatureViewer({Key? key, required this.content, this.lineSeparation = 5}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    var widgets = <Widget>[];
+    var lines = content.split('\n');
+
+    var currentType = MarkdownType.normal;
+    var margin = EdgeInsets.fromLTRB(0, lineSeparation / 2, 0, lineSeparation / 2);
+
+    for (var line in lines) {
+      var newMarkdownType = featureViewType(line);
+
+      switch (newMarkdownType) {
+        case MarkdownType.divider:
+          widgets.add(const Divider());
+          break;
+
+
+        case MarkdownType.comment:
+          widgets.add(Container(margin: margin, child: Text(line, style: Theme.of(context).textTheme.overline)));
+          break;
+
+        case MarkdownType.heading1:
+          widgets.add(Container(margin: margin, child: Text(line, style: Theme.of(context).textTheme.headline1)));
+          break;
+
+        case MarkdownType.heading2:
+          widgets.add(Container(margin: margin, child: Text(line, style: Theme.of(context).textTheme.headline2)));
+          break;
+
+        case MarkdownType.heading3:
+          widgets.add(Container(margin: margin, child: Text(line, style: Theme.of(context).textTheme.headline3)));
+          break;
+
+        case MarkdownType.heading4:
+          widgets.add(Container(margin: margin, child: Text(line, style: Theme.of(context).textTheme.headline4)));
+          break;
+
+        case MarkdownType.heading5:
+          widgets.add(Container(margin: margin, child: Text(line, style: Theme.of(context).textTheme.headline5)));
+          break;
+
+        case MarkdownType.heading6:
+          widgets.add(Container(margin: margin, child: Text(line, style: Theme.of(context).textTheme.headline6)));
+          break;
+
+        default:
+          widgets.add(Container(margin: margin, child: normal(line, context)));
+      }
+      currentType = newMarkdownType;
+    }
+
+    return Padding(padding: const EdgeInsets.all(25),
+        child :Column(
+      children: widgets,
+      crossAxisAlignment: CrossAxisAlignment.start,
+    ));
+  }
+
+  Widget normal(String text, BuildContext context) {
+    TextStyle? quotes = Theme.of(context).textTheme.bodyText1?.copyWith(color: Theme.of(context).primaryColor);
+    var contents = splitOutDoubleQuotes([text]);
+    var widgets = <Widget>[];
+
+    for (var content in contents) {
+      if (content.startsWith('"')) {
+        widgets.add(Text(content, style: quotes,));
+      } else {
+        widgets.add(Text(content));
+      }
+    }
+
+
+
+    return Wrap(children: widgets);
+  }
+
+  List<String> splitOutDoubleQuotes(List<String> content) {
+    var response = <String>[];
+
+    for (var item in content) {
+      String s = item;
+      var startIndex = s.indexOf('"');
+      var endIndex = startIndex == -1 ? -1 : s.indexOf('"', startIndex  + 1);
+      while (startIndex > -1 && endIndex > -1) {
+        if (startIndex > 0) {
+          response.add(s.substring(0, startIndex));
+        }
+        response.add(s.substring(startIndex, endIndex + 1));
+        s = s.substring(endIndex + 1);
+        startIndex = s.indexOf('"');
+        endIndex = startIndex == -1 ? -1 : s.indexOf('"', startIndex  + 1);
+      }
+      if (s.isNotEmpty) {
+        response.add(s);
+      }
+    }
+    return response;
+  }
 }

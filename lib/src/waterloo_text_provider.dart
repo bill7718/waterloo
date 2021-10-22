@@ -18,6 +18,10 @@ abstract class WaterlooTextProvider {
   ///
   String? get(String? reference);
 
+  /// [true] if the reference is present
+  /// a null reference always returns [false]
+  bool has(String? reference);
+
   ///
   /// Contains default text values for field references used by the Waterloo base widgets
   ///
