@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:serializable_data/serializable_data.dart';
 
 import '../src/waterloo_drop_down_list.dart';
-import 'waterloo_future_drop_down_list.dart';
+import '../src/waterloo_future_drop_down_list.dart';
 
 
 class DataObjectList<T extends PersistableDataObject> extends StatelessWidget {
@@ -35,7 +35,7 @@ class DataObjectList<T extends PersistableDataObject> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return FutureWaterlooDropDownList(label: screenFieldLabel ?? descriptionLabel, valueBinder: valueBinder, initialValue: initialValue,
+    return WaterlooFutureDropDownList(label: screenFieldLabel ?? descriptionLabel, valueBinder: valueBinder, initialValue: initialValue,
     getter: DataListGetter<T>(filterLabel, filterValue, descriptionLabel, idLabel, filterRef, reader),);
   }
 }

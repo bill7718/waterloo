@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:waterloo/src/change_notifier_list.dart';
-import '../alpha/waterloo_vm.dart';
+import 'waterloo_vm.dart';
 
 ///
 /// Displays a list of items.

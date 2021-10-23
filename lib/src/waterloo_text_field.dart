@@ -1,10 +1,25 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:waterloo/src/waterloo_text_provider.dart';
 import 'waterloo_theme.dart';
+
+/// {@template initialValue}
+/// The initial value to use with this form field.
+/// {@endtemplate}
+
+/// {@template valueBinder}
+/// Called by the [onChange] method. Used to bind the value to an external object
+/// {@endtemplate}
+
+/// {@template label}
+/// The label to be shown on this field.
+///
+/// The widget looks this value up in the [WaterlooTextProvider] and substitutes the value
+/// found.
+///
+/// {@endtemplate}
+
 
 ///
 /// A wrapper around a [TextFormField]
@@ -13,10 +28,10 @@ import 'waterloo_theme.dart';
 class WaterlooTextField extends StatelessWidget {
   static const FormFieldValidator<String> emptyValidator = empty;
 
-  /// The initial value to use with this form field
+  /// {@macro initialValue}
   final String? initialValue;
 
-  /// Called with by the [onChange] method. Used to bind the value to an external object
+  /// {@macro valueBinder}
   final Function valueBinder;
 
   /// Validates the entered value. Returns an error message
@@ -25,7 +40,7 @@ class WaterlooTextField extends StatelessWidget {
   /// If true then the text value is obscured - normally used for passwords
   final bool obscure;
 
-  /// The label for the field
+  /// {@macro label}
   final String label;
 
   /// Optional help to be shown with the field
@@ -67,7 +82,8 @@ class WaterlooTextField extends StatelessWidget {
           autovalidateMode: AutovalidateMode.onUserInteraction,
           obscureText: obscure,
           focusNode: focus,
-          decoration: InputDecoration(labelText: textProvider.get(label), helperText: textProvider.get(help), hintText: textProvider.get(hint)),          validator: (v) => textProvider.get(validator(v)),
+          decoration: InputDecoration(labelText: textProvider.get(label), helperText: textProvider.get(help), hintText: textProvider.get(hint)),
+          validator: (v) => textProvider.get(validator(v)),
           onChanged: (v) => valueBinder(v),
           readOnly: readOnly,
         ));

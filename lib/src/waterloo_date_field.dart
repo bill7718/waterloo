@@ -4,6 +4,18 @@ import 'package:serializable_data/serializable_data.dart';
 import 'waterloo_text_field.dart';
 import 'waterloo_theme.dart';
 
+/// {@template maxDurationBefore}
+/// Used by the calendar widget to control the smallest allowable date that can be selected.
+/// Specified as a duration relative to the current date/time.
+/// {@endtemplate}
+///
+///
+/// {@template maxDurationAfter}
+/// Used by the calendar widget to control the largest allowable date that can be selected.
+/// Specified as a duration relative to the current date/time.
+/// {@endtemplate}
+
+
 ///
 /// A [WaterlooTextField] that allows input of a date.
 ///
@@ -11,7 +23,8 @@ import 'waterloo_theme.dart';
 /// can select the date or enter it directly.
 ///
 class WaterlooDateField extends StatefulWidget {
-  /// The text field label - passed directly to the [WaterlooTextField]
+
+  /// {@macro label}
   final String label;
 
   /// {@macro maxDurationAfter}
@@ -20,7 +33,10 @@ class WaterlooDateField extends StatefulWidget {
   /// {@macro maxDurationBefore}
   final Duration? maxPastDuration;
 
-  /// The initial value to show in the field - this class converts to a DD/MM/YYYY date
+  /// {@macro initialValue}
+  ///
+  ///
+  /// This class converts to a DD/MM/YYYY date
   /// and passes it to the initialValue in the [WaterlooTextField]
   final DateTime? initialValue;
 
@@ -31,7 +47,10 @@ class WaterlooDateField extends StatefulWidget {
   /// If true then the icon which opens the Calendar widget is not shown
   final bool readOnly;
 
-  /// Binds this value to an external object. The date is exchanged as a [DateTime] object
+  /// {@macro valueBinder}
+  ///
+  ///
+  /// The date is passed on as a [DateTime] object
   final Function valueBinder;
 
   /// Validates the entered value. Returns an error message
@@ -123,6 +142,8 @@ class WaterlooDateFieldState extends State<WaterlooDateField> {
             ))
     ]);
   }
+
+
 }
 
 ///
@@ -157,13 +178,4 @@ class WaterlooDateFieldTheme {
 }
 
 
-/// {@template maxDurationBefore}
-/// Used by the calendar widget to control the smallest allowable date that can be selected.
-/// Specified as a duration relative to the current date/time.
-/// {@endtemplate}
-///
-///
-/// {@template maxDurationAfter}
-/// Used by the calendar widget to control the largest allowable date that can be selected.
-/// Specified as a duration relative to the current date/time.
-/// {@endtemplate}
+

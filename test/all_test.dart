@@ -8,7 +8,9 @@ import 'src/waterloo_text_button_test.dart' as button;
 import 'src/waterloo_switch_tile_test.dart' as switch_tile;
 import 'src/waterloo_form_message_test.dart' as form_message;
 import 'src/waterloo_drop_down_list_test.dart' as drop;
+import 'src/waterloo_future_drop_down_list_test.dart' as future_drop;
 import 'src/waterloo_radio_button_list_test.dart' as radio;
+
 import 'src/change_notifier_list_test.dart' as list;
 
 
@@ -30,6 +32,7 @@ main () {
   switch_tile.main();
   form_message.main();
   drop.main();
+  future_drop.main();
   radio.main();
 
   list.main();

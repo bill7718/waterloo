@@ -131,19 +131,20 @@ bool checkClosedDropDownList(String label, {String? initialValue, String? value}
     Finder fWaterloo = find.byWidgetPredicate((widget) => widget is WaterlooDropDownList && widget.label == label);
 
     Finder fText = find.byWidgetPredicate((widget) => widget is WaterlooTextField && widget.label == label && widget.readOnly);
-    expect(fText, findsOneWidget);
+    expect(fText, findsOneWidget, reason: '#1 $label : $initialValue $value');
 
     if (initialValue != null) {
       Finder fInitial = find.descendant(
           of: fWaterloo, matching: find.byWidgetPredicate((widget) => widget is WaterlooTextField && widget.initialValue == initialValue));
-      expect(fInitial, findsOneWidget);
+      expect(fInitial, findsOneWidget, reason: '#2 $label : $initialValue $value');
     }
 
     Finder fIcon =
         find.descendant(of: fWaterloo, matching: find.byWidgetPredicate((widget) => widget is Icon && widget.icon == Icons.keyboard_arrow_down));
-    expect(fIcon, findsOneWidget);
+    expect(fIcon, findsOneWidget, reason: '#3 $label : $initialValue $value');
     return true;
   } catch (ex) {
+    print(ex.toString());
     return false;
   }
 }
