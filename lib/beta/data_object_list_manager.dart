@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:injector/injector.dart';
 import 'package:provider/provider.dart';
 import 'package:serializable_data/serializable_data.dart';
-import 'package:waterloo/data_object_widgets.dart';
 import 'package:waterloo/waterloo.dart';
+
+import 'data_object_dialog.dart';
+import 'data_object_table.dart';
 
 class DataObjectListManager extends StatefulWidget {
   final String fieldName;
