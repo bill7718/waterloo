@@ -26,7 +26,7 @@ export 'src/waterloo_drop_down_list.dart';
 export 'src/waterloo_radio_button_list.dart';
 export 'src/waterloo_future_drop_down_list.dart';
 
-export 'beta/waterloo_form_container.dart';
+export 'beta/waterloo_app_bar.dart';
 export 'src/waterloo_form_message.dart';
 export 'beta/text.dart';
 

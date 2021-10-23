@@ -8,7 +8,7 @@ import 'data_object_grid.dart';
 import 'waterloo_event_handler.dart';
 import '../src/waterloo_text_button.dart';
 
-import 'data_object_form.dart';
+import '../alpha/data_object_form.dart';
 
 class DataObjectDialog extends StatelessWidget {
   final List<DataObject> data;

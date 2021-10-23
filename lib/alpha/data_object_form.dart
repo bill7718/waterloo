@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:serializable_data/serializable_data.dart';
 import 'package:waterloo/beta/waterloo_grid_form.dart';
 import 'package:waterloo/waterloo.dart';
-import 'waterloo_event_handler.dart';
+import '../beta/waterloo_event_handler.dart';
 
 class DataObjectForm extends StatelessWidget {
   final List<DataObject> data;

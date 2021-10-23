@@ -19,7 +19,7 @@ export 'src/data_object_view.dart';
 export 'beta/data_object_grid_form_dialog.dart';
 export 'src/data_object_integer_field.dart';
 
-export 'beta/data_object_form.dart';
+//export 'beta/data_object_form.dart';
 export 'beta/data_object_dialog.dart';
 
 export 'beta/data_object_relationship_field.dart';
