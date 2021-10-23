@@ -4,9 +4,11 @@ import '../src/waterloo_radio_button_list.dart';
 import '../src/waterloo_drop_down_list.dart';
 
 class DataObjectRadioList extends StatelessWidget {
-  /// The label for the field
+
+  /// {@macro label}
   final String label;
 
+  /// {@macro listItems}
   final List<ListItem> items;
 
   final DataObject data;

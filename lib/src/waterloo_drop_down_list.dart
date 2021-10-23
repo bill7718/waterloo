@@ -3,11 +3,17 @@ import 'package:provider/provider.dart';
 import 'waterloo_text_field.dart';
 import 'waterloo_theme.dart';
 
+/// {@template listItems}
+/// The items to be selected. They should be sorted by the ancestor widget
+/// {@endtemplate}
+
+
 ///
 /// Shows a list of values as a [PopupMenuEntry] which wraps a [ListTile]
 ///
 class WaterlooDropDownList extends StatefulWidget {
-  /// The items to be selected. They should be sorted by the ancestor widget
+
+  /// {@macro listItems}
   final List<ListItem> items;
 
   /// The initial value to show

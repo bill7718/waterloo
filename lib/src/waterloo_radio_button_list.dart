@@ -3,11 +3,16 @@ import 'package:provider/provider.dart';
 import 'package:waterloo/src/waterloo_text_provider.dart';
 
 import 'waterloo_drop_down_list.dart';
+
+
+
+
 ///
 /// Shows a list of radio buttons
+///
 class WaterlooRadioButtonList extends StatefulWidget {
 
-  /// The items to be selected. They should be sorted by the ancestor widget
+  /// {@macro listItems}
   final List<ListItem> items;
 
   /// The initial value to show

@@ -5,15 +5,23 @@ import 'package:serializable_data/serializable_data.dart';
 import 'waterloo_text_field.dart';
 import 'waterloo_text_provider.dart';
 
+/// {@template dataObjectFieldValidator}
+/// Adds additional validation to this field.
+///
+///
+/// Note that this class calls the [validate] method for the corresponding [DataObject] by default.
+/// {@endtemplate}
+
+
 ///
 /// Wrapper around a [WaterlooTextField] that binds the value to a field in a [DataObject]
 ///
 class DataObjectTextField extends StatelessWidget {
 
-  /// The label for the field
+  /// {@macro label}
   final String label;
 
-  /// Validates the entered value. Returns an error message
+  /// {@macro dataObjectFieldValidator}
   final FormFieldValidator<String> validator;
 
   /// Optional help to be shown with the field
