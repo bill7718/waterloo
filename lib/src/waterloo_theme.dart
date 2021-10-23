@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:waterloo/alpha/waterloo_percent_field.dart';
 import 'package:waterloo/src/data_object_view.dart';
 import 'package:waterloo/beta/waterloo_grid.dart';
 import 'package:waterloo/beta/waterloo_journey_scaffold.dart';
@@ -10,7 +11,6 @@ import 'package:waterloo/src/waterloo_form_message.dart';
 import '../beta/data_object_form.dart';
 import '../beta/data_object_table.dart';
 import 'waterloo_drop_down_list.dart';
-import '../beta/waterloo_percent_field.dart';
 import 'waterloo_switch_tile.dart';
 import 'waterloo_text_field.dart';
 

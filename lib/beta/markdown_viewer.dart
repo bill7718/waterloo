@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -251,7 +253,7 @@ class MarkdownPageViewState extends State<MarkdownPageView> {
     for (var row in tableData) {
       var cells = <DataCell>[];
       for (var cellData in row.split('|')) {
-        cells.add(DataCell(normalTextLine(cellData, link)));
+        cells.add(DataCell(SizedBox(width: cellWidth(cellData.length), child: normalTextLine(cellData, link))));
       }
       rows.add(DataRow(cells: cells));
     }
@@ -294,12 +296,19 @@ class MarkdownPageViewState extends State<MarkdownPageView> {
             widget.baseUrl + item.substring(2, item.length - 1),
           ));
         } else {
-          widgets.add(Text(item));
+          widgets.add(Text(item, maxLines: 8, overflow: TextOverflow.clip,));
         }
       }
     }
 
     return Wrap(children: widgets);
+  }
+
+  double cellWidth(int length) {
+    var minWidth = 10.0;
+    var lengthFactor = 8 * length;
+    var maxWidth = 350.0;
+    return min( minWidth + lengthFactor, maxWidth);
   }
 
   List<String> splitMarkdown(List<String> items) {

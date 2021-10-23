@@ -17,9 +17,9 @@ export 'src/waterloo_switch_tile.dart';
 export 'src/waterloo_text_button.dart';
 
 
-export 'beta/filtered_list.dart';
+export 'alpha/filtered_list.dart';
 export 'beta/drop_target_list_view.dart';
-export 'beta/waterloo_vm.dart';
+export 'alpha/waterloo_vm.dart';
 export 'src/change_notifier_list.dart';
 
 export 'src/waterloo_drop_down_list.dart';
@@ -31,8 +31,8 @@ export 'src/waterloo_form_message.dart';
 export 'beta/text.dart';
 
 export 'src/waterloo_currency_field.dart';
-export 'beta/waterloo_percent_field.dart';
-export 'beta/waterloo_animate_scale_opacity.dart';
+export 'alpha/waterloo_percent_field.dart';
+export 'alpha/waterloo_animate_scale_opacity.dart';
 
 export 'beta/waterloo_grid.dart';
 export 'beta/waterloo_grid_form.dart';

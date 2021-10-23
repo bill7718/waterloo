@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:injector/injector.dart';
 import 'package:serializable_data/serializable_data.dart';
 import '../src/data_object_currency_field.dart';
 import '../src/data_object_date_field.dart';
 import '../src/data_object_drop_down_list.dart';
 import '../src/data_object_integer_field.dart';
 import 'data_object_list_manager.dart';
-import 'data_object_percent_field.dart';
 import '../src/data_object_text_field.dart';
 import 'data_object_radio_list.dart';
 import '../src/waterloo_drop_down_list.dart';
@@ -74,18 +72,11 @@ class DataObjectWidget extends StatelessWidget {
       );
     }
 
-    if (specifications[fieldName]?.type == 'percent') {
-      return DataObjectPercentField(
-        label: specifications[fieldName]?.label ?? fieldName,
-        data: data,
-        fieldName: fieldName,
-        help: specifications[fieldName]?.help ?? '',
-      );
-    }
-
     if (specifications[fieldName]?.type == DataSpecification.dataObjectListType) {
       return DataObjectListManager(data: data, fieldName: fieldName, specifications: specifications);
     }
+
+
 
     return DataObjectTextField(
       label: specifications[fieldName]?.label ?? fieldName,
@@ -117,3 +108,16 @@ List<Widget> dataObjectList(List<DataObject> data, List<List<String>> fieldNames
   }
   return widgets;
 }
+
+/*
+
+if (specifications[fieldName]?.type == 'percent') {
+      return DataObjectPercentField(
+        label: specifications[fieldName]?.label ?? fieldName,
+        data: data,
+        fieldName: fieldName,
+        help: specifications[fieldName]?.help ?? '',
+      );
+    }
+
+ */
