@@ -162,8 +162,9 @@ void main() {
       expect(
           checkClosedDropDownList(
               label,
+            expectValid: false
           ),
-          false);
+          true);
       expect(checkTextInputField(label, readOnly: true), true);
 
     });

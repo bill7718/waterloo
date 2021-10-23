@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:serializable_data/serializable_data.dart';
 
-import '../src/waterloo_switch_tile.dart';
+import 'waterloo_switch_tile.dart';
 
+/// A wrapper around [WaterlooSwitchTile] which maintains a Yes/No field in a [DataObject]
 class DataObjectSwitchTile extends StatelessWidget {
-  /// The label for the field
+
+  /// {@macro label}
   final String label;
 
+  /// {@macro data}
   final DataObject data;
 
-  ///
+  /// {@macro fieldName}
   final String fieldName;
 
   const DataObjectSwitchTile({Key? key, required this.label, required this.data, required this.fieldName})

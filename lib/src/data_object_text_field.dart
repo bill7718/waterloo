@@ -12,6 +12,15 @@ import 'waterloo_text_provider.dart';
 /// Note that this class calls the [validate] method for the corresponding [DataObject] by default.
 /// {@endtemplate}
 
+/// {@template data}
+/// The [DataObject] that contains the data items that is being maintained
+/// {@endtemplate}
+
+/// {@template fieldName}
+/// The reference to the field within the [data] [DataObject] that is being maintained
+/// {@endtemplate}
+
+
 
 ///
 /// Wrapper around a [WaterlooTextField] that binds the value to a field in a [DataObject]
@@ -30,9 +39,10 @@ class DataObjectTextField extends StatelessWidget {
   /// If true then the text value is obscured - normally used for passwords
   final bool obscure;
 
+  /// {@macro data}
   final DataObject data;
 
-  ///
+  /// {@macro fieldName}
   final String fieldName;
 
   const DataObjectTextField(

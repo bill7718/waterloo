@@ -119,4 +119,3 @@ class DataObjectTableTheme {
   const DataObjectTableTheme({this.editIcon = Icons.edit, this.deleteIcon = Icons.delete, this.columnSpacing = 28});
 }
 
-//TODO Horizontal scrolling

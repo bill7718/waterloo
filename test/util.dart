@@ -126,7 +126,7 @@ bool checkRadioButtonList(String label, {String? initialValue, List<ListItem>? i
   }
 }
 
-bool checkClosedDropDownList(String label, {String? initialValue, String? value}) {
+bool checkClosedDropDownList(String label, {String? initialValue, String? value, bool expectValid = true}) {
   try {
     Finder fWaterloo = find.byWidgetPredicate((widget) => widget is WaterlooDropDownList && widget.label == label);
 
@@ -142,10 +142,12 @@ bool checkClosedDropDownList(String label, {String? initialValue, String? value}
     Finder fIcon =
         find.descendant(of: fWaterloo, matching: find.byWidgetPredicate((widget) => widget is Icon && widget.icon == Icons.keyboard_arrow_down));
     expect(fIcon, findsOneWidget, reason: '#3 $label : $initialValue $value');
-    return true;
+    return expectValid;
   } catch (ex) {
-    print(ex.toString());
-    return false;
+    if (expectValid) {
+      print(ex.toString());
+    }
+    return !expectValid;
   }
 }
 

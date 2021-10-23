@@ -15,16 +15,17 @@ var fullCoverageExpected = <String>{
   'data_object_text_field.dart',
   'waterloo_form_message.dart',
   'data_object_drop_down_list.dart',
+  'data_object_radio_list.dart',
   'change_notifier_list.dart',
   'data_object_change_notifier.dart',
   'data_object_currency_field.dart',
   'data_object_view.dart',
   'data_object_date_field.dart',
-  'data_object_integer_field.dart'
+  'data_object_integer_field.dart',
+  'data_object_switch_tile.dart'
 };
 
 void main() {
-
   var codeFiles = <String>{};
   codeFiles.addAll(fullCoverageExpected);
 
@@ -54,11 +55,9 @@ void main() {
     }
   }
 
-
   if (codeFiles.isEmpty) {
     print('Code Coverage complete');
   } else {
     throw Exception('Code coverage incomplete for ${codeFiles.toString()} ');
   }
-
 }
