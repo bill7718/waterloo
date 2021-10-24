@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:waterloo/beta/waterloo_event_handler.dart';
 
 import 'waterloo_grid_form.dart';
@@ -43,27 +44,32 @@ class WaterlooGridFormDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      child: WaterlooGridForm(
-          eventHandler: DialogEventHandler(),
-          events: const [
-            EventSpecification(event: 'Cancel', description: 'Cancel', mustValidate: false),
-            EventSpecification(event: 'Ok', description: 'Ok', mustValidate: true),
-          ],
-          payload: payload,
-          formTitle: formTitle,
-          formSubtitle: formSubtitle,
-          act: false,
-          children: children,
-          minimumColumnWidth: minimumColumnWidth,
-          maximumColumnWidth: maximumColumnWidth,
-          maximumColumnCount: maximumColumnCount,
-          preferredColumnWidth: preferredColumnWidth,
-          preferredColumnCount: preferredColumnCount,
-          rowSeparation: rowSeparation,
-          columnSeparation: columnSeparation,
-          validatePayload: validatePayload),
-    );
+    var handler = DialogEventHandler();
+
+    // Provide the dialog handler so that child widgets of Waterloo Grid form can access the correct EventHandler
+    return Provider<WaterlooEventHandler>.value(
+        value: handler,
+        child: Dialog(
+          child: WaterlooGridForm(
+              eventHandler: handler,
+              events: const [
+                EventSpecification(event: 'Cancel', description: 'Cancel', mustValidate: false),
+                EventSpecification(event: 'Ok', description: 'Ok', mustValidate: true),
+              ],
+              payload: payload,
+              formTitle: formTitle,
+              formSubtitle: formSubtitle,
+              act: false,
+              children: children,
+              minimumColumnWidth: minimumColumnWidth,
+              maximumColumnWidth: maximumColumnWidth,
+              maximumColumnCount: maximumColumnCount,
+              preferredColumnWidth: preferredColumnWidth,
+              preferredColumnCount: preferredColumnCount,
+              rowSeparation: rowSeparation,
+              columnSeparation: columnSeparation,
+              validatePayload: validatePayload),
+        ));
   }
 }
 
