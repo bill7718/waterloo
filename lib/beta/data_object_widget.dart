@@ -14,8 +14,9 @@ class DataObjectWidget extends StatelessWidget {
   final DataObject data;
   final String fieldName;
   final Map<String, DataSpecification> specifications;
+  final Map<String, RelationshipSpecification> relationships;
 
-  const DataObjectWidget({Key? key, required this.data, required this.fieldName, required this.specifications}) : super(key: key);
+  const DataObjectWidget({Key? key, required this.data, required this.fieldName, required this.specifications, required this.relationships}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +74,7 @@ class DataObjectWidget extends StatelessWidget {
     }
 
     if (specifications[fieldName]?.type == DataSpecification.dataObjectListType) {
-      return DataObjectListManager(data: data, fieldName: fieldName, specifications: specifications);
+      return DataObjectListManager(data: data, fieldName: fieldName, specifications: specifications, relationships: relationships,);
     }
 
 
@@ -91,33 +92,3 @@ class DataObjectWidget extends StatelessWidget {
   String? _fieldValidator(String? v) => specifications[fieldName]?.validator(v);
 }
 
-List<Widget> dataObjectList(List<DataObject> data, List<List<String>> fieldNames, Map<String, DataSpecification> specifications) {
-  var widgets = <Widget>[];
-
-  var i = 0;
-  while (i < data.length) {
-    for (var field in fieldNames[i]) {
-      widgets.add(DataObjectWidget(
-        data: data[i],
-        fieldName: field,
-        specifications: specifications,
-      ));
-    }
-
-    i++;
-  }
-  return widgets;
-}
-
-/*
-
-if (specifications[fieldName]?.type == 'percent') {
-      return DataObjectPercentField(
-        label: specifications[fieldName]?.label ?? fieldName,
-        data: data,
-        fieldName: fieldName,
-        help: specifications[fieldName]?.help ?? '',
-      );
-    }
-
- */
