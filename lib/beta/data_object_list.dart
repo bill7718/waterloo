@@ -13,14 +13,14 @@ import '../src/waterloo_future_drop_down_list.dart';
 ///
 class DataObjectList<T extends PersistableDataObject> extends StatelessWidget {
 
-  /// {@template filter}
-  /// Suppose I filter Students by year I might have
-  /// - filterLabel = 'year'
-  /// - filterValue = 2021
-  /// - filterRef = 'Student'
-  /// - descriptionLabel = 'studentName'
-  /// - idLabel = 'studentId'
-  /// {@endtemplate}
+ /// {@template filter}
+ /// Suppose I filter Students by year I might have
+ /// - filterLabel = 'year'
+ /// - filterValue = 2021
+ /// - filterRef = 'Student'
+ /// - descriptionLabel = 'studentName'
+ /// - idLabel = 'studentId'
+ /// {@endtemplate}
 
 
   /// The field used to filter the data.
