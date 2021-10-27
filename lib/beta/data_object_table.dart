@@ -88,7 +88,7 @@ class DataObjectTableEditor<T extends DataObject> extends StatelessWidget {
   final List<String>? dialogFieldNames;
 
   /// Title to use for the edit dialog if edit is enabled
-  final String? title;
+  final String? editDialogTitle;
 
   final String subTitle;
 
@@ -99,7 +99,7 @@ class DataObjectTableEditor<T extends DataObject> extends StatelessWidget {
       required this.relationships,
       required this.fieldNames,
       this.dialogFieldNames,
-      this.title,
+      this.editDialogTitle,
       this.subTitle = ''})
       : super(key: key);
 
@@ -112,9 +112,9 @@ class DataObjectTableEditor<T extends DataObject> extends StatelessWidget {
       Icon(theme.editIcon): (object) {
         showWaterlooGridFormDialog(context,
             payload: object,
-            formTitle: title ?? '',
+            formTitle: editDialogTitle ?? '',
             formSubtitle: subTitle,
-            children: dataObjectWidgetList(object, [dialogFieldNames ?? fieldNames], specifications, relationships, textProvider),
+            children: dataObjectWidgetList([object], [dialogFieldNames ?? fieldNames], specifications, relationships, textProvider),
             callback: (response) {
           if (response != null) {
             data.notify();

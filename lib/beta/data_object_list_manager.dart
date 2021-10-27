@@ -65,6 +65,7 @@ class DataObjectListManagerState extends State<DataObjectListManager> {
             fieldNames: fieldNames,
             specifications: widget.specifications,
             relationships: widget.relationships,
+            editDialogTitle: widget.specifications[widget.fieldName]?.itemDialogTitle ?? '',
           ),
           layoutRule: WaterlooGridChildLayoutRule.full),
       if (switchValue || list.list.isNotEmpty)
@@ -75,7 +76,7 @@ class DataObjectListManagerState extends State<DataObjectListManager> {
               onPressed: () {
                 var o = Injector.appInstance.get<DataObject>(dependencyName: widget.specifications[widget.fieldName]!.dataType!);
                 showWaterlooGridFormDialog(context,
-                    formTitle: '',
+                    formTitle: widget.specifications[widget.fieldName]?.itemDialogTitle ?? '',
                     payload: [o],
                     children: dataObjectWidgetList([o], [fieldNames], widget.specifications, widget.relationships, textProvider),
                     callback: (response) {

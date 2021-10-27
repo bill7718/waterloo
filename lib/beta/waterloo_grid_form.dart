@@ -7,7 +7,6 @@ import 'package:waterloo/beta/waterloo_grid.dart';
 import 'package:waterloo/src/waterloo_text_button.dart';
 import 'package:waterloo/src/waterloo_text_provider.dart';
 
-
 class WaterlooGridForm extends StatelessWidget {
   final dynamic payload;
   final GlobalKey formKey = GlobalKey();
@@ -43,7 +42,7 @@ class WaterlooGridForm extends StatelessWidget {
       this.formSubtitle,
       this.act = false,
       this.formMessage = '',
-        this.initialError,
+      this.initialError,
       required this.children,
       this.minimumColumnWidth,
       this.maximumColumnWidth,
@@ -55,7 +54,6 @@ class WaterlooGridForm extends StatelessWidget {
       this.validatePayload = true})
       : super(key: key);
 
-
   @override
   Widget build(BuildContext context) {
     var widgets = <Widget>[];
@@ -64,8 +62,7 @@ class WaterlooGridForm extends StatelessWidget {
     var error = FormError();
     error.error = textProvider.get(initialError) ?? '';
     widgets.add(WaterlooGridChild(
-        layoutRule: WaterlooGridChildLayoutRule.full,
-        child: WaterlooFormMessage(error: error, text: textProvider.get(formMessage) ?? '')));
+        layoutRule: WaterlooGridChildLayoutRule.full, child: WaterlooFormMessage(error: error, text: textProvider.get(formMessage) ?? '')));
 
     widgets.addAll(children);
 
@@ -81,13 +78,15 @@ class WaterlooGridForm extends StatelessWidget {
             if (formState.validate()) {
               var s = event.additionalValidation == null ? null : event.additionalValidation!(payload);
               if (validatePayload) {
-                for (var d in payload) {
-                  s ??= d.validate();
+                if (payload is List) {
+                  for (var d in payload) {
+                    s ??= d.validate();
+                  }
+                } else {
+                  s ??= payload.validate();
                 }
               }
-              s == null
-                  ? eventHandler.handleEvent(context, event: event.event, output: payload)
-                  : error.error = textProvider.get(s) ?? '';
+              s == null ? eventHandler.handleEvent(context, event: event.event, output: payload) : error.error = textProvider.get(s) ?? '';
             }
           } else {
             eventHandler.handleEvent(context, event: event.event, output: payload);
@@ -110,12 +109,7 @@ class WaterlooGridForm extends StatelessWidget {
       rowSeparation: rowSeparation,
     );
 
-    return WaterlooJourneyScaffold(
-        eventHandler: eventHandler,
-        formKey: formKey,
-        title: formTitle,
-        subTitle: formSubtitle,
-        child: grid);
+    return WaterlooJourneyScaffold(eventHandler: eventHandler, formKey: formKey, title: formTitle, subTitle: formSubtitle, child: grid);
   }
 }
 
@@ -144,5 +138,3 @@ class WaterlooGridTextRow extends StatelessWidget with HasWaterlooGridChildLayou
   @override
   WaterlooGridChildLayoutRule get layoutRule => WaterlooGridChildLayoutRule.full;
 }
-
-

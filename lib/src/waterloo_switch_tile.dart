@@ -21,7 +21,7 @@ class WaterlooSwitchTile extends StatefulWidget {
   /// Binds the value to an external object
   final Function valueBinder;
 
-  /// The text for the [SwitchListTile] [title] widget. This widget accepts a reference value in the label
+  /// The text for the [SwitchListTile] [editDialogTitle] widget. This widget accepts a reference value in the label
   /// and it uses [WaterlooTextProvider] to convert the reference into the required text value.
   final String label;
 

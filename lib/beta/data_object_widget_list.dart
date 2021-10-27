@@ -2,10 +2,22 @@
 
 import 'package:flutter/material.dart';
 import 'package:serializable_data/serializable_data.dart';
-
 import '../data_object_widgets.dart';
 import '../waterloo.dart';
 
+///
+/// Create a list of Widgets that maintain the data in the list of field names
+///
+///
+/// Incorporates the following features
+/// - by default it adds a [DataObjectWidget] corresponding to the field name and data object in the lists
+/// - if there is no [DataSpecification] for the field name then this method adds a [MarkdownViewer] which contains the text for that label
+/// - if the field name contains 2 field names separated by a '>' then the method adds the second field only if the value of the first field is not null
+/// - if the field name contains 2 field names separated by a '<' then the method adds the second field only if the value of the first field is null
+/// - if the field name contains 2 field names separated by a '=' then the method adds the second field only if the value of the first field is true
+/// - if the field name contains 2 field names separated by a '!' then the method adds the second field only if the value of the first field is false
+/// - if the field name contains 2 field names separated by a '|' then the method adds the second field and rebuilds it if the first field(s) change
+///
 List<Widget> dataObjectWidgetList(
     List<DataObject> data, List<List<String>> fieldNames, Map<String, DataSpecification> specifications,
     Map<String, RelationshipSpecification> relationships, WaterlooTextProvider textProvider) {
