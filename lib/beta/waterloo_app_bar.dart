@@ -28,7 +28,7 @@ class WaterlooAppBar {
             ),
           if (handleAction2 != null)
             IconButton(
-              icon: const Icon(Icons.refresh),
+              icon: Icon(Provider.of<WaterlooTheme>(context).appBarTheme.action2Icon),
               onPressed: () {
                 handleAction2();
               },
@@ -40,7 +40,8 @@ class WaterlooAppBar {
 
 class WaterlooAppBarTheme {
   final IconData actionIcon;
+  final IconData action2Icon;
   final TextStyle subTitleStyle;
 
-  const WaterlooAppBarTheme({this.actionIcon = Icons.home, this.subTitleStyle = const TextStyle(fontSize: 16)});
+  const WaterlooAppBarTheme({this.actionIcon = Icons.home, this.action2Icon = Icons.refresh, this.subTitleStyle = const TextStyle(fontSize: 16)});
 }

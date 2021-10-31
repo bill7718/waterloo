@@ -39,14 +39,14 @@ class WaterlooGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
       var layoutConstraints = WaterlooGridLayoutConstraints.getConstraints(
-          gridWidth: constraints.maxWidth,
-          minimumColumnWidth: minimumColumnWidth,
-          maximumColumnWidth: maximumColumnWidth,
-          preferredColumnCount: preferredColumnCount ?? Provider.of<WaterlooTheme>(context).gridTheme.preferredColumnCount,
-          preferredWidth: preferredColumnWidth,
-          maximumColumnCount: maximumColumnCount,
-          columnSeparation: columnSeparation ?? Provider.of<WaterlooTheme>(context).gridTheme.columnSeparation,
-          pad: pad);
+        gridWidth: constraints.maxWidth,
+        minimumColumnWidth: minimumColumnWidth,
+        maximumColumnWidth: maximumColumnWidth,
+        preferredColumnCount: preferredColumnCount ?? Provider.of<WaterlooTheme>(context).gridTheme.preferredColumnCount,
+        preferredWidth: preferredColumnWidth,
+        maximumColumnCount: maximumColumnCount,
+        columnSeparation: columnSeparation ?? Provider.of<WaterlooTheme>(context).gridTheme.columnSeparation,
+      );
 
       var rowSep = rowSeparation ?? Provider.of<WaterlooTheme>(context).gridTheme.rowSeparation;
 
@@ -95,10 +95,13 @@ class WaterlooGrid extends StatelessWidget {
               }
 
               rowContents = <Widget>[];
-              rowContents.add(Padding(child: SizedBox(width: width, child: children[i]), padding: EdgeInsets.only(left: layoutConstraints.margin)));
+              rowContents.add(Padding(
+                  child: SizedBox(width: width, child: children[i]),
+                  padding: EdgeInsets.only(left: layoutConstraints.margin)));
               remainingWidth = remainingWidth = constraints.maxWidth - width - layoutConstraints.margin;
             } else {
-              rowContents.add(Padding(child: SizedBox(width: width, child: children[i]), padding: EdgeInsets.only(left: leftMargin)));
+              rowContents.add(
+                  Padding(child: SizedBox(width: width, child: children[i]), padding: EdgeInsets.only(left: leftMargin)));
               remainingWidth = remainingWidth - width - leftMargin;
             }
             break;
@@ -119,7 +122,9 @@ class WaterlooGrid extends StatelessWidget {
             }
 
             rowContents = <Widget>[];
-            rowContents.add(Padding(child: SizedBox(width: width, child: children[i]), padding: EdgeInsets.only(left: layoutConstraints.margin)));
+            rowContents.add(Padding(
+                child: SizedBox(width: width, child: children[i]),
+                padding: EdgeInsets.only(left: layoutConstraints.margin)));
             remainingWidth = remainingWidth = constraints.maxWidth - width - layoutConstraints.margin;
             break;
 
@@ -233,31 +238,126 @@ class WaterlooGrid extends StatelessWidget {
   }
 }
 
+class WaterlooGridChild extends StatelessWidget implements HasWaterlooGridChildLayout {
+  @override
+  final int columnCount;
+  final Widget child;
+  @override
+  final double? preferredWidth;
+  @override
+  final WaterlooGridChildLayoutRule layoutRule;
+
+  const WaterlooGridChild(
+      {Key? key,
+      this.columnCount = 1,
+      required this.child,
+      this.preferredWidth,
+      this.layoutRule = WaterlooGridChildLayoutRule.normal})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(builder: (context, constraints) {
+      return child;
+    });
+  }
+}
+
+enum WaterlooGridChildLayoutRule { start, full, fill, normal }
+
+abstract class HasWaterlooGridChildLayout {
+  int get columnCount => 1;
+  double? get preferredWidth => null;
+  WaterlooGridChildLayoutRule get layoutRule => WaterlooGridChildLayoutRule.normal;
+}
+
+class WaterlooGridRow extends StatelessWidget implements HasWaterlooGridChildLayout {
+  @override
+  final int columnCount;
+  final List<Widget> children;
+  @override
+  final double? preferredWidth;
+  @override
+  final WaterlooGridChildLayoutRule layoutRule;
+
+  const WaterlooGridRow(
+      {Key? key,
+      this.columnCount = 1,
+      required this.children,
+      this.preferredWidth,
+      this.layoutRule = WaterlooGridChildLayoutRule.full})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: children,
+    );
+  }
+}
+
+///
+/// Default parameters used by the [WaterlooGrid]
+///
+class WaterlooGridTheme {
+  /// The default value of the preferred number of columns for a grid
+  final int preferredColumnCount;
+
+  /// The default value of the separation between columns
+  final double columnSeparation;
+
+  /// The default value of the separation between columns
+  final double rowSeparation;
+
+  const WaterlooGridTheme({this.preferredColumnCount = 3, this.columnSeparation = 25, this.rowSeparation = 5});
+}
+
+///
+/// Specifies the layout constraints used to build a rid of widgets
+///
 class WaterlooGridLayoutConstraints {
+  /// The number of columns in the Grid
   final int numberOfColumns;
+
+  /// The width of the column
   final double columnWidth;
-  final int columnFlex;
-  final int columnSeparatorFlex;
+
+  /// The size of hte left and right margin
   final double margin;
-  final int marginFlex;
 
-  WaterlooGridLayoutConstraints(this.numberOfColumns, this.columnWidth, this.columnFlex, this.columnSeparatorFlex, this.margin, this.marginFlex);
+  WaterlooGridLayoutConstraints(this.numberOfColumns, this.columnWidth, this.margin);
 
+  ///
+  /// Generate constraints based on the values provided
+  /// - minimumColumnWidth : The column(s) will not have a width smaller than this unless the available width is too small
+  /// - maximumColumnWidth : The column(s) will not have a width greater than this. If necessary the margin will be increased to ensure that this is so.
+  /// - preferredWidth : The preferred width for the column. Given a range of possible column counts the system prefers column counts than give a width close to the preferred width
+  /// - preferredColumnCount : Given a range of possible column widths the system prefers a with counts that gives a the preferred column count
+  /// - maximumColumnCount: The maximum column Count. If necessary the margin is increased to ensure that this constraint is respected
+  /// - columnSeparation : The distance between the columns. A fixed value that is always respected
+  /// - grid width : the actual available width
+  ///
+  ///
+  /// This method works as follows
+  /// - use the gridWidth, minimumColumnCount (1) and the maximum column width provided to calculate an actual maximumColumnWidth
+  /// - use the gridWidth, minimum column width, the maximum column count and the separation to calculate an actual maximum column count
+  ///
+  ///
   static WaterlooGridLayoutConstraints getConstraints(
-      {double? minimumColumnWidth,
+      {
+        double? minimumColumnWidth,
       double? maximumColumnWidth,
       double? preferredWidth,
       int? preferredColumnCount,
       int? maximumColumnCount,
       double? columnSeparation,
-      bool pad = true,
       required double gridWidth}) {
     var separation = columnSeparation ?? 1;
 
     double availableWidth = gridWidth + separation;
-    if (!pad) {
-      availableWidth = gridWidth - separation;
-    }
+
+    availableWidth = gridWidth - separation;
 
     // initialise the width and column count constraints
     double maxColWidth = maximumColumnWidth ?? 999.00;
@@ -288,13 +388,7 @@ class WaterlooGridLayoutConstraints {
       // now I know the column count the columnWidth and the separation I can calculate the margin
       double margin = (gridWidth - actColCount * actColWidth - (actColCount - 1) * separation) / 2;
 
-      // now I can calculate the flex values needed to support this
-
-      int separationFlex = 1000;
-      int columnFlex = separationFlex * actColWidth ~/ separation;
-      int marginFlex = separationFlex * margin ~/ separation;
-
-      return WaterlooGridLayoutConstraints(actColCount, actColWidth, columnFlex, separationFlex, margin, marginFlex);
+      return WaterlooGridLayoutConstraints(actColCount, actColWidth, margin);
     } else {
       int actColCount = availableWidth ~/ (minColWidth + separation);
       actColCount = min(actColCount, preferredColumnCount ?? 999);
@@ -305,83 +399,7 @@ class WaterlooGridLayoutConstraints {
 
       // now I know the column count the columnWidth and the separation I can calculate the margin
       double margin = (gridWidth - actColCount * actColWidth - (actColCount - 1) * separation) / 2;
-
-      // now I can calculate the flex values needed to support this
-
-      int separationFlex = 1000;
-      int columnFlex = separationFlex * actColWidth ~/ separation;
-      int marginFlex = separationFlex * margin ~/ separation;
-
-      return WaterlooGridLayoutConstraints(actColCount, actColWidth, columnFlex, separationFlex, margin, marginFlex);
+      return WaterlooGridLayoutConstraints(actColCount, actColWidth, margin);
     }
   }
-
-  int get totalFlex => 2 * marginFlex + columnFlex * numberOfColumns + columnSeparatorFlex * (numberOfColumns - 1);
-}
-
-class WaterlooGridChild extends StatelessWidget implements HasWaterlooGridChildLayout {
-  @override
-  final int columnCount;
-  final Widget child;
-  @override
-  final double? preferredWidth;
-  @override
-  final WaterlooGridChildLayoutRule layoutRule;
-
-  const WaterlooGridChild(
-      {Key? key, this.columnCount = 1, required this.child, this.preferredWidth, this.layoutRule = WaterlooGridChildLayoutRule.normal})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (context, constraints) {
-      return child;
-    });
-  }
-}
-
-enum WaterlooGridChildLayoutRule { start, full, fill, normal }
-
-abstract class HasWaterlooGridChildLayout {
-  int get columnCount => 1;
-  double? get preferredWidth => null;
-  WaterlooGridChildLayoutRule get layoutRule => WaterlooGridChildLayoutRule.normal;
-}
-
-class WaterlooGridRow extends StatelessWidget implements HasWaterlooGridChildLayout {
-  @override
-  final int columnCount;
-  final List<Widget> children;
-  @override
-  final double? preferredWidth;
-  @override
-  final WaterlooGridChildLayoutRule layoutRule;
-
-  const WaterlooGridRow(
-      {Key? key, this.columnCount = 1, required this.children, this.preferredWidth, this.layoutRule = WaterlooGridChildLayoutRule.full})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: children,
-    );
-  }
-}
-
-///
-/// Default parameters used by the [WaterlooGrid]
-///
-class WaterlooGridTheme {
-  /// The default value of the preferred number of columns for a grid
-  final int preferredColumnCount;
-
-  /// The default value of the separation between columns
-  final double columnSeparation;
-
-  /// The default value of the separation between columns
-  final double rowSeparation;
-
-  const WaterlooGridTheme({this.preferredColumnCount = 3, this.columnSeparation = 25, this.rowSeparation = 5});
 }
