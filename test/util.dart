@@ -270,3 +270,28 @@ Future<void> tapRadioTile(String label, String description,  WidgetTester tester
   c.complete();
   return c.future;
 }
+
+
+bool isCloseTo(double expected, double actual, { double marginOfError = 0.001}) {
+  if (actual > expected + marginOfError) {
+    return false;
+  }
+
+  if (actual < expected - marginOfError) {
+    return false;
+  }
+
+  return true;
+}
+
+bool isCloseToButLessThanOrEqual(double expected, double actual, { double marginOfError = 0.001}) {
+  if (actual > expected) {
+    return false;
+  }
+
+  if (actual < expected - marginOfError) {
+    return false;
+  }
+
+  return true;
+}

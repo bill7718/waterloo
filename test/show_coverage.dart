@@ -12,6 +12,7 @@ var fullCoverageExpected = <String>{
   'waterloo_currency_field.dart',
   'waterloo_text_button.dart',
   'waterloo_switch_tile.dart',
+  'waterloo_grid_layout_constraints.dart',
   'data_object_text_field.dart',
   'waterloo_form_message.dart',
   'data_object_drop_down_list.dart',

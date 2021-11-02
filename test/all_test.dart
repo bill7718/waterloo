@@ -11,6 +11,9 @@ import 'src/waterloo_drop_down_list_test.dart' as drop;
 import 'src/waterloo_future_drop_down_list_test.dart' as future_drop;
 import 'src/waterloo_radio_button_list_test.dart' as radio;
 
+import 'src/waterloo_grid_layout_constraints_test.dart' as grid_constraints;
+
+
 import 'src/change_notifier_list_test.dart' as list;
 
 import 'src/data_object_text_field_test.dart' as data_object_text;
@@ -38,6 +41,8 @@ main () {
   radio.main();
 
   list.main();
+
+  grid_constraints.main();
 
   data_object_text.main();
   data_object_drop.main();
