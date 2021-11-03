@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:serializable_data/serializable_data.dart';
 
-import 'data_object_list.dart';
+import '../src/data_object_list.dart';
 
 class DataObjectRelationshipField<T extends PersistableDataObject> extends StatelessWidget {
   final DataObjectRelationship data;

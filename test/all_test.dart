@@ -13,7 +13,6 @@ import 'src/waterloo_radio_button_list_test.dart' as radio;
 
 import 'src/waterloo_grid_layout_constraints_test.dart' as grid_constraints;
 
-
 import 'src/change_notifier_list_test.dart' as list;
 
 import 'src/data_object_text_field_test.dart' as data_object_text;
@@ -25,6 +24,7 @@ import 'src/data_object_view_test.dart' as data_object_view;
 import 'src/data_object_date_field_test.dart' as data_object_date;
 import 'src/data_object_integer_field_test.dart' as data_object_integer;
 import 'src/data_object_switch_tile_test.dart' as data_object_switch_tile;
+import 'src/data_object_list_test.dart' as data_object_list;
 
 
 main () {
@@ -53,6 +53,7 @@ main () {
   data_object_date.main();
   data_object_integer.main();
   data_object_switch_tile.main();
+  data_object_list.main();
 
 }
 

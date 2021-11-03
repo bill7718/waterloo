@@ -23,7 +23,8 @@ var fullCoverageExpected = <String>{
   'data_object_view.dart',
   'data_object_date_field.dart',
   'data_object_integer_field.dart',
-  'data_object_switch_tile.dart'
+  'data_object_switch_tile.dart',
+  'data_object_list.dart'
 };
 
 void main() {

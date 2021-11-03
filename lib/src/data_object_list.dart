@@ -76,7 +76,7 @@ class DataObjectList<T extends PersistableDataObject> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return WaterlooFutureDropDownList(label: screenFieldLabel ?? descriptionLabel, valueBinder: valueBinder, initialValue: initialValue,
-    getter: DataListGetter<T>(filterLabel, filterValue, descriptionLabel, idLabel, filterRef, reader),);
+    getter: DataListGetter<T>(filterLabel: filterLabel, filterValue: filterValue, descriptionLabel: descriptionLabel, idLabel: idLabel, filterRef: filterRef, reader: reader),);
   }
 }
 
