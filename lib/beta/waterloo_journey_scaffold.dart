@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:waterloo/waterloo.dart';
 
 class WaterlooJourneyScaffold extends StatelessWidget {
+
   final String title;
   final String? subTitle;
   final bool act;

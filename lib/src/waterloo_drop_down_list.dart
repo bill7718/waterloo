@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:serializable_data/serializable_data.dart';
 import 'waterloo_text_field.dart';
 import 'waterloo_theme.dart';
 
@@ -93,19 +94,8 @@ class WaterlooDropDownListState extends State<WaterlooDropDownList> {
   }
 }
 
-/// Contains the id and description of the data shown in a list
-class ListItem {
-  /// The id of a list item
-  final String id;
-
-  /// The description corresponding to the id
-  final String description;
-
-  ListItem(this.id, this.description);
-}
-
 ///
-/// Default parameters used by the [WaterlooCurrencyField]
+/// Default parameters used by the [WaterlooDropDownList]
 ///
 class WaterlooDropDownListTheme {
 

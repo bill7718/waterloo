@@ -1,4 +1,4 @@
-import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:waterloo/src/waterloo_theme.dart';
@@ -6,6 +6,7 @@ import 'package:waterloo/src/waterloo_theme.dart';
 import '../src/waterloo_grid_layout_constraints.dart';
 
 class WaterlooGrid extends StatelessWidget {
+
   final List<Widget> children;
 
   final double? minimumColumnWidth;

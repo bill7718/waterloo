@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:serializable_data/serializable_data.dart';
 import 'package:waterloo/src/waterloo_drop_down_list.dart';
 
 import '../util.dart';

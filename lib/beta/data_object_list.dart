@@ -2,8 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:serializable_data/serializable_data.dart';
-import '../src/waterloo_future_drop_down_list.dart';
-import 'data_list_getter.dart';
+import 'package:waterloo/src/waterloo_future_drop_down_list.dart';
 
 ///
 /// Shows data from a [DataObject] as a list. Wraps a [Future] around a [WaterlooFutureDropDownList]

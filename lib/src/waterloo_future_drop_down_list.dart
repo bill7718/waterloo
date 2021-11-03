@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:serializable_data/serializable_data.dart';
 import 'package:waterloo/waterloo.dart';
 
 import 'waterloo_drop_down_list.dart';
@@ -42,12 +43,3 @@ class WaterlooFutureDropDownList extends StatelessWidget {
   }
 }
 
-///
-/// Interface specification for classes that provide a list of values to be
-/// displayed via a [Future]
-///
-abstract class ListGetter {
-
-  /// Return the list of values
-  Future<List<ListItem>> getList();
-}
