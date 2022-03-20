@@ -11,9 +11,9 @@ dependencies:
     sdk: flutter
 
   serializable_data:
-    path: ../serializable_data
+    git: https://github.com/bill7718/serializable_data
 
-  provider: ^5.0.0
+  provider: ^6.0.2
   http: ^0.13.4
   injector: ^2.0.0
 

@@ -13,6 +13,7 @@ import '../beta/data_object_table.dart';
 import 'waterloo_drop_down_list.dart';
 import 'waterloo_switch_tile.dart';
 import 'waterloo_text_field.dart';
+import '../beta/waterloo_editable_text.dart';
 
 ///
 /// Contains theme data that is specific to Waterloo Widgets
@@ -32,6 +33,7 @@ class WaterlooTheme {
   final WaterlooFormMessageTheme formMessageTheme;
   final WaterlooJourneyScaffoldTheme scaffoldTheme;
   final DataObjectViewTheme viewTheme;
+  final WaterlooEditableTextTheme editableTextTheme;
 
   WaterlooTheme({
     this.textFieldTheme = const WaterlooTextFieldTheme(),
@@ -47,5 +49,6 @@ class WaterlooTheme {
     this.formMessageTheme = const WaterlooFormMessageTheme(),
     this.scaffoldTheme = const WaterlooJourneyScaffoldTheme(),
     this.viewTheme = const DataObjectViewTheme(),
+    this.editableTextTheme = const WaterlooEditableTextTheme()
   });
 }

@@ -43,5 +43,6 @@ export 'src/waterloo_text_provider.dart';
 
 export 'beta/markdown_viewer.dart';
 
-
+export 'beta/waterloo_editable_text.dart';
+export 'beta/waterloo_event_button.dart';
 

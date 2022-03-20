@@ -191,6 +191,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.12.11"
+  material_color_utilities:
+    dependency: transitive
+    description:
+      name: material_color_utilities
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.3"
   meta:
     dependency: transitive
     description:
@@ -247,19 +254,28 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.2"
+  pretty_json:
+    dependency: transitive
+    description:
+      name: pretty_json
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
   provider:
     dependency: "direct main"
     description:
       name: provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.0.0"
+    version: "6.0.2"
   serializable_data:
     dependency: "direct main"
     description:
-      path: "../serializable_data"
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "671378b68af83dc1f250a405a7172d006d3a87d2"
+      url: "https://github.com/bill7718/serializable_data"
+    source: git
     version: "1.0.0"
   sky_engine:
     dependency: transitive
@@ -314,7 +330,7 @@ packages:
       name: test_api
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.3"
+    version: "0.4.8"
   typed_data:
     dependency: transitive
     description:
@@ -335,7 +351,7 @@ packages:
       name: vector_math
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.0"
+    version: "2.1.1"
   xml:
     dependency: transitive
     description:
