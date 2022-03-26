@@ -7,7 +7,6 @@ import '../src/data_object_integer_field.dart';
 import 'data_object_list_manager.dart';
 import '../src/data_object_text_field.dart';
 import '../src/data_object_radio_list.dart';
-import '../src/waterloo_drop_down_list.dart';
 import '../src/data_object_switch_tile.dart';
 
 class DataObjectWidget extends StatelessWidget {
