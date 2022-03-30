@@ -81,6 +81,7 @@ class WaterlooTextFieldState extends State<WaterlooTextField> {
 
   bool previouslyValidated = false;
 
+
   @override
   void initState() {
     previouslyValidated = false;
@@ -111,6 +112,7 @@ class WaterlooTextFieldState extends State<WaterlooTextField> {
               previouslyValidated = true;
               return textProvider.get(widget.validator(v));
             }
+            return null;
           },
           onChanged: (v) => widget.valueBinder(v),
           readOnly: widget.readOnly,

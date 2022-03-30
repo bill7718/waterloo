@@ -19,8 +19,6 @@ dartdoc:
    - data_object_widgets
    - serializable_data
 
-
-
   categories:
     Overview:
       markdown: doc/content/overview.md
