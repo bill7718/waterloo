@@ -10,14 +10,10 @@ dartdoc:
     - no-documentable-libraries
 
 
-  includeExternal:
-    - ../serializable_data/lib/serializable_data.dart
-
-
   include:
    - waterloo
    - data_object_widgets
-   - serializable_data
+
 
   categories:
     Overview:

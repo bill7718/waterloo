@@ -7,8 +7,6 @@
 /// {@category overview}
 library waterloo;
 
-import 'package:serializable_data/serializable_data.dart';
-
 export 'templates.dart';
 export 'src/waterloo_theme.dart';
 export 'src/waterloo_text_field.dart';
