@@ -1,5 +1,5 @@
 {
-  "name": "Waterloo",
+  "name": "waterloo",
   "description": "General Npm",
   "scripts": {
     "upgrade_dartdoc": "pub global activate dartdoc",
